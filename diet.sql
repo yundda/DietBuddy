@@ -2,8 +2,6 @@ SHOW DATABASES;
 -- 데이터베이스 확인할 때
 USE mysql;
 SELECT * FROM user;
--- user 명 확인할 때
-DESC user;
 
 CREATE DATABASE dietBuddy DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 -- 데이터베이스 생성
@@ -24,4 +22,17 @@ FLUSH PRIVILEGES;
 SHOW TABLES;
 
 -- DROP TABLE user;
-/
+
+
+-- 칼럼명 확인
+DESC user;
+DESC user_goal;
+DESC mealtime;
+DESC intake;
+
+-- 테이블 조회
+SELECT * FROM user;
+SELECT * FROM user_goal;
+SELECT * FROM mealtime;
+SELECT * FROM intake;
+

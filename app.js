@@ -1,8 +1,7 @@
 const express = require("express");
-const indexRouter = require("./routes/index");
 const db = require("./models");
 const app = express();
-const port = 8081;
+const PORT = 8081;
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
@@ -11,11 +10,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/static", express.static(__dirname + "/static"));
 
+// 라우터 불러오기
+const indexRouter = require("./routes/index");
+const userRouter = require("./routes/user");
 app.use("/", indexRouter);
+app.use("/user", userRouter);
 
-db.sequelize.sync({ force: true }).then((result) => {
+// 404 페이지
+app.get("*", (req, res) => {
+  res.render("404page");
+});
+
+db.sequelize.sync({ force: true }).then(() => {
   console.log("db 연결 성공");
-  app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+  app.listen(PORT, () => {
+    console.log(`http://localhost:${PORT}`);
   });
 });
