@@ -23,6 +23,7 @@ SHOW TABLES;
 
 -- DROP TABLE user;
 
+DROP Table mealtime;
 
 -- 칼럼명 확인
 DESC user;
@@ -33,6 +34,5 @@ DESC intake;
 -- 테이블 조회
 SELECT * FROM user;
 SELECT * FROM user_goal;
-SELECT * FROM mealtime;
 SELECT * FROM intake;
 

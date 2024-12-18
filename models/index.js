@@ -20,7 +20,6 @@ db.Sequelize = Sequelize;
 const UserModel = require("./User")(sequelize, Sequelize);
 const UserGoalModel = require("./UserGoal")(sequelize, Sequelize);
 const IntakeModel = require("./Intake")(sequelize, Sequelize);
-const MealtimeModel = require("./Mealtime")(sequelize, Sequelize);
 
 // User : UserGoal = 1 : 1
 UserModel.hasOne(UserGoalModel, {
@@ -46,6 +45,5 @@ IntakeModel.belongsTo(UserModel, {
 db.User = UserModel;
 db.UserGoal = UserGoalModel;
 db.Intake = IntakeModel;
-db.Mealtime = MealtimeModel;
 
 module.exports = db;

@@ -1,0 +1,101 @@
+const utils = {};
+
+utils.calc_BMR = (gender, weight, height, age) => {
+  if (gender === "male") {
+    return 10 * weight + 6.25 * height - 5 * age + 5;
+  } else {
+    return 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+};
+utils.calc_AMR = (BMR, activelevel) => {
+  return Math.round(BMR * activelevel);
+};
+
+utils.calc_intake = (AMR, weight, goalWeight, period) => {
+  return Math.round(AMR - ((weight - goalWeight) * 7000) / period);
+};
+
+utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
+  let calc_protein;
+  if (gender === "male") {
+    if (activelevel < 1.6) {
+      switch (dietgoal) {
+        case "근성장":
+          calc_protein = weight * 2;
+          break;
+        case "다이어트":
+          calc_protein = weight * 1.8;
+          break;
+        case "유지":
+          calc_protein = weight * 1.8;
+      }
+    } else {
+      switch (dietgoal) {
+        case "근성장":
+          calc_protein = weight * 2.2;
+          break;
+        case "다이어트":
+          calc_protein = weight * 2.0;
+          break;
+        case "유지":
+          calc_protein = weight * 1.8;
+      }
+    }
+  } else if (gender === "female") {
+    if (activelevel < 1.6) {
+      switch (dietgoal) {
+        case "근성장":
+          calc_protein = weight * 1.7;
+          break;
+        case "다이어트":
+          calc_protein = weight * 1.5;
+          break;
+        case "유지":
+          calc_protein = weight * 1.5;
+          break;
+      }
+    } else {
+      switch (dietgoal) {
+        case "근성장":
+          calc_protein = weight * 1.8;
+          break;
+        case "다이어트":
+          calc_protein = weight * 1.65;
+          break;
+        case "유지":
+          calc_protein = weight * 1.5;
+          break;
+      }
+    }
+  }
+  return Math.round(calc_protein);
+};
+utils.calc_carbo = (intake, dietgoal) => {
+  let calc_carbo;
+  switch (dietgoal) {
+    case "근성장":
+      calc_carbo = intake * 0.135;
+      break;
+    case "다이어트":
+      calc_carbo = intake * 0.125;
+      break;
+    case "유지":
+      calc_carbo = intake * 0.135;
+      break;
+  }
+  return Math.round(calc_carbo);
+};
+utils.calc_fat = (intake, carbo, protein) => {
+  return Math.round((intake - (carbo + protein) * 4) / 9);
+};
+
+utils.ratio_carbo = (carbo, intake) => {
+  return Math.round(((carbo * 4) / intake) * 100);
+};
+utils.ratio_protein = (protein, intake) => {
+  return Math.round(((protein * 4) / intake) * 100);
+};
+utils.ratio_fat = (fat, intake) => {
+  return Math.round(((fat * 9) / intake) * 100);
+};
+module.exports = utils;
