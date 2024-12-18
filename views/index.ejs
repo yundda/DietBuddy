@@ -1,20 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>메인</title>
-    <link rel="stylesheet" href="../static/css/style.css" />
-  </head>
+  <%- include('partials/title', { title: '메인' })%>
   <body>
-    <header>
-      <div class="logo"><span>DIET</span> BUDDY</div>
-      <nav>
-        <a href="#">고객센터</a>
-      </nav>
-    </header>
-
-    <!-- 메인 콘텐츠 -->
+    <%-include('partials/header')%>
     <main>
       <section class="content">
         <h1><span>Healthy</span> living made easy!!</h1>
@@ -29,14 +17,6 @@
         <img src="../static/img/Broccoli.png" alt="Broccoli" />
       </div>
     </main>
-
-    <!-- 하단 푸터 -->
-    <footer>
-      <div class="footer-links">
-        <a href="#">설명</a>
-        <a href="#">Contact</a>
-      </div>
-      <p>&copy; 2024 DietBubby. All Rights Reserved.</p>
-    </footer>
+    <%-include('partials/footer')%>
   </body>
 </html>
