@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const utils = {};
 
 utils.calc_BMR = (gender, weight, height, age) => {
