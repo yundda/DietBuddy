@@ -1,0 +1,125 @@
+/* 기본 스타일 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #e8f7e2;
+}
+
+header .logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #5ca14b;
+}
+
+header .logo span {
+  font-size: 36px;
+  font-weight: bold;
+  color: #5ca14b;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 10%;
+  background-color: #ffffff;
+}
+
+main .content {
+  flex: 1;
+}
+
+main .content h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+main .content h1 span {
+  color: #d9534f;
+}
+
+main .content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+main .content .signin-text {
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+main .buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 2px solid #5ca14b;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn.login {
+  background-color: #ffffff;
+  color: #5ca14b;
+}
+
+.btn.signup {
+  background-color: #5ca14b;
+  color: #ffffff;
+}
+
+.btn:hover {
+  background-color: #5ca14b;
+  color: #ffffff;
+}
+
+.image img {
+  width: 300px;
+  height: auto;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 10%;
+  background-color: #e8f7e2;
+  color: #666;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #666;
+  margin: 0 10px;
+}
