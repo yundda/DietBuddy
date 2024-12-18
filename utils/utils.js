@@ -98,4 +98,19 @@ utils.ratio_protein = (protein, intake) => {
 utils.ratio_fat = (fat, intake) => {
   return Math.round(((fat * 9) / intake) * 100);
 };
+
+//비밀번호 암호화 함수
+utils.hashSaltPw = (pw) => {
+  const salt = crypto.randomBytes(16).toString("base64");
+  const iteration = 100;
+  const keylen = 64;
+  const algorithm = "sha512";
+
+  const hash = crypto
+    .pdkdf2Sync(pw, salt, iteration, keylen, algorithm)
+    .toString("base64");
+
+  return { salt, hash };
+};
+
 module.exports = utils;

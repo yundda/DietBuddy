@@ -6,8 +6,8 @@ router.get("/", controller.getIndex);
 router.get("/signup", controller.getSignup);
 router.get("/login", controller.getLogin);
 
-router.post("/signup", controller.postSignup);
-router.post("/login", controller.postLogin);
+router.post("/doSignup", controller.postSignup);
+router.post("/doLogin", controller.postLogin);
 router.post("/logout", controller.postLogout);
 
 module.exports = router;
