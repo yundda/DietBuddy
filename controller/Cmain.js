@@ -61,7 +61,7 @@ exports.postLogin = async (req, res) => {
           email: findUser.email,
         };
 
-        res.render("user", { data: req.session.user, isLogin: true });
+        res.send({ isLogin: true });
       } else {
       }
     } else {
