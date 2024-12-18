@@ -39,6 +39,10 @@ const UserGoal = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("Gain", "Loss", "Stay"),
         allowNull: false,
       },
+      BMR: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       AMR: {
         type: DataTypes.INTEGER,
         allowNull: false,
