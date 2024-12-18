@@ -1,4 +1,3 @@
-const utils = require("../utils/utils");
 const models = require("../models");
 const {
   calc_AMR,
@@ -7,7 +6,7 @@ const {
   calc_carbo,
   calc_protein,
   calc_fat,
-} = require("../../test_buddy1/utils/utils");
+} = require("../utils/utils");
 
 exports.getUser = (req, res) => {
   res.render("user");
@@ -30,12 +29,36 @@ exports.patchUser = (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
+  const deleteUser = await models.User.destroy({
+    where: {
+      email: req.session.email,
+    },
+  });
+
+  if (deleteUser) {
+    //결과가 나왔다면.
+    res.send({ isDelete: true });
+  } else {
+    res.send({ isDelete: false });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
   try {
-    const Result = await models;
-    res.send("회원 탈퇴 완료");
+    const deleteResult = await models.User.destroy({
+      where: {
+        email: req.session.email,
+      },
+    });
+
+    if (deleteResult) {
+      res.send({ isDelete: true });
+    } else {
+      res.send({ isDelete: false });
+    }
   } catch (err) {
-    console.log("Cuser.js postIntake : server error", err);
-    res.status(500).send("Cuser.js postIntake : server error");
+    console.log("Cuser.js deleteUser : server error", err);
+    res.status(500).send("Cuser.js deleteUser : server error");
   }
 };
 
