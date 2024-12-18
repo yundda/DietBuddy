@@ -36,7 +36,6 @@ exports.deleteUser = async (req, res) => {
   });
 
   if (deleteUser) {
-    //결과가 나왔다면.
     res.send({ isDelete: true });
   } else {
     res.send({ isDelete: false });
