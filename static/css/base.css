@@ -1,4 +1,3 @@
-/* 기본 스타일 초기화 */
 * {
   margin: 0;
   padding: 0;
@@ -13,6 +12,7 @@ body {
   margin: 0;
 }
 
+/* Header 스타일 */
 header {
   display: flex;
   justify-content: space-between;
@@ -39,45 +39,31 @@ header nav a {
   font-size: 16px;
 }
 
-main {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 50px 10%;
-  background-color: #ffffff;
+.logo-img {
+  width: 100px;
+  height: auto;
+  max-height: 100px;
 }
 
-main .content {
-  flex: 1;
+/* Footer 스타일 */
+footer {
+  text-align: center;
+  padding: 20px 10%;
+  background-color: #e8f7e2;
+  color: #666;
 }
 
-main .content h1 {
-  font-size: 48px;
-  font-weight: bold;
-  margin-bottom: 20px;
+.footer-links {
+  margin-bottom: 10px;
 }
 
-main .content h1 span {
-  color: #d9534f;
+.footer-links a {
+  text-decoration: none;
+  color: #666;
+  margin: 0 10px;
 }
 
-main .content p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-main .content .signin-text {
-  color: #999;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-main .buttons {
-  display: flex;
-  gap: 10px;
-}
-
+/* 버튼 스타일 */
 .btn {
   padding: 10px 20px;
   border: 2px solid #5ca14b;
@@ -102,32 +88,11 @@ main .buttons {
   color: #ffffff;
 }
 
+/* 이미지 스타일 */
 .image img {
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
   height: auto;
-}
-
-footer {
-  text-align: center;
-  padding: 20px 10%;
-  background-color: #e8f7e2;
-  color: #666;
-}
-
-.footer-links {
-  margin-bottom: 10px;
-}
-
-.footer-links a {
-  text-decoration: none;
-  color: #666;
-  margin: 0 10px;
-}
-
-.logo-img {
-  width: 100px;
-  height: auto;
-  max-height: 100px;
 }
 
 @font-face {
@@ -142,4 +107,3 @@ footer {
   font-family: Tenada, sans-serif;
   color: #5ca14b;
 }
-

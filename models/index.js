@@ -42,16 +42,6 @@ IntakeModel.belongsTo(UserModel, {
   foreignKey: "id",
 });
 
-// Intake : Mealtime = 1 : N
-IntakeModel.hasMany(MealtimeModel, {
-  onDelete: "CASCADE",
-  onUpdate: "CASCADE",
-  foreignKey: "intake_id",
-});
-MealtimeModel.belongsTo(IntakeModel, {
-  foreignKey: "intake_id",
-});
-
 // (4) db 객체에 모델 추가
 db.User = UserModel;
 db.UserGoal = UserGoalModel;

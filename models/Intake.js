@@ -7,6 +7,10 @@ const Intake = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      mealtime: {
+        type: DataTypes.ENUM("breakfast", "lunch", "dinner", "btwmeal"),
+        allowNull: false,
+      },
       carbo: {
         type: DataTypes.INTEGER,
         allowNull: false,
