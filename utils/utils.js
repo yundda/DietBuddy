@@ -114,4 +114,17 @@ utils.hashSaltPw = (pw) => {
   return { salt, hash };
 };
 
+//비밀번호 대조 함수
+function checkPw(inputPw, savedSalt, savedHash) {
+  const iteration = 100;
+  const keylen = 64;
+  const algorithm = "sha512";
+
+  const hash = crypto
+    .pdkdf2Sync(inputPw, savedSalt, iteration, keylen, algorithm)
+    .toString("base64");
+
+  return hash === savedHash;
+}
+
 module.exports = utils;
