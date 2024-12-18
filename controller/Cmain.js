@@ -1,7 +1,7 @@
 // const models = require("../models/User");
 const models = require("../models/index");
-const crypto = require("crypto");
-const { hashSaltPw } = require("../utils/utils");
+
+const { hashSaltPw, checkPw } = require("../utils/utils");
 
 exports.getIndex = (req, res) => {
   res.render("index");
@@ -20,15 +20,15 @@ exports.postSignup = (req, res) => {
     //비밀번호를 암호화 한 뒤
     //솔트 값과 해시 코드를 반환하는 함수
 
-    const { salt, hash } = hashSaltPw(req.body.pw);
+    const hashResult = hashSaltPw(req.body.pw);
 
     //회원 정보 추가
     models.User.create({
       email: req.body.email,
-      pw: hash,
+      pw: hashResult.hash,
       name: req.body.name,
       findPw: req.body.findPw,
-      salt: salt,
+      salt: hashResult.salt,
     }).then((result) => {
       if (result) {
         res.send({ isCreate: true });
@@ -50,15 +50,20 @@ exports.postLogin = async (req, res) => {
         email: req.body.email,
       },
     });
+    //DB에 저장된 해시랑 솔트 값.
+    const { hash: DBhash, salt: DBsalt } = findUser;
 
     if (findUser) {
-      req.session.user = {
-        id: findUser.id,
-        sessionName: findUser.name,
-        sessionEmail: findUser.email,
-      };
+      if (checkPw(req.body.pw, DBsalt, DBhash)) {
+        req.session.user = {
+          id: findUser.id,
+          name: findUser.name,
+          email: findUser.email,
+        };
 
-      res.render("user", { data: req.session.user, isLogin: true });
+        res.send({ isLogin: true });
+      } else {
+      }
     } else {
       res.send({ isLogin: false });
     }
