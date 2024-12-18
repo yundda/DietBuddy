@@ -24,21 +24,17 @@ exports.getUserUpdate = (req, res) => {
   res.render("userUpdate");
 };
 
-exports.patchUser = (req, res) => {
-  res.send("회원 정보 수정 완료");
-};
-
-exports.deleteUser = async (req, res) => {
-  const deleteUser = await models.User.destroy({
-    where: {
-      email: req.session.email,
-    },
-  });
-
-  if (deleteUser) {
-    res.send({ isDelete: true });
-  } else {
-    res.send({ isDelete: false });
+exports.patchUser = async (req, res) => {
+  const { id } = req.session.user;
+  // const { salt, hash } = cipherPw(req.body.pw);
+  try {
+    const patchUser = await models.User.update({
+      name: req.body.name,
+    });
+    res.send("회원 정보 수정 완료");
+  } catch (err) {
+    console.log("Cuser.js deleteUser : server error", err);
+    res.status(500).send("Cuser.js deleteUser : server error");
   }
 };
 
@@ -46,7 +42,7 @@ exports.deleteUser = async (req, res) => {
   try {
     const deleteResult = await models.User.destroy({
       where: {
-        email: req.session.email,
+        email: req.session.user.email,
       },
     });
 
