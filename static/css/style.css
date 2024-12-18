@@ -123,3 +123,9 @@ footer {
   color: #666;
   margin: 0 10px;
 }
+
+.logo-img {
+  width: 100px;
+  height: auto;
+  max-height: 100px;
+}
