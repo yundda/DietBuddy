@@ -1,9 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>로그인</title>
+    <%- include('partials/title', { title: '로그인' })%>
+    <link rel="stylesheet" href="../static/css/base.css" />
+    <link rel="stylesheet" href="../static/css/login.css" />
   </head>
-  <body></body>
+  <body>
+    <%-include('partials/header')%>
+
+    <main>
+      <section class="login-content">
+        <h2 class="login-title">로그인</h2>
+
+        <!-- 이메일 입력 -->
+        <div class="input-group">
+          <label for="email">이메일</label>
+          <input type="email" id="email" placeholder="abc@gmail.com" />
+        </div>
+
+        <!-- 비밀번호 입력 -->
+        <div class="input-group">
+          <label for="password">비밀번호</label>
+          <input type="password" id="password" placeholder="**********" />
+          <a href="#" class="forgot-password">비밀번호를 잊으셨나요?</a>
+        </div>
+
+        <!-- 로그인 버튼 -->
+        <button type="submit" class="btn login-btn" id="loginBtn">로그인</button>
+
+        <!-- 에러 메시지 -->
+        <p id="errorMsg" style="color: red; display: none">
+          이메일 또는 비밀번호가 잘못되었습니다.
+        </p>
+
+        <!-- 회원가입 링크 -->
+        <p class="signup-text">
+          아직 계정이 없으신가요? <a href="/signup" class="signup-link">회원가입</a>
+        </p>
+      </section>
+
+      <div class="image">
+        <img src="../static/img/Grape.png" alt="Grapes" />
+      </div>
+    </main>
+    <%-include('partials/footer')%>
+    <script>
+      document.getElementById("loginBtn").addEventListener("click", () => {
+        // 빈값일 경우 얼럿처리
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const errorMsg = document.getElementById("errorMsg");
+
+        // Axios POST 요청
+        axios
+          .post("/login", { email, password })
+          .then((response) => {
+            console.log("성공!");
+            if (response.status === 200) {
+              window.location.href = "/user";
+            }
+          })
+          .catch((error) => {
+            errorMsg.style.display = "block";
+            errorMsg.textContent =
+              error.response.data.message || "로그인에 실패했습니다.";
+          });
+      });
+    </script>
+  </body>
 </html>
