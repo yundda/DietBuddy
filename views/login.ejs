@@ -26,7 +26,7 @@
         </div>
 
         <!-- 로그인 버튼 -->
-        <button type="submit" class="btn login-btn" id="loginBtn">로그인</button>
+        <button type="submit" class="btn login-btn" onclick="user_login()">로그인</button>
 
         <!-- 에러 메시지 -->
         <p id="errorMsg" style="color: red; display: none">
@@ -44,28 +44,6 @@
       </div>
     </main>
     <%-include('partials/footer')%>
-    <script>
-      document.getElementById("loginBtn").addEventListener("click", () => {
-        // 빈값일 경우 얼럿처리
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-        const errorMsg = document.getElementById("errorMsg");
-
-        // Axios POST 요청
-        axios
-          .post("/login", { email, password })
-          .then((response) => {
-            console.log("성공!");
-            if (response.status === 200) {
-              window.location.href = "/user";
-            }
-          })
-          .catch((error) => {
-            errorMsg.style.display = "block";
-            errorMsg.textContent =
-              error.response.data.message || "로그인에 실패했습니다.";
-          });
-      });
-    </script>
+    <script src="../static/js/login_axios.js"></script>
   </body>
 </html>
