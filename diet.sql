@@ -36,3 +36,13 @@ SELECT * FROM user;
 SELECT * FROM user_goal;
 SELECT * FROM intake;
 
+INSERT INTO `user` (`email`, `pw`, `name`, `findPw`, `salt`, `createdAt`, `updatedAt`) 
+VALUES (
+  'aaaa',
+  '1111qqqq',
+  '홍길동',
+  'recovery_code',
+  'random_salt_value',
+  NOW(),
+  NOW()
+);
