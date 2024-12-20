@@ -23,10 +23,6 @@ const Intake = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      fiber: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
     },
     {
       timestamps: true,
