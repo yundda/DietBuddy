@@ -49,7 +49,7 @@ function user_signup() {
         alert("회원가입이 완료되었습니다.");
         document.location.href = "/login";
       } else {
-        alert("회원가입 실패.");
+        alert(result.data.msg);
         return false;
       }
     })
