@@ -6,38 +6,66 @@ const {
   calc_carbo,
   calc_protein,
   calc_fat,
+  hashSaltPw,
 } = require("../utils/utils");
 
-exports.getUser = (req, res) => {
-  res.render("user");
+exports.getUser = async (req, res) => {
+  // 세션 검증 후 isSettingGoal true/false에 따라서 mypage before/after로 나누기
+  try {
+    const { id: sessionId } = req.session.user;
+    if (id) {
+      const userGoal = models.UserGoal.findOne({
+        where: {
+          id: sessionId,
+        },
+      });
+      res.render("user", { isSettingGoal: true, userGoal });
+    } else {
+      res.render("user", { isSettingGoal: false });
+    }
+  } catch (err) {
+    console.log("Cuser.js patchUser : server error", err);
+    res.status(500).send("Cuser.js patchUser : server error");
+  }
 };
 
 exports.getSetGoal = (req, res) => {
   res.render("settingGoal");
 };
 
-exports.getDailyIntake = (req, res) => {
-  res.render("user");
-};
+// exports.getDailyIntake = (req, res) => {
+//   res.render("user");
+// };
 
 exports.getUserUpdate = (req, res) => {
   res.render("userUpdate");
 };
 
+// 회원 정보 수정 PATCH '/user/patch'
 exports.patchUser = async (req, res) => {
-  const { id } = req.session.user;
-  // const { salt, hash } = cipherPw(req.body.pw);
   try {
-    const patchUser = await models.User.update({
-      name: req.body.name,
-    });
+    const { id: sessionId } = req.session.user;
+    const { salt, hash } = hashSaltPw(req.body.pw);
+    const patchResult = await models.User.update(
+      {
+        name: req.body.name,
+        pw: hash,
+        salt: salt,
+      },
+      {
+        where: {
+          id: sessionId,
+        },
+      }
+    );
     res.send("회원 정보 수정 완료");
   } catch (err) {
-    console.log("Cuser.js deleteUser : server error", err);
-    res.status(500).send("Cuser.js deleteUser : server error");
+    console.log("Cuser.js patchUser : server error", err);
+    res.status(500).send("Cuser.js patchUser : server error");
   }
 };
 
+// 회원 탈퇴 DELETE '/user'
 exports.deleteUser = async (req, res) => {
   try {
     const deleteResult = await models.User.destroy({
@@ -57,25 +85,25 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-/* req.session.user = {id, email, name} */
+/* req.session.user = {id : ~, email : ~, name : ~} */
 
-// [241218] 추가
 // POST '/user/settingGoal
-// 목표 설정 DB 저장 (create)
+// 유효성 검증 후 목표 DB 저장
 exports.postSetGoal = async (req, res) => {
-  const { id: sessionId } = req.session.user;
   // gender value -> "male", "female"
   // activeLevel value -> 1.2 / 1.375 / 1.55 / 1.725
   // dietGoal value -> "근성장" / "체지방 감량" / "유지"
-  const { weight, height, age, gender, activeLevel, goalWeight, period, dietGoal } =
-    req.body;
-  const calcedBMR = calc_BMR(gender, weight, height, age);
-  const calcedAMR = calc_AMR(calcedBMR, activeLevel);
-  const calcedIntake = calc_intake(calcedAMR, weight, goalWeight, period);
-  const calcedCarbo = calc_carbo(calcedIntake, dietGoal);
-  const calcedProtein = calc_protein(gender, activeLevel, dietGoal, weight);
-  const calcedFat = calc_fat(calcedIntake, calcedCarbo, calcedProtein);
   try {
+    const { id: sessionId } = req.session.user;
+    const { weight, height, age, gender, activeLevel, goalWeight, period, dietGoal } =
+      req.body;
+    const calcedBMR = calc_BMR(gender, weight, height, age);
+    const calcedAMR = calc_AMR(calcedBMR, activeLevel);
+    const calcedIntake = calc_intake(calcedAMR, weight, goalWeight, period);
+    const calcedCarbo = calc_carbo(calcedIntake, dietGoal);
+    const calcedProtein = calc_protein(gender, activeLevel, dietGoal, weight);
+    const calcedFat = calc_fat(calcedIntake, calcedCarbo, calcedProtein);
+    // 목표 재설정인지 초기 설정인지
     const checkGoal = await models.UserGoal.findOne({
       where: {
         id: sessionId,
@@ -142,8 +170,8 @@ exports.postSetGoal = async (req, res) => {
 exports.postIntake = async (req, res) => {
   // req.body or form 데이터
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
-  const { mealtime, carbo, protein, fat, fiber } = req.body;
   try {
+    const { mealtime, carbo, protein, fat, fiber } = req.body;
     const intakeResult = await models.Intake.create(
       {
         mealtime: mealtime,
