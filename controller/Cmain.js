@@ -13,6 +13,12 @@ exports.getSignup = (req, res) => {
 exports.getLogin = (req, res) => {
   res.render("login");
 };
+//비밀번호 찾기 페이지
+//페이지 이름은 임시로 정한 것.
+//나중에 비밀번호 페이지 만들어지면 바꾼다.
+exports.getFindpw = (req, res) => {
+  res.render("findPw");
+};
 
 //회원가입 controller
 exports.postSignup = (req, res) => {
@@ -84,6 +90,31 @@ exports.postLogin = async (req, res) => {
   } catch (err) {
     console.log("Cmain.js postLogin : server error", err);
     res.status(500).send("Cmain.js postLogin : server error");
+  }
+};
+
+//비밀번호 찾기 controller
+exports.postFindpw = async (req, res) => {
+  try {
+    const findingPw = await models.User.findOne({
+      where: {
+        email: req.body.email,
+        // findPw: req.body.findPw,
+      },
+    });
+    //만일 보안문자 내용이 겹치면 어떻게 하지?
+    //이메일도 같이 보내게 하는 게 좋을 것 같다.
+
+    if (findingPw.findPw === req.body.findPw) {
+      console.log("회원 존재");
+      res.send({ isFind: true, msg: "비밀번호 변경 페이지로 이동" });
+    } else {
+      console.log("회원 없음.");
+      res.send({ isFind: false, msg: "해당 정보와 일치하는 회원이 존재하지 않습니다." });
+    }
+  } catch (err) {
+    console.log("Cmain.js postFindpw : server error", err);
+    res.status(500).send("Cmain.js postFindpw : server error");
   }
 };
 
