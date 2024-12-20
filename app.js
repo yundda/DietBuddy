@@ -9,6 +9,18 @@ app.set("views", "./views");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use("/static", express.static(__dirname + "/static"));
+//세션 옵션 설정
+app.use(
+  session({
+    secret: "password",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 10 * 60 * 1000,
+    },
+  })
+);
 
 // 라우터 불러오기
 const indexRouter = require("./routes/index");

@@ -51,7 +51,7 @@ exports.postLogin = async (req, res) => {
       },
     });
     //DB에 저장된 해시랑 솔트 값.
-    const { hash: DBhash, salt: DBsalt } = findUser;
+    const { pw: DBhash, salt: DBsalt } = findUser;
 
     if (findUser) {
       if (checkPw(req.body.pw, DBsalt, DBhash)) {
