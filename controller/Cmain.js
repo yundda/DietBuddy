@@ -30,7 +30,7 @@ exports.postSignup = (req, res) => {
       },
     });
 
-    if (!sameCheck) {
+    if (sameCheck) {
       //중복되는 이메일이 없을 경우
       const hashResult = hashSaltPw(req.body.pw);
 
