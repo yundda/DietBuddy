@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const db = require("./models");
 const app = express();
 const PORT = 8081;
@@ -33,7 +34,7 @@ app.get("*", (req, res) => {
   res.render("404page");
 });
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   console.log("db 연결 성공");
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
