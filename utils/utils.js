@@ -115,7 +115,7 @@ utils.hashSaltPw = (pw) => {
 };
 
 //비밀번호 대조 함수
-checkPw = (inputPw, savedSalt, savedHash) => {
+utils.checkPw = (inputPw, savedSalt, savedHash) => {
   const iteration = 100;
   const keylen = 64;
   const algorithm = "sha512";
