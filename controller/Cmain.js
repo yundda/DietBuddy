@@ -17,28 +17,39 @@ exports.getLogin = (req, res) => {
 //회원가입 controller
 exports.postSignup = (req, res) => {
   try {
-    //비밀번호를 암호화 한 뒤
-    //솔트 값과 해시 코드를 반환하는 함수
-
-    const hashResult = hashSaltPw(req.body.pw);
-
-    //회원 정보 추가
-    models.User.create({
-      email: req.body.email,
-      pw: hashResult.hash,
-      name: req.body.name,
-      findPw: req.body.findPw,
-      salt: hashResult.salt,
-    }).then((result) => {
-      if (result) {
-        res.send({ isCreate: true });
-      } else {
-        res.send({ isCreate: false });
-      }
+    //아이디(이메일) 중복체크
+    const sameCheck = models.User.findOne({
+      where: {
+        email: req.body.email,
+      },
     });
+
+    if (!sameCheck) {
+      //중복되는 이메일이 없을 경우
+      const hashResult = hashSaltPw(req.body.pw);
+
+      //회원 정보 추가
+      models.User.create({
+        email: req.body.email,
+        pw: hashResult.hash,
+        name: req.body.name,
+        findPw: req.body.findPw,
+        salt: hashResult.salt,
+      }).then((result) => {
+        if (result) {
+          res.send({ isCreate: true });
+        } else {
+          res.send({ isCreate: false });
+        }
+      });
+    } else {
+      //중복되는 이메일이 있을 경우우
+      console.log("중복 이메일 존재");
+      res.send({ msg: "이 이메일로 가입한 회원이 이미 있습니다." });
+    }
   } catch (err) {
-    console.log("Cmain.js postSetGoal : server error", err);
-    res.status(500).send("Cmain.js postSetGoal : server error");
+    console.log("Cmain.js postSignup : server error", err);
+    res.status(500).send("Cmain.js postSignup : server error");
   }
 };
 
@@ -60,6 +71,9 @@ exports.postLogin = async (req, res) => {
           name: findUser.name,
           email: findUser.email,
         };
+        // console.log("세션 저장 확인");
+        // console.log(req.session.user);
+        //세션이 잘 저장되었는지 확인.
 
         res.send({ isLogin: true });
       } else {
@@ -68,16 +82,21 @@ exports.postLogin = async (req, res) => {
       res.send({ isLogin: false });
     }
   } catch (err) {
-    console.log("Cmain.js postSetGoal : server error", err);
-    res.status(500).send("Cmain.js postSetGoal : server error");
+    console.log("Cmain.js postLogin : server error", err);
+    res.status(500).send("Cmain.js postLogin : server error");
   }
 };
 
 //로그아웃 controller
 exports.postLogout = (req, res) => {
-  req.session.destroy((err) => {
-    if (err) throw err;
+  try {
+    req.session.destroy((err) => {
+      if (err) throw err;
 
-    res.send({ isOut: true });
-  });
+      res.send({ isOut: true });
+    });
+  } catch (err) {
+    console.log("Cmain.js postLogout : server error", err);
+    res.status(500).send("Cmain.js postLogout : server error");
+  }
 };
