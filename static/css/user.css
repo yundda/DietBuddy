@@ -1,0 +1,268 @@
+/* 메인 컨테이너 */
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px;
+}
+
+/* 왼쪽 섹션 */
+.left-section {
+  width: 55%;
+}
+
+.goal-info {
+  margin-bottom: 20px;
+}
+
+.goal-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goal-card {
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  flex: 1;
+  margin-right: 10px;
+  position: relative;
+}
+
+.kcal-card {
+  background-color: #ffe1b2;
+}
+
+.weight-card {
+  background-color: #d6fbff;
+}
+
+.weight-container {
+  margin-bottom: 10px;
+}
+
+/* 몸무게 막대 */
+.weight-bar {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(to right, #a8e0f0, #5cb8e0, #a8e0f0);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* 몸무게 현재 위치 표시 (빨간색 막대) */
+.weight-indicator {
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  background: red;
+  left: 60%;
+}
+
+/* 몸무게 레이블 (범위 값) */
+.weight-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #5a5a5a;
+}
+
+.goal-card:last-child {
+  margin-right: 0;
+}
+
+.btn {
+  background-color: #5ca14b;
+  color: white;
+  padding: 10px 20px;
+  border: #5ca14b solid 2px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 100%;
+}
+
+.btn:hover {
+  color: #5ca14b;
+  background-color: white;
+}
+
+/* 영양소 카드 */
+.nutrition-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.nutrition-card {
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.nutrition-card:last-child {
+  margin-right: 0;
+}
+
+.nutrition-icon img {
+  width: 50px;
+  height: 50px;
+}
+
+.icon-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.background-carbs {
+  background: #ffe1b2;
+}
+
+.background-protein {
+  background: #ffe4e9;
+}
+
+.background-fat {
+  background: #d6fbff;
+}
+
+.icon-background img {
+  width: 30px;
+  height: 30px;
+}
+
+/* 제목 스타일 */
+.nutrition-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* 섭취량 값 스타일 */
+.nutrition-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* 섭취량 레이블 */
+.nutrition-card span {
+  font-size: 14px;
+  color: #888;
+}
+
+/* 상태 메시지 스타일 */
+.nutrition-status {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* 상태별 메시지 색상 */
+.nutrition-status.none {
+  background-color: #ffcccc;
+  color: #d9534f;
+}
+
+.nutrition-status.half {
+  background-color: #fff4b2;
+  color: #f0ad4e;
+}
+
+.nutrition-status.full {
+  background-color: #d4f5e9;
+  color: #5cb85c;
+}
+
+/* 그래프 */
+.graph-section {
+  margin-top: 20px;
+}
+
+.graph-container {
+  margin-top: 10px;
+}
+
+/* 오른쪽 섹션 */
+.right-section {
+  width: 40%;
+  background-color: #e8f7e2;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.meal-info {
+  margin-top: 20px;
+}
+
+.meal-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: white;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calorie-container {
+  margin-bottom: 10px; /* 바와 텍스트 간 간격 */
+}
+
+.calorie-bar {
+  position: relative;
+  height: 15px;
+  width: 100%;
+  background: linear-gradient(to right, #80caff, #88d498, #ffdd57, #ff8566);
+  border-radius: 7.5px;
+  overflow: hidden;
+}
+
+.calorie-progress {
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 7.5px;
+}
+
+.calorie-indicator {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: red;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  transform: translateX(-50%);
+}
+
+.calorie-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #5a5a5a;
+  margin-top: 5px;
+  
+}
+
+.spaced-text {
+  word-spacing: 6em;
+  font-size: 16px;
+}

@@ -34,9 +34,14 @@ header .logo span {
 }
 
 header nav a {
+  margin-left: 20px;
   text-decoration: none;
   color: #333;
   font-size: 16px;
+}
+
+header nav a:first-child {
+  margin-left: 0;
 }
 
 .logo-img {

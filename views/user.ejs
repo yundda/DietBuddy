@@ -4,8 +4,157 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>마이 페이지</title>
+    <link rel="stylesheet" href="../static/css/base.css" />
+    <link rel="stylesheet" href="../static/css/user.css" />
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body>
-    <h1>user 페이지</h1>
+    <%-include('partials/userHeader')%>
+
+    <main class="main-content">
+      <div class="container">
+        <!-- 왼쪽 섹션 -->
+        <section class="left-section">
+          <div class="goal-info">
+            <h1>~~님의 목표 달성까지 10일 남았어요~</h1>
+            <p>2024. 12. 20</p>
+            <div class="goal-details">
+              <div class="goal-card kcal-card">
+                <div class="calorie-container">
+                  <div class="calorie-bar">
+                    <div class="calorie-progress"></div>
+                    <div class="calorie-indicator"></div>
+                  </div>
+                  <div class="calorie-labels"></div>
+                </div>
+                <span class="spaced-text">권장섭취량 1500kcal</span>
+              </div>
+              <div class="goal-card weight-card">
+                <div class="weight-container">
+                  <div class="weight-bar">
+                    <div class="weight-indicator"></div>
+                  </div>
+                  <div class="weight-labels">
+                    <span>60</span>
+                    <span>70</span>
+                    <span>80</span>
+                  </div>
+                </div>
+                <span class="spaced-text">Weight 71kg</span>
+              </div>
+              <button class="btn">목표 설정</button>
+            </div>
+          </div>
+
+          <div class="nutrition-section">
+            <div class="nutrition-card">
+              <div class="nutrition-icon">
+                <div class="icon-background background-carbs">
+                  <img src="../static/img/carbs.png" alt="탄수화물 아이콘" />
+                </div>
+              </div>
+              <h2>탄수화물</h2>
+              <p class="nutrition-value">100/100</p>
+              <span>섭취량</span>
+              <div class="nutrition-status full">충분해요!</div>
+            </div>
+
+            <div class="nutrition-card">
+              <div class="nutrition-icon">
+                <div class="icon-background background-protein">
+                  <img src="../static/img/protein.png" alt="단백질 아이콘" />
+                </div>
+              </div>
+              <h2>단백질</h2>
+              <p class="nutrition-value">20/100</p>
+              <span>섭취량</span>
+              <div class="nutrition-status none">부족해요 ㅠㅠ</div>
+            </div>
+
+            <div class="nutrition-card">
+              <div class="nutrition-icon">
+                <div class="icon-background background-fat">
+                  <img src="../static/img/fat.png" alt="지방 아이콘" />
+                </div>
+              </div>
+              <h2>지방</h2>
+              <p class="nutrition-value">50/100</p>
+              <span>섭취량</span>
+              <div class="nutrition-status half">괜찮은 수준이에요</div>
+            </div>
+          </div>
+
+          <div class="graph-section">
+            <h2>일일 영양소 섭취 비율</h2>
+            <select id="month-select"></select>
+            <div class="graph-container nutrition-card">
+              <div id="chart"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 오른쪽 섹션 -->
+        <section class="right-section">
+          <h2>오늘의 식단</h2>
+          <div class="meal-info">
+            <div class="meal-item">
+              <p>아침</p>
+              <p>Ibuprofen (500mg)</p>
+            </div>
+            <div class="meal-item">
+              <p>간식</p>
+              <p>Breakfast (360 Kcal)</p>
+            </div>
+            <div class="meal-item">
+              <p>점심</p>
+              <p>Lunch (500 Kcal)</p>
+            </div>
+            <!-- 추가 항목 삽입 -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <%-include('partials/footer')%>
+    <script>
+      const currentCalorie = 900; // 현재 섭취량
+      const maxCalorie = 1000; // 권장 섭취량
+      const maxProgress = 120; // 최대 progress(%) 설정
+
+      const steps = 5;
+      const maxDisplayCalorie = Math.round(maxCalorie * (maxProgress / 100));
+      const interval = maxDisplayCalorie / (steps - 1);
+      const calorieLabelsContainer = document.querySelector(".calorie-labels");
+
+      calorieLabelsContainer.innerHTML = "";
+
+      for (let i = 0; i < steps; i++) {
+        const labelValue = Math.round(interval * i);
+        const span = document.createElement("span");
+        span.textContent = labelValue;
+        calorieLabelsContainer.appendChild(span);
+      }
+
+      // 프로그레스 바와 인디케이터
+      const progressBar = document.querySelector(".calorie-progress");
+      const indicator = document.querySelector(".calorie-indicator");
+
+      // 진행률 계산
+      let progressPercentage = (currentCalorie / maxDisplayCalorie) * 100;
+
+      // 진행률이 최대 progress를 넘지 않도록 제한
+      if (progressPercentage > maxProgress) {
+        progressPercentage = maxProgress;
+      }
+
+      // 진행도 및 위치 업데이트
+      progressBar.style.width = `${progressPercentage}%`; // 바 진행률
+      indicator.style.left = `${progressPercentage}%`; // 동그라미 위치
+
+      if (currentCalorie > maxCalorie * (maxProgress / 100)) {
+        indicator.style.background = "red"; // 동그라미 색상 변경
+      }
+    </script>
+    <script src="../static/js/graph.js"></script>
   </body>
 </html>
