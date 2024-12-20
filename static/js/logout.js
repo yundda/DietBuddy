@@ -8,7 +8,7 @@ function user_logout() {
     }).then((res) => {
       if (res.data.isOut) {
         alert("로그아웃이 완료되었습니다.");
-        document.location.href = "/logout"; //로그아웃 페이지로 이동
+        document.location.href = "/";
       }
     });
   } else {
