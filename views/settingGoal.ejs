@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <%- include('partials/title', { title: '로그인' })%>
-    <link rel="stylesheet" href="../static/css/settingGoal.css" />
-    <link rel="stylesheet" href="../static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/settingGoal.css" />
+    <link rel="stylesheet" href="/static/css/base.css" />
   </head>
   <body>
     <%-include('partials/header')%>
@@ -112,7 +112,7 @@
               </button>
             </div>
             <br /><br />
-            <button type="submit" class="submit-btn" onclick="handleSubmit()">
+            <button type="button" class="submit-btn" onclick="handleSubmit()">
               Create my plan
             </button>
           </form>
@@ -125,6 +125,6 @@
       </section>
     </main>
     <%-include('partials/footer')%>
-    <script src="../static/js/settingGoal.js" defer></script>
+    <script src="/static/js/settingGoal.js" defer></script>
   </body>
 </html>

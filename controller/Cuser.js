@@ -12,19 +12,22 @@ const {
 
 exports.getUser = async (req, res) => {
   try {
-    console.log(req.session.user);
-    const { id: sessionId, name: sessionName } = req.session.user;
-
-    const startOfToday = new Date();
-    startOfToday.setHours(0, 0, 0, 0);
-    const endOfToday = new Date();
-    endOfToday.setHours(23, 59, 59, 999);
-
     // 세션 있으면 goal 있냐 없냐에 따라서 isSettingGoal true/false 전달 각각 mypage after/before,
     // my page after : 세팅한 goal 정보 가져와서 보여주기
     // my page before : 빈 값으로 보여주기
-    if (sessionId) {
+    if (req.session.user) {
+      console.log(req.session.user);
+      const { id: sessionId, name: sessionName } = req.session.user;
+
+      const startOfToday = new Date();
+      startOfToday.setHours(0, 0, 0, 0);
+      const endOfToday = new Date();
+      endOfToday.setHours(23, 59, 59, 999);
+
       const goal_id = await models.UserGoal.findOne({
+        where: { id: sessionId },
+      });
+      const intake_id = await models.Intake.findOne({
         where: { id: sessionId },
       });
       if (goal_id) {
@@ -43,109 +46,110 @@ exports.getUser = async (req, res) => {
             [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
           ],
         });
-        // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
-        const todayIntakes = await models.Intake.findAll({
-          where: {
-            id: sessionId,
-            createdAt: {
-              [Op.gte]: startOfToday, // 오늘 0시 이후
-              [Op.lte]: endOfToday, // 오늘 23시 59분 이전
+        if (intake_id) {
+          // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
+          const todayIntakes = await models.Intake.findAll({
+            where: {
+              id: sessionId,
+              createdAt: {
+                [Op.gte]: startOfToday, // 오늘 0시 이후
+                [Op.lte]: endOfToday, // 오늘 23시 59분 이전
+              },
             },
-          },
-        });
-        /*
+          });
+          /*
       [
         RowDataPacket { id: 1, carbo: , protein: , fat : mealtime : },
         RowDataPacket {  },
       ]
      */
-        let todayCarbo = 0;
-        let todayProtein = 0;
-        let todayFat = 0;
-        for (let i of todayIntakes) {
-          todayCarbo += i.carbo;
-          todayProtein += i.protein;
-          todayFat += i.fat;
-        }
-        // 3. 섭취 칼로리
-        const todayCal = todayCarbo * 4 + todayProtein * 4 + todayFat * 9;
-        // 4. 아침, 점심, 저녁 별 섭취 정보(오른쪽 페이지) ; 배열로 전달
-        const todayBreakfast = await models.Intake.findAll({
-          where: {
-            id: sessionId,
-            mealtime: "breakfast",
-            createdAt: {
-              [Op.gte]: startOfToday,
-              [Op.lte]: endOfToday,
+          let todayCarbo = 0;
+          let todayProtein = 0;
+          let todayFat = 0;
+          for (let i of todayIntakes) {
+            todayCarbo += i.carbo;
+            todayProtein += i.protein;
+            todayFat += i.fat;
+          }
+          // 3. 섭취 칼로리
+          const todayCal = todayCarbo * 4 + todayProtein * 4 + todayFat * 9;
+          // 4. 아침, 점심, 저녁 별 섭취 정보(오른쪽 페이지) ; 배열로 전달
+          const todayBreakfast = await models.Intake.findAll({
+            where: {
+              id: sessionId,
+              mealtime: "breakfast",
+              createdAt: {
+                [Op.gte]: startOfToday,
+                [Op.lte]: endOfToday,
+              },
+              order: [["createdAt"]],
             },
-            order: [["createdAt"]],
-          },
-        });
-        const todayLunch = await models.Intake.findAll({
-          where: {
-            id: sessionId,
-            mealtime: "lunch",
-            createdAt: {
-              [Op.gte]: startOfToday,
-              [Op.lte]: endOfToday,
+          });
+          const todayLunch = await models.Intake.findAll({
+            where: {
+              id: sessionId,
+              mealtime: "lunch",
+              createdAt: {
+                [Op.gte]: startOfToday,
+                [Op.lte]: endOfToday,
+              },
+              order: [["createdAt"]],
             },
-            order: [["createdAt"]],
-          },
-        });
-        const todayDinner = await models.Intake.findAll({
-          where: {
-            id: sessionId,
-            mealtime: "dinner",
-            createdAt: {
-              [Op.gte]: startOfToday,
-              [Op.lte]: endOfToday,
+          });
+          const todayDinner = await models.Intake.findAll({
+            where: {
+              id: sessionId,
+              mealtime: "dinner",
+              createdAt: {
+                [Op.gte]: startOfToday,
+                [Op.lte]: endOfToday,
+              },
+              order: [["createdAt"]],
             },
-            order: [["createdAt"]],
-          },
-        });
-        const todayBtwmeal = await models.Intake.findAll({
-          where: {
-            id: sessionId,
-            mealtime: "btwmeal",
-            createdAt: {
-              [Op.gte]: startOfToday,
-              [Op.lte]: endOfToday,
+          });
+          const todayBtwmeal = await models.Intake.findAll({
+            where: {
+              id: sessionId,
+              mealtime: "btwmeal",
+              createdAt: {
+                [Op.gte]: startOfToday,
+                [Op.lte]: endOfToday,
+              },
+              order: [["createdAt"]],
             },
-            order: [["createdAt"]],
-          },
-        });
+          });
 
-        // 5. 섭취 비율(그래프)
-        // 날짜별 하루 누적 탄단지 값을 배열로 전달
-        const now = new Date();
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // 이번 달 1일
-        const endOfMonth = new Date(
-          now.getFullYear(),
-          now.getMonth() + 1,
-          0,
-          23,
-          59,
-          59,
-          999
-        ); // 이번 달의 마지막 날을 계산 (다음 달의 첫 번째 날을 기준으로 전날)
-        const monthCumIntake = await models.Intake.findAll({
-          attributes: [
-            [Sequelize.fn("DATE", Sequelize.col("createdAt")), "intakeDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
-            [Sequelize.fn("SUM", Sequelize.col("carbo")), "cumCarbo"], // 각 날짜별 탄수
-            [Sequelize.fn("SUM", Sequelize.col("protein")), "cumProtein"], // 각 날짜별 단백질
-            [Sequelize.fn("SUM", Sequelize.col("fat")), "cumFat"], // 각 날짜별 지방
-          ],
-          where: {
-            createdAt: {
-              [Op.gte]: startOfMonth, // 현재달 1일
-              [Op.lte]: endOfMonth, // 현재달 마지막날
+          // 5. 섭취 비율(그래프)
+          // 날짜별 하루 누적 탄단지 값을 배열로 전달
+          const now = new Date();
+          const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // 이번 달 1일
+          const endOfMonth = new Date(
+            now.getFullYear(),
+            now.getMonth() + 1,
+            0,
+            23,
+            59,
+            59,
+            999
+          ); // 이번 달의 마지막 날을 계산 (다음 달의 첫 번째 날을 기준으로 전날)
+          const monthCumIntake = await models.Intake.findAll({
+            attributes: [
+              [Sequelize.fn("DATE", Sequelize.col("createdAt")), "intakeDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
+              [Sequelize.fn("SUM", Sequelize.col("carbo")), "cumCarbo"], // 각 날짜별 탄수
+              [Sequelize.fn("SUM", Sequelize.col("protein")), "cumProtein"], // 각 날짜별 단백질
+              [Sequelize.fn("SUM", Sequelize.col("fat")), "cumFat"], // 각 날짜별 지방
+            ],
+            where: {
+              createdAt: {
+                [Op.gte]: startOfMonth, // 현재달 1일
+                [Op.lte]: endOfMonth, // 현재달 마지막날
+              },
             },
-          },
-          group: [Sequelize.fn("DATE", Sequelize.col("createdAt"))], // 날짜별로 그룹화
-          order: [[Sequelize.fn("DATE", Sequelize.col("createdAt")), "ASC"]], // 날짜별로 정렬
-        });
+            group: [Sequelize.fn("DATE", Sequelize.col("createdAt"))], // 날짜별로 그룹화
+            order: [[Sequelize.fn("DATE", Sequelize.col("createdAt")), "ASC"]], // 날짜별로 정렬
+          });
 
-        /*
+          /*
         monthCumIntake =
           [
             {
@@ -162,15 +166,15 @@ exports.getUser = async (req, res) => {
             },
           ]
       */
-        // 6. 섭취 정보가 있는 달만 전달
-        const intakeMonth = await models.Intake.findAll({
-          attributes: [
-            [Sequelize.fn("MONTH", Sequelize.col("createdAt")), "intakeMonth"],
-          ],
-          group: [Sequelize.fn("MONTH", Sequelize.col("createdAt"))],
-          order: [[Sequelize.fn("MONTH", Sequelize.col("createdAt")), "ASC"]],
-        });
-        /*
+          // 6. 섭취 정보가 있는 달만 전달
+          const intakeMonth = await models.Intake.findAll({
+            attributes: [
+              [Sequelize.fn("MONTH", Sequelize.col("createdAt")), "intakeMonth"],
+            ],
+            group: [Sequelize.fn("MONTH", Sequelize.col("createdAt"))],
+            order: [[Sequelize.fn("MONTH", Sequelize.col("createdAt")), "ASC"]],
+          });
+          /*
         intakeMonth = 
         [
           { intakeMonth: 1 }, // 1월
@@ -178,26 +182,38 @@ exports.getUser = async (req, res) => {
           { intakeMonth: 3 }, // 3월
         ]
       */
-        // userTodayIntakes 중 todayBreakfast,todayLunch,todayDinner,todayBtwmeal,monthCumIntake, intakeMonth 는 배열로 전달
-        res.render("user", {
-          isSettingGoal: true,
-          username: sessionName,
-          userGoal,
-          userTodayIntakes: {
-            todayCarbo,
-            todayProtein,
-            todayFat,
-            todayBreakfast,
-            todayLunch,
-            todayDinner,
-            todayBtwmeal,
-          },
-          todayCal,
-          monthCumIntake,
-          intakeMonth,
-        });
+          // userTodayIntakes 중 todayBreakfast,todayLunch,todayDinner,todayBtwmeal,monthCumIntake, intakeMonth 는 배열로 전달
+          res.render("user", {
+            isSettingGoal: true,
+            isIntakeData: true,
+            username: sessionName,
+            userGoal,
+            userTodayIntakes: {
+              todayCarbo,
+              todayProtein,
+              todayFat,
+              todayBreakfast,
+              todayLunch,
+              todayDinner,
+              todayBtwmeal,
+            },
+            todayCal,
+            monthCumIntake,
+            intakeMonth,
+          });
+        } else {
+          res.render("user", {
+            isSettingGoal: true,
+            isIntakeData: false,
+            username: sessionName,
+          });
+        }
       } else {
-        res.render("user", { isSettingGoal: false, username: sessionName });
+        res.render("user", {
+          isSettingGoal: false,
+          isIntakeData: false,
+          username: sessionName,
+        });
       }
     } else {
       // 세션 없으면 get 요청으로 /user 못 오게 막기
@@ -210,7 +226,16 @@ exports.getUser = async (req, res) => {
 };
 
 exports.getSetGoal = (req, res) => {
-  res.render("settingGoal");
+  try {
+    if (req.session.user) {
+      res.render("settingGoal");
+    } else {
+      res.redirect("/");
+    }
+  } catch (err) {
+    console.log("Cuser.js getSetGoal : server error", err);
+    res.status(500).send("Cuser.js getSetGoal : server error");
+  }
 };
 
 // 날짜별 섭취 정보
@@ -276,8 +301,7 @@ exports.getDailyIntake = async (req, res) => {
 // 회원 정보 수정 페이지 GET '/user/patch'
 exports.getUserUpdate = (req, res) => {
   res.render("userUpdate");
-  };
-  
+};
 
 // 회원 정보 수정 PATCH '/user/patch'
 exports.patchUser = async (req, res) => {
@@ -330,8 +354,9 @@ exports.deleteUser = async (req, res) => {
 exports.postSetGoal = async (req, res) => {
   // gender value -> "male", "female"
   // activeLevel value -> 1.2 / 1.375 / 1.55 / 1.725
-  // dietGoal value -> "근성장" / "체지방 감량" / "유지"
+  // dietGoal value -> "Gain" / "Lose" / "Stay"
   try {
+    console.log(req.body);
     const { id: sessionId } = req.session.user;
     const { weight, height, age, gender, activeLevel, goalWeight, period, dietGoal } =
       req.body;
@@ -364,6 +389,7 @@ exports.postSetGoal = async (req, res) => {
           recomCarbo: calcedCarbo,
           recomProtein: calcedProtein,
           recomFat: calcedFat,
+          id: sessionId,
         },
         {
           where: {
@@ -388,6 +414,7 @@ exports.postSetGoal = async (req, res) => {
           recomCarbo: calcedCarbo,
           recomProtein: calcedProtein,
           recomFat: calcedFat,
+          id: sessionId,
         },
         {
           where: {
@@ -396,7 +423,8 @@ exports.postSetGoal = async (req, res) => {
         }
       );
     }
-    res.redirect("/user");
+    res.send("목표 설정 완료");
+    // res.redirect("/user");
   } catch (err) {
     console.log("Cuser.js postSetGoal : server error", err);
     res.status(500).send("Cuser.js postSetGoal : server error");
