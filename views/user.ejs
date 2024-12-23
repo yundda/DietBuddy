@@ -15,8 +15,15 @@
         <!-- 왼쪽 섹션 -->
         <section class="left-section">
           <div class="goal-info">
-            <h1><%=username%>님의 목표 달성까지 10일 남았어요~</h1>
-            <p>2024. 12. 20</p>
+            <h1
+              id="goal-message"
+              data-goal-setting-date="<%= isSettingGoal ? userGoal.goalSettingDate : '' %>"
+              data-is-setting-goal="<%= isSettingGoal %>"
+            >
+              <% if (isSettingGoal) { %> <%= username %> 님의 목표 달성까지 --일 남았어요!
+              <% } else { %> <%= username %> 님, 목표를 설정해주세요! <% } %>
+            </h1>
+            <p id="today-date"></p>
             <div class="goal-details">
               <div class="goal-card kcal-card">
                 <div class="calorie-container">
@@ -41,7 +48,9 @@
                 </div>
                 <span class="spaced-text">Weight 71kg</span>
               </div>
-              <button class="btn">목표 설정</button>
+              <form action="/user/settingGoal" method="GET">
+                <button type="submit" class="btn">목표 설정</button>
+              </form>
             </div>
           </div>
 
@@ -153,6 +162,32 @@
 
       if (currentCalorie > maxCalorie * (maxProgress / 100)) {
         indicator.style.background = "red"; // 동그라미 색상 변경
+      }
+
+      const username = "<%= username %>";
+      const goalMessageElement = document.getElementById("goal-message");
+      const isSettingGoal =
+        goalMessageElement.getAttribute("data-is-setting-goal") === "true";
+      const goalSettingDate = goalMessageElement.getAttribute("data-goal-setting-date");
+
+      if (isSettingGoal) {
+        // 목표 날짜가 설정된 경우
+        const today = new Date();
+        const goalDate = new Date(goalSettingDate);
+
+        // D-Day 계산
+        const remainingDays = Math.ceil((goalDate - today) / (1000 * 60 * 60 * 24));
+
+        if (remainingDays > 0) {
+          goalMessageElement.textContent = `${username} 님의 목표 달성까지 ${remainingDays}일 남았어요!`;
+        } else if (remainingDays === 0) {
+          goalMessageElement.textContent = `${username} 님의 목표 달성일이 오늘입니다!`;
+        } else {
+          goalMessageElement.textContent = `${username} 님의 목표 달성일이 지났습니다!`;
+        }
+      } else {
+        // 목표 날짜가 설정되지 않은 경우
+        goalMessageElement.textContent = `${username} 님, 목표를 설정해주세요!`;
       }
     </script>
     <script src="../static/js/graph.js"></script>
