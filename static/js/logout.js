@@ -15,4 +15,3 @@ function user_logout() {
     return false;
   }
 }
-

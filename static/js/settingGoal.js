@@ -19,7 +19,7 @@ function handleSubmit(event) {
   const form = document.forms["goal-form"];
   if (!form) {
     console.error("Form not found!");
-    return;
+    return false;
   }
   const weight = form.weight.value.trim();
   const height = form.height.value.trim();
