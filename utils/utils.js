@@ -21,49 +21,49 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
   if (gender === "male") {
     if (activelevel < 1.6) {
       switch (dietgoal) {
-        case "근성장":
+        case "Gain":
           calc_protein = weight * 2;
           break;
-        case "다이어트":
+        case "Lose":
           calc_protein = weight * 1.8;
           break;
-        case "유지":
+        case "Stay":
           calc_protein = weight * 1.8;
       }
     } else {
       switch (dietgoal) {
-        case "근성장":
+        case "Gain":
           calc_protein = weight * 2.2;
           break;
-        case "다이어트":
+        case "Lose":
           calc_protein = weight * 2.0;
           break;
-        case "유지":
+        case "Stay":
           calc_protein = weight * 1.8;
       }
     }
   } else if (gender === "female") {
     if (activelevel < 1.6) {
       switch (dietgoal) {
-        case "근성장":
+        case "Gain":
           calc_protein = weight * 1.7;
           break;
-        case "다이어트":
+        case "Lose":
           calc_protein = weight * 1.5;
           break;
-        case "유지":
+        case "Stay":
           calc_protein = weight * 1.5;
           break;
       }
     } else {
       switch (dietgoal) {
-        case "근성장":
+        case "Gain":
           calc_protein = weight * 1.8;
           break;
-        case "다이어트":
+        case "Lose":
           calc_protein = weight * 1.65;
           break;
-        case "유지":
+        case "Stay":
           calc_protein = weight * 1.5;
           break;
       }

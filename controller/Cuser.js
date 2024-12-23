@@ -12,6 +12,7 @@ const {
 
 exports.getUser = async (req, res) => {
   try {
+    console.log(req.session.user);
     const { id: sessionId, name: sessionName } = req.session.user;
 
     const startOfToday = new Date();
@@ -39,8 +40,10 @@ exports.getUser = async (req, res) => {
             "recomCarbo",
             "recomProtein",
             "recomFat",
+            [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
           ],
         });
+        userGoal.createdAt;
         // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
         const todayIntakes = await models.Intake.findAll({
           where: {
@@ -195,7 +198,7 @@ exports.getUser = async (req, res) => {
           intakeMonth,
         });
       } else {
-        res.render("user", { isSettingGoal: false, });
+        res.render("user", { isSettingGoal: false,, username: sessionName });
       }
     } else {
       // 세션 없으면 get 요청으로 /user 못 오게 막기
@@ -211,8 +214,11 @@ exports.getSetGoal = (req, res) => {
   res.render("settingGoal");
 };
 
+// 날짜별 섭취 정보
 // exports.getDailyIntake = (req, res) => {
-//   res.render("user");
+//   console.log(req.params)
+
+//   res.send("success");
 // };
 
 // 회원 정보 수정 페이지 GET '/user/patch'
