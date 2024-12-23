@@ -4,7 +4,7 @@ function delete_user() {
   if (ask) {
     axios({
       method: "delete",
-      url: "/deleteUser",
+      url: "user/delete",
     })
       .then((res) => {
         if (res.data.isDelete) {
