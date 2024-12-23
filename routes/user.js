@@ -13,5 +13,6 @@ router.delete("/delete", controller.deleteUser);
 
 router.post("/settingGoal", controller.postSetGoal);
 router.post("/dailyIntake", controller.postIntake);
+router.post("/logout", controller.postLogout);
 
 module.exports = router;
