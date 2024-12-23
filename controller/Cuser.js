@@ -395,7 +395,7 @@ exports.postSetGoal = async (req, res) => {
         }
       );
     }
-    res.send("유저 목표 DB 저장 성공");
+    res.redirect("/user");
   } catch (err) {
     console.log("Cuser.js postSetGoal : server error", err);
     res.status(500).send("Cuser.js postSetGoal : server error");
