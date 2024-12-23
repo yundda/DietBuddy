@@ -31,13 +31,7 @@ function user_update() {
     },
   })
     .then((result) => {
-      if (result.data.success) {
-        alert("회원 정보가 수정되었습니다.");
-        document.location.href = "/user";
-      } else {
-        alert(result.data.msg);
-        console.log("Update failed:", result.data);
-      }
+      console.log(result.data);
     })
     .catch((err) => {
       console.log(err);

@@ -48,7 +48,7 @@ exports.getUser = async (req, res) => {
         });
         console.log("goalSettingDate>>", userGoal.dataValues.goalSettingDate);
         const goalDate = new Date(userGoal.dataValues.goalSettingDate);
-        goalDate.setDate(goalDate.getDate() + 100);
+        goalDate.setDate(goalDate.getDate() + userGoal.dataValues.period);
         if (intake_id) {
           // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
           const todayIntakes = await models.Intake.findAll({
@@ -305,8 +305,22 @@ exports.getDailyIntake = async (req, res) => {
 };
 
 // 회원 정보 수정 페이지 GET '/user/patch'
-exports.getUserUpdate = (req, res) => {
-  res.render("userUpdate");
+exports.getUserUpdate = async (req, res) => {
+  try {
+    const { id: sessionId } = req.session.user;
+    const patchUser = await models.User.findOne({
+      where: { id: sessionId },
+    });
+    console.log(patchUser);
+    res.render("userUpdate", {
+      name: patchUser.dataValues.name,
+      email: patchUser.dataValues.email,
+      findPw: patchUser.dataValues.findPw,
+    });
+  } catch (err) {
+    console.log("Cuser.js getUserUpdate : server error", err);
+    res.status(500).send("Cuser.js getUserUpdate : server error");
+  }
 };
 
 // 회원 정보 수정 PATCH '/user/patch'
