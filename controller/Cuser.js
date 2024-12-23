@@ -463,6 +463,21 @@ exports.postIntake = async (req, res) => {
   }
 };
 
+//로그아웃 controller
+//Cuser.js로 옮겨주세요
+exports.postLogout = (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) throw err;
+
+      res.send({ isOut: true });
+    });
+  } catch (err) {
+    console.log("Cmain.js postLogout : server error", err);
+    res.status(500).send("Cmain.js postLogout : server error");
+  }
+};
+
 // 섭취량 수정
 // 섭취량 삭제
 
