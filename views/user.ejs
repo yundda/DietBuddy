@@ -16,8 +16,8 @@
         <!-- 왼쪽 섹션 -->
         <section class="left-section">
           <div class="goal-info">
-            <h1>~~님의 목표 달성까지 10일 남았어요~</h1>
-            <p>2024. 12. 20</p>
+            <h1 id="goal-message" data-goal-date="<%= userGoal.goalSettingDate %>">
+            <p id="today-date"></p>
             <div class="goal-details">
               <div class="goal-card kcal-card">
                 <div class="calorie-container">
@@ -154,6 +154,30 @@
       if (currentCalorie > maxCalorie * (maxProgress / 100)) {
         indicator.style.background = "red"; // 동그라미 색상 변경
       }
+
+      // 목표 날짜 가져오기
+      const goalMessageElement = document.getElementById("goal-message");
+      const goalDate = new Date(goalMessageElement.getAttribute("data-goal-date"));
+
+      // 오늘 날짜 가져오기
+      const today = new Date();
+
+      // D-Day 계산
+      const remainingDays = Math.ceil((goalDate - today) / (1000 * 60 * 60 * 24));
+
+      // 오늘 날짜 포맷
+      const formattedDate = `${today.getFullYear()}. ${today.getMonth() + 1}. ${today.getDate()}`;
+      document.getElementById("today-date").textContent = formattedDate;
+
+      // D-Day 메시지 업데이트
+      if (remainingDays > 0) {
+        goalMessageElement.textContent = `<%= username %> 님의 목표 달성까지 ${remainingDays}일 남았어요.`;
+      } else if (remainingDays === 0) {
+        goalMessageElement.textContent = `<%= username %> 님의 목표 달성일이 오늘입니다!`;
+      } else {
+        goalMessageElement.textContent = `<%= username %> 님의 목표를 설정해보세요!.`;
+      }
+
     </script>
     <script src="../static/js/graph.js"></script>
   </body>

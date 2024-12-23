@@ -195,7 +195,7 @@ exports.getUser = async (req, res) => {
           intakeMonth,
         });
       } else {
-        res.render("user", { isSettingGoal: false });
+        res.render("user", { isSettingGoal: false, });
       }
     } else {
       // 세션 없으면 get 요청으로 /user 못 오게 막기
