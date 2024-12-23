@@ -33,15 +33,15 @@ function user_goal() {
     }
 
     axios({
-        method: "post",
-        url: "/settingGoal", // 라우터에 맞춘 경로
-        data: data,
+      method: "post",
+      url: "/user/settingGoal", // 라우터에 맞춘 경로
+      data: data,
     })
       .then((result) => {
         if (result.data.isCreate) {
           alert("목표 설정이 완료되었습니다.");
           console.log("Server response:", result.data);
-          document.location.href = "/dashboard";
+          document.location.href = "/user";
         } else {
           alert("목표 설정 실패.");
           console.log("Server response (failure):", result.data);
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   form.addEventListener("submit", (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     console.log("Form submitted!");
     user_goal();
   });
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const buttons = document.querySelectorAll(selector);
     buttons.forEach((button) => {
       button.addEventListener("click", (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         buttons.forEach((btn) => btn.classList.remove("selected"));
         button.classList.add("selected");
         console.log(`Selected button in ${selector}: ${button.textContent}`);
@@ -86,4 +86,3 @@ document.addEventListener("DOMContentLoaded", () => {
   setupSingleSelect(".diet-goal");
   setupSingleSelect(".activity-level");
 });
-

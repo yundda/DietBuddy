@@ -198,7 +198,7 @@ exports.getUser = async (req, res) => {
           intakeMonth,
         });
       } else {
-        res.render("user", { isSettingGoal: false,, username: sessionName });
+        res.render("user", { isSettingGoal: false, username: sessionName });
       }
     } else {
       // 세션 없으면 get 요청으로 /user 못 오게 막기
@@ -343,7 +343,7 @@ exports.postSetGoal = async (req, res) => {
         }
       );
     }
-    res.send("유저 목표 DB 저장 성공");
+    res.redirect("/user");
   } catch (err) {
     console.log("Cuser.js postSetGoal : server error", err);
     res.status(500).send("Cuser.js postSetGoal : server error");
