@@ -30,7 +30,7 @@ function user_signup() {
     return false;
   }
   if (findPw === "") {
-    alert("보안문자를를 입력해 주세요.");
+    alert("보안문자를 입력해 주세요.");
     return false;
   }
   axios({
