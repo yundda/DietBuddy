@@ -20,4 +20,5 @@ function user_new_pw() {
       return false;
     }
   });
+  //비번 찾고 다시 로그인 화면으로!
 }
