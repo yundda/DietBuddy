@@ -20,7 +20,7 @@
               id="height"
               min="0"
               max="300"
-              placeholder="Enter your height here"
+              placeholder="키를 입력해주세요"
               required
             />
 
@@ -32,7 +32,7 @@
               max="600"
               name="weight"
               id="weight"
-              placeholder="Enter your weight here"
+              placeholder="몸무게를 입력해 주세요"
               required
             />
 
@@ -44,7 +44,7 @@
               id="age"
               min="0"
               max="150"
-              placeholder="Enter your age here"
+              placeholder="나이를 입력해주세요"
               required
             />
 
@@ -70,12 +70,19 @@
               min="0"
               max="600"
               id="target-weight"
-              placeholder="Enter your target weight in kg"
+              placeholder="목표 채중을 입력해주세요"
             />
 
             <!--  목표 기간 입력 -->
-            <label>목표 기간</label>
-            <input type="date" name="goal-date" id="goal-date" />
+            <label>목표 기간(일)</label>
+            <input
+              type="number"
+              name="goal-date"
+              id="goal-date"
+              min="1"
+              max="500"
+              placeholder="목표 기간을 일 단위로 입력해주세요요"
+            />
 
             <!-- 식단 목표 -->
             <label>식단 목표</label>
@@ -105,7 +112,9 @@
               </button>
             </div>
             <br /><br />
-            <button type="submit" class="submit-btn">Create my plan</button>
+            <button type="submit" class="submit-btn" onclick="handleSubmit()">
+              Create my plan
+            </button>
           </form>
         </div>
       </section>
