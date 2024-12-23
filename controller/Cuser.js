@@ -187,7 +187,7 @@ exports.getUser = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: true,
             username: sessionName,
-            userGoal,
+            userGoal: userGoal || {},
             userTodayIntakes: {
               todayCarbo,
               todayProtein,
@@ -206,6 +206,7 @@ exports.getUser = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: false,
             username: sessionName,
+            userGoal: userGoal || {},
           });
         }
       } else {
