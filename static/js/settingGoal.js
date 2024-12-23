@@ -17,7 +17,7 @@ function user_goal() {
       height: form.height.value.trim(),
       age: form.age.value.trim(),
       gender: document.querySelector('input[name="gender"]:checked')?.value || null,
-      activeLevel: getSelectedActivityLevel(), // 활동 수준 값 가져오기
+      activeLevel: getSelectedActivityLevel(),
       goalWeight: form["target-weight"].value.trim(),
       period: form["goal-date"].value,
       dietGoal:
@@ -86,3 +86,4 @@ document.addEventListener("DOMContentLoaded", () => {
   setupSingleSelect(".diet-goal");
   setupSingleSelect(".activity-level");
 });
+
