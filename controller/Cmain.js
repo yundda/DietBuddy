@@ -117,17 +117,3 @@ exports.postFindpw = async (req, res) => {
     res.status(500).send("Cmain.js postFindpw : server error");
   }
 };
-
-//로그아웃 controller
-exports.postLogout = (req, res) => {
-  try {
-    req.session.destroy((err) => {
-      if (err) throw err;
-
-      res.send({ isOut: true });
-    });
-  } catch (err) {
-    console.log("Cmain.js postLogout : server error", err);
-    res.status(500).send("Cmain.js postLogout : server error");
-  }
-};

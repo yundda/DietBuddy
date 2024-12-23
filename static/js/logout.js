@@ -4,7 +4,7 @@ function user_logout() {
   if (ask) {
     axios({
       method: "get", //세션 지우는 건데 이걸로 보내는 게 맞나? delete로 보내야 하나?
-      url: "/logout",
+      url: "user/logout",
     }).then((res) => {
       if (res.data.isOut) {
         alert("로그아웃이 완료되었습니다.");
