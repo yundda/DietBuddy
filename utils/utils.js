@@ -24,7 +24,7 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
         case "Gain":
           calc_protein = weight * 2;
           break;
-        case "Lose":
+        case "Loss":
           calc_protein = weight * 1.8;
           break;
         case "Stay":
@@ -35,7 +35,7 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
         case "Gain":
           calc_protein = weight * 2.2;
           break;
-        case "Lose":
+        case "Loss":
           calc_protein = weight * 2.0;
           break;
         case "Stay":
@@ -48,7 +48,7 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
         case "Gain":
           calc_protein = weight * 1.7;
           break;
-        case "Lose":
+        case "Loss":
           calc_protein = weight * 1.5;
           break;
         case "Stay":
@@ -60,7 +60,7 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
         case "Gain":
           calc_protein = weight * 1.8;
           break;
-        case "Lose":
+        case "Loss":
           calc_protein = weight * 1.65;
           break;
         case "Stay":
@@ -74,13 +74,13 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
 utils.calc_carbo = (intake, dietgoal) => {
   let calc_carbo;
   switch (dietgoal) {
-    case "근성장":
+    case "Gain":
       calc_carbo = intake * 0.135;
       break;
-    case "다이어트":
+    case "Loss":
       calc_carbo = intake * 0.125;
       break;
-    case "유지":
+    case "Gain":
       calc_carbo = intake * 0.135;
       break;
   }

@@ -112,7 +112,9 @@
               </button>
             </div>
             <br /><br />
-            <button type="submit" class="submit-btn">목표 설정</button>
+            <button type="button" class="submit-btn" onclick="handleSubmit()">
+              Create my plan
+            </button>
           </form>
         </div>
       </section>
@@ -123,6 +125,6 @@
       </section>
     </main>
     <%-include('partials/footer')%>
-    <script src="../static/js/settingGoal.js" defer></script>
+    <script src="/static/js/settingGoal.js" defer></script>
   </body>
 </html>

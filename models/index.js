@@ -25,7 +25,7 @@ const IntakeModel = require("./Intake")(sequelize, Sequelize);
 UserModel.hasOne(UserGoalModel, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
-  foreignKey: "goal_id",
+  foreignKey: "id",
 });
 UserGoalModel.belongsTo(UserModel, {
   foreignKey: "id",
