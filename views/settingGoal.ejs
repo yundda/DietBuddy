@@ -1,9 +1,121 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>건강 목표 설정</title>
+    <%- include('partials/title', { title: '로그인' })%>
+    <link rel="stylesheet" href="../static/css/settingGoal.css" />
+    <link rel="stylesheet" href="../static/css/base.css" />
   </head>
-  <body></body>
+  <body>
+    <%-include('partials/header')%>
+    <main>
+      <section class="goalsetting-content">
+        <div class="goal-form">
+          <h1>목표 설정</h1>
+          <form name="goal-form">
+            <!-- 키키 입력 -->
+            <label for="height">키(cm)</label>
+            <input
+              type="number"
+              name="height"
+              id="height"
+              min="0"
+              max="300"
+              placeholder="Enter your height here"
+              required
+            />
+
+            <!-- 몸무게 입력력 -->
+            <label for="weight">체중(kg)</label>
+            <input
+              type="number"
+              min="0"
+              max="600"
+              name="weight"
+              id="weight"
+              placeholder="Enter your weight here"
+              required
+            />
+
+            <!-- 나이 입력력 -->
+            <label for="age">나이</label>
+            <input
+              type="number"
+              name="age"
+              id="age"
+              min="0"
+              max="150"
+              placeholder="Enter your age here"
+              required
+            />
+
+            <!-- 성별 입력 -->
+
+            <div class="gender-selection">
+              <label>성별</label>
+              <label for="male">
+                <input type="radio" id="male" name="gender" value="male" />
+                남성
+              </label>
+              <label for="female">
+                <input type="radio" id="female" name="gender" value="female" />
+                여성
+              </label>
+            </div>
+
+            <!--  목표 체중 입력력 -->
+            <label for="target-weight">목표 체중</label>
+            <input
+              type="text"
+              name="target-weight"
+              min="0"
+              max="600"
+              id="target-weight"
+              placeholder="Enter your target weight in kg"
+            />
+
+            <!--  목표 기간 입력 -->
+            <label>목표 기간</label>
+            <input type="date" name="goal-date" id="goal-date" />
+
+            <!-- 식단 목표 -->
+            <label>식단 목표</label>
+
+            <div class="diet-goals">
+              <button type="button" class="diet-goal" value="Loss">체지방 감소</button>
+              <button type="button" class="diet-goal" value="Gain">근육 증가</button>
+              <button type="button" class="diet-goal" value="Stay">유지</button>
+            </div>
+
+            <!-- 활동 수준 -->
+            <label>활동 수준</label>
+
+            <div class="activity-levels">
+              <button type="button" class="activity-level" value="1.2">
+                활동이 적거나 운동하지 않음
+              </button>
+
+              <button type="button" class="activity-level" value="1.375">
+                가벼운 활동
+              </button>
+              <button type="button" class="activity-level" value="1.55">
+                보통의 활동
+              </button>
+              <button type="button" class="activity-level" value="1.725">
+                매우 활발한 활동
+              </button>
+            </div>
+            <br /><br />
+            <button type="submit" class="submit-btn">Create my plan</button>
+          </form>
+        </div>
+      </section>
+      <section>
+        <div class="tea-image">
+          <img src="/static/img/Tea.png" alt="Tea with Lemon" />
+        </div>
+      </section>
+    </main>
+    <%-include('partials/footer')%>
+    <script src="../static/js/settingGoal.js" defer></script>
+  </body>
 </html>

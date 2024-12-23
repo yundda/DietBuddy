@@ -18,6 +18,9 @@ main .content h1 {
   margin-bottom: 20px;
 }
 
+main .content h2 {
+  color: #159428;
+}
 main .content h1 span {
   color: #d9534f;
 }
@@ -25,6 +28,8 @@ main .content h1 span {
 main .content p {
   font-size: 18px;
   margin-bottom: 20px;
+
+  color: rgb(52, 179, 52);
 }
 
 main .content .signin-text {
@@ -38,4 +43,26 @@ main .buttons {
   gap: 10px;
 }
 
+@font-face {
+  font-family: "Tenada";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ChosunGu";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
