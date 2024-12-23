@@ -1,3 +1,4 @@
+
 const calc_BMR = (gender, weight, height, age) => {
   if (gender === "male") {
     return 10 * weight + 6.25 * height - 5 * age + 5;
@@ -56,6 +57,7 @@ function handleSubmit(event) {
     user_goal();
   }
 }
+
 // 데이터 처리 함수
 function user_goal() {
   try {
@@ -101,7 +103,7 @@ function user_goal() {
       .then((result) => {
         if (result.data) {
           alert("목표 설정이 완료되었습니다.");
-          // console.log("Server response:", result.data);
+          console.log("Server response:", result.data);
           document.location.href = "/user";
         } else {
           alert("목표 설정 실패.");
@@ -138,6 +140,7 @@ setupSingleSelect(".activity-level");
 //   return;
 // }
 
+
 // form.addEventListener("submit", (e) => {
 //   e.preventDefault();
 //   console.log("Form submitted!");
@@ -145,5 +148,34 @@ setupSingleSelect(".activity-level");
 // });
 
 // 단일 선택 버튼 로직
+  form.addEventListener("submit", (e) => {
+    //e.preventDefault();
+    console.log("Form submitted!");
+    user_goal();
+  });
+
+  // 버튼 선택 로직
+  const setupSingleSelect = (selector) => {
+    const buttons = document.querySelectorAll(selector);
+    buttons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        //e.preventDefault();
+        buttons.forEach((btn) => btn.classList.remove("selected"));
+        button.classList.add("selected");
+        console.log(`Selected button in ${selector}: ${button.textContent}`);
+      });
+    });
+  };
+  setupSingleSelect(".diet-goal");
+  setupSingleSelect(".activity-level");
+});
+
+// 목표 유효성 검증
+// 함수 불러오기 !!
+// 아래 함수에 인자로 들어가는 변수들 form value로 받기
+
+const calcedBMR = calc_BMR(gender, weight, height, age);
+const calcedAMR = calc_AMR(calcedBMR, activeLevel);
+const calcedIntake = calc_intake(calcedAMR, weight, goalWeight, period);
 
 // });
