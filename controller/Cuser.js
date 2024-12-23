@@ -43,7 +43,6 @@ exports.getUser = async (req, res) => {
             [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
           ],
         });
-        userGoal.createdAt;
         // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
         const todayIntakes = await models.Intake.findAll({
           where: {
@@ -215,11 +214,64 @@ exports.getSetGoal = (req, res) => {
 };
 
 // 날짜별 섭취 정보
-// exports.getDailyIntake = (req, res) => {
-//   console.log(req.params)
-
-//   res.send("success");
-// };
+// GET '/user/:date'
+exports.getDailyIntake = async (req, res) => {
+  console.log(req.params);
+  try {
+    // const startOfDay=new Date(req.params.date)
+    // startOfDay.setHours(0,0,0,0)
+    // const endOfDay=new Date(req.params.date)
+    // endOfDay.setHours(0,0,0,0)
+    const todayBreakfast = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "breakfast",
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
+        },
+        order: [["createdAt"]],
+      },
+    });
+    const todayLunch = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "lunch",
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
+        },
+        order: [["createdAt"]],
+      },
+    });
+    const todayDinner = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "dinner",
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
+        },
+        order: [["createdAt"]],
+      },
+    });
+    const todayBtwmeal = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "btwmeal",
+        createdAt: {
+          [Op.gte]: startOfDay,
+          [Op.lte]: endOfDay,
+        },
+        order: [["createdAt"]],
+      },
+    });
+    res.send("success");
+  } catch (err) {
+    console.log("Cuser.js getDailyIntake : server error", err);
+    res.status(500).send("Cuser.js getDailyIntake : server error");
+  }
+};
 
 // 회원 정보 수정 페이지 GET '/user/patch'
 exports.getUserUpdate = (req, res) => {
