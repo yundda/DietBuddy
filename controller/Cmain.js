@@ -17,7 +17,7 @@ exports.getLogin = (req, res) => {
 //페이지 이름은 임시로 정한 것.
 //나중에 비밀번호 페이지 만들어지면 바꾼다.
 exports.getFindpw = (req, res) => {
-  res.render("userUpdate");
+  res.render("findPw");
 };
 
 //회원가입 controller

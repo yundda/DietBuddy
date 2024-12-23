@@ -15,10 +15,13 @@
           <form class="update-form">
             <!-- 이름 입력 -->
             <label for="name">이름</label>
-            <input type="text" id="name" value="<%=name%>" required />
+
+            <input type="text" id="name" value="<%= name %>" required />
+
             <!-- 이메일 입력 -->
             <label for="email">이메일</label>
-            <input type="email" id="email" placeholder="<%=email%>" required readonly />
+            <input type="email" id="email" value="<%= email %>" required readonly />
+
 
             <label for="password1">새 비밀번호</label>
             <input
@@ -53,11 +56,13 @@
           </form>
         </div>
       </section>
+
       <section>
         <div class="image">
           <img src="/static/img/carbs.png" alt="User Update" />
         </div>
       </section>
+
     </main>
     <%- include('partials/footer') %>
     <script src="/static/js/userUpdate.js"></script>

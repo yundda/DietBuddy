@@ -8,6 +8,7 @@ function user_signup() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const pw = document.getElementById("password").value;
+  const confirmPw = document.getElementById("confirm-password").value;
   const findPw = document.getElementById("security-answer").value;
   const regPw = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
@@ -23,6 +24,10 @@ function user_signup() {
     alert("비밀번호를를 입력해 주세요.");
     return false;
   }
+  if (pw !== confirmPw) {
+    alert("비밀번호가 일치하지 않습니다. 다시 확인해 주세요.");
+    return false;
+  }
   if (!regPw.test(pw)) {
     alert(
       "비밀번호는 영어대소문자와 숫자 중 하나를 포함하고 있는 8자리 이상 20자리 이하 글자여야야 합니다."
@@ -35,7 +40,7 @@ function user_signup() {
   }
   axios({
     method: "post",
-    url: "/doSignup", //임시로 지은 url 이름
+    url: "/doSignup",
     data: {
       name: name,
       email: email,
