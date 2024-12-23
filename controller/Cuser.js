@@ -224,7 +224,8 @@ exports.getSetGoal = (req, res) => {
 // 회원 정보 수정 페이지 GET '/user/patch'
 exports.getUserUpdate = (req, res) => {
   res.render("userUpdate");
-};
+  };
+  
 
 // 회원 정보 수정 PATCH '/user/patch'
 exports.patchUser = async (req, res) => {
