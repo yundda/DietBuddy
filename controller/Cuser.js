@@ -307,17 +307,21 @@ exports.getDailyIntake = async (req, res) => {
 // 회원 정보 수정 페이지 GET '/user/patch'
 exports.getUserUpdate = async (req, res) => {
   try {
-    const { id: sessionId } = req.session.user;
-    const patchUser = await models.User.findOne({
-      where: { id: sessionId },
-    });
-    console.log("patchUser >> ", patchUser);
-    res.render("userUpdate", {
-      name: patchUser.dataValues.name,
-      email: patchUser.dataValues.email,
-      // findPw: patchUser.dataValues.findPw,
-      // findPwQuestion: patchUser.dataValues.findPwQuestion,
-    });
+    if (req.session.user) {
+      const { id: sessionId } = req.session.user;
+      const patchUser = await models.User.findOne({
+        where: { id: sessionId },
+      });
+      console.log("patchUser >> ", patchUser);
+      res.render("userUpdate", {
+        name: patchUser.dataValues.name,
+        email: patchUser.dataValues.email,
+        // findPw: patchUser.dataValues.findPw,
+        // findPwQuestion: patchUser.dataValues.findPwQuestion,
+      });
+    } else {
+      res.redirect("/");
+    }
   } catch (err) {
     console.log("Cuser.js getUserUpdate : server error", err);
     res.status(500).send("Cuser.js getUserUpdate : server error");
@@ -327,34 +331,39 @@ exports.getUserUpdate = async (req, res) => {
 // 회원 정보 수정 PATCH '/user/patch'
 exports.patchUser = async (req, res) => {
   try {
-    const { id: sessionId } = req.session.user;
-    if (req.body.pw) {
-      const { salt, hash } = hashSaltPw(req.body.pw);
-      const patchResult = await models.User.update(
-        {
-          name: req.body.name,
-          pw: hash,
-          salt: salt,
-        },
-        {
-          where: {
-            id: sessionId,
+    if (req.session.user) {
+      const { id: sessionId } = req.session.user;
+      console.log(req.body);
+      if (req.body.pw) {
+        const { salt, hash } = hashSaltPw(req.body.pw);
+        const patchResult = await models.User.update(
+          {
+            name: req.body.name,
+            pw: hash,
+            salt: salt,
           },
-        }
-      );
+          {
+            where: {
+              id: sessionId,
+            },
+          }
+        );
+      } else {
+        const patchResult = await models.User.update(
+          {
+            name: req.body.name,
+          },
+          {
+            where: {
+              id: sessionId,
+            },
+          }
+        );
+      }
+      res.end();
     } else {
-      const patchResult = await models.User.update(
-        {
-          name: req.body.nome,
-        },
-        {
-          where: {
-            id: sessionId,
-          },
-        }
-      );
+      res.redirect("/");
     }
-    res.send("회원 정보 수정 완료");
   } catch (err) {
     console.log("Cuser.js patchUser : server error", err);
     res.status(500).send("Cuser.js patchUser : server error");
