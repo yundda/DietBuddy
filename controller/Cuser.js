@@ -46,6 +46,9 @@ exports.getUser = async (req, res) => {
             [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
           ],
         });
+        console.log("goalSettingDate>>", userGoal.dataValues.goalSettingDate);
+        const goalDate = new Date(userGoal.dataValues.goalSettingDate);
+        goalDate.setDate(goalDate.getDate() + 100);
         if (intake_id) {
           // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
           const todayIntakes = await models.Intake.findAll({
@@ -187,7 +190,8 @@ exports.getUser = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: true,
             username: sessionName,
-            userGoal: userGoal || {},
+            userGoal,
+            goalDate,
             userTodayIntakes: {
               todayCarbo,
               todayProtein,
@@ -206,7 +210,7 @@ exports.getUser = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: false,
             username: sessionName,
-            userGoal: userGoal || {},
+            goalDate: goalDate || {},
           });
         }
       } else {
@@ -214,6 +218,7 @@ exports.getUser = async (req, res) => {
           isSettingGoal: false,
           isIntakeData: false,
           username: sessionName,
+          goalDate: goalDate || {},
         });
       }
     } else {
