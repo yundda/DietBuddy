@@ -1,3 +1,4 @@
+const { calc_BMR, calc_AMR, calc_intake } = require("../utils/utils");
 // 데이터 처리 함수
 function user_goal() {
   try {
@@ -88,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // 목표 유효성 검증
-// 함수 불러오기 !! {calc_BMR,calc_AMR,calc_intake} = require("../utils/utils");
+// 함수 불러오기 !!
 // 아래 함수에 인자로 들어가는 변수들 form value로 받기
 
 const calcedBMR = calc_BMR(gender, weight, height, age);

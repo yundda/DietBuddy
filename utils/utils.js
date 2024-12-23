@@ -13,11 +13,7 @@ utils.calc_AMR = (BMR, activelevel) => {
 };
 
 utils.calc_intake = (AMR, weight, goalWeight, period) => {
-  if (weight >= goalWeight) {
-    return Math.round(AMR - ((weight - goalWeight) * 7000) / period);
-  } else if (weight < goalWeight) {
-    return Math.round(AMR + ((goalWeight - weight) * 7000) / period);
-  }
+  return Math.round(AMR - ((weight - goalWeight) * 7000) / period);
 };
 
 utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
