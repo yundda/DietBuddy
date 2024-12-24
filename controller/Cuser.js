@@ -210,7 +210,7 @@ exports.getUser = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: false,
             username: sessionName,
-            goalDate: goalDate || {},
+            goalDate: goalDate,
           });
         }
       } else {
@@ -218,7 +218,6 @@ exports.getUser = async (req, res) => {
           isSettingGoal: false,
           isIntakeData: false,
           username: sessionName,
-          goalDate: goalDate || {},
         });
       }
     } else {
@@ -506,7 +505,6 @@ exports.postIntake = async (req, res) => {
 };
 
 //로그아웃 controller
-//Cuser.js로 옮겨주세요
 exports.postLogout = (req, res) => {
   try {
     req.session.destroy((err) => {

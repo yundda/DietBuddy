@@ -1,3 +1,4 @@
+-- Active: 1732688622705@@127.0.0.1@3306@dietBuddy
 
 SHOW DATABASES;
 -- 데이터베이스 확인할 때
@@ -22,14 +23,13 @@ FLUSH PRIVILEGES;
 
 SHOW TABLES;
 
--- DROP TABLE user;
-
-DROP Table mealtime;
+DROP TABLE user_goal;
+DROP TABLE intake;
+DROP Table user;
 
 -- 칼럼명 확인
 DESC user;
 DESC user_goal;
-DESC mealtime;
 DESC intake;
 
 -- 테이블 조회
