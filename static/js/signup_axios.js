@@ -4,11 +4,11 @@ function user_signup() {
   //유효성 체크
   //이름, 이메일, 비밀번호, 보안문자를 전부 입력했는지 확인한다.
 
-  // const form = document.forms["signup-form"];
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const pw = document.getElementById("password").value;
   const confirmPw = document.getElementById("confirm-password").value;
+  const pwQuestion = document.getElementById("security-question").value;
   const findPw = document.getElementById("security-answer").value;
   const regPw = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
@@ -34,6 +34,10 @@ function user_signup() {
     );
     return false;
   }
+  if (pwQuestion === "") {
+    alert("질문을 선택해주세요.");
+    return false;
+  }
   if (findPw === "") {
     alert("보안문자를 입력해 주세요.");
     return false;
@@ -45,6 +49,7 @@ function user_signup() {
       name: name,
       email: email,
       pw: pw,
+      pwQuestion: pwQuestion,
       findPw: findPw,
     },
   })

@@ -1,3 +1,4 @@
+
 SHOW DATABASES;
 -- 데이터베이스 확인할 때
 USE mysql;
