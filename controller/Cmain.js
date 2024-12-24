@@ -39,6 +39,7 @@ exports.postSignup = (req, res) => {
         email: req.body.email,
         pw: hashResult.hash,
         name: req.body.name,
+        pwQuestion: req.body.pwQuestion,
         findPw: req.body.findPw,
         salt: hashResult.salt,
       }).then((result) => {
@@ -99,13 +100,12 @@ exports.postFindpw = async (req, res) => {
     const findingPw = await models.User.findOne({
       where: {
         email: req.body.email,
-        // findPw: req.body.findPw,
       },
     });
-    //만일 보안문자 내용이 겹치면 어떻게 하지?
-    //이메일도 같이 보내게 하는 게 좋을 것 같다.
 
-    if (findingPw.findPw === req.body.findPw) {
+    const { pwQuestion, findPw } = findingPw;
+
+    if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
       console.log("회원 존재");
       res.send({ isFind: true, msg: "비밀번호 변경 페이지로 이동" });
     } else {
