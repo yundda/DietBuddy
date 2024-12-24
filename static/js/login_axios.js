@@ -27,8 +27,9 @@ function user_login() {
         console.log("로그인 성공!");
         window.location.href = "/user";
       } else {
-        console.log("로그인 실패!");
+        errorMsg.style.display = "block";
         errorMsg.textContent = "로그인에 실패했습니다.";
+        console.log("로그인 실패!");
       }
     })
     .catch((error) => {

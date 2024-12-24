@@ -84,6 +84,7 @@ exports.postLogin = async (req, res) => {
 
         res.send({ isLogin: true });
       } else {
+        res.send({ isLogin: false });
       }
     } else {
       res.send({ isLogin: false });
