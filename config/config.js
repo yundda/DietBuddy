@@ -6,6 +6,7 @@ const development = {
   database: process.env.DB_DATABASE,
   host: process.env.DB_HOST,
   dialect: "mysql",
+  timezone: "+09:00",
 };
 
 const production = {
@@ -14,6 +15,7 @@ const production = {
   database: process.env.DB_PROD_DATABASE,
   host: process.env.DB_PROD_HOST,
   dialect: "mysql",
+  timezone: "+09:00",
 };
 
 module.exports = { development, production };
