@@ -2,6 +2,7 @@ const originalName = document.getElementById("name").value;
 function isClick() {
   const pw1 = document.getElementById("password1");
   const pw2 = document.getElementById("password2");
+
   if (pw1.value.trim() === "") {
     pw2.placeholder = "새 비밀번호를 먼저 입력해주세요";
     pw2.disabled = true;
@@ -14,13 +15,14 @@ function user_update() {
   const name = document.getElementById("name").value.trim();
   const pw1 = document.getElementById("password1").value.trim();
   const pw2 = document.getElementById("password2").value.trim();
+  const date = new Date().toISOString().split("T")[0];
 
   // const findPw = document.getElementById("security-answer").value;
   const regPw = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
   if (name == originalName && pw1 === "" && pw2 === "") {
     alert("수정 사항이 없습니다.");
-    document.location.href = "/user";
+    document.location.href = `/user/date/${date}`;
     return;
   }
   if (name === "") {
@@ -47,7 +49,7 @@ function user_update() {
   })
     .then(() => {
       alert("수정이 완료되었습니다.");
-      document.location.href = "/user";
+      document.location.href = `/user/date/${date}`;
     })
     .catch((err) => {
       console.log(err);

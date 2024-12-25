@@ -6,11 +6,12 @@ function delete_user() {
   if (ask) {
     axios({
       method: "delete",
-      url: "user/delete",
+      url: "/user/delete",
     })
       .then((res) => {
         if (res.data.isDelete) {
           alert("탈퇴되었습니다.");
+          document.location.href = "/";
         } else {
           alert("탈퇴 실패.");
           return false;

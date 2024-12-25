@@ -128,7 +128,7 @@ function user_goal() {
     .then((result) => {
       if (result.data) {
         alert("목표 설정이 완료되었습니다.");
-        document.location.href = "/user";
+        document.location.href = "/user/mypage";
       } else {
         alert("목표 설정 실패.");
       }
