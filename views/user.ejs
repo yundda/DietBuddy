@@ -70,8 +70,8 @@
             userTodayIntakes.todayCarbo, target: userGoal.recomCarbo }, { type: 'protein',
             name: '단백질', value: userTodayIntakes.todayProtein, target:
             userGoal.recomProtein }, { type: 'fat', name: '지방', value:
-            userTodayIntakes.todayFat, target: userGoal.recomFat } ]; %>
-            <% nutrients.forEach(nutrient => { %>
+            userTodayIntakes.todayFat, target: userGoal.recomFat } ]; %> <%
+            nutrients.forEach(nutrient => { %>
             <div class="nutrition-card">
               <div class="nutrition-icon">
                 <div class="icon-background background-<%= nutrient.type %>">

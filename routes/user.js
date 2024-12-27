@@ -8,6 +8,8 @@ router.get("/mypage/:date?", controller.getUser);
 router.get("/settingGoal", controller.getSetGoal);
 // router.get("/dailyIntake", controller.getDailyIntake);
 router.get("/patch", controller.getUserUpdate);
+router.get("/intake/monthly", controller.getMonthlyIntake);
+router.get("/validMonths", controller.getValidMonths);
 
 router.patch("/patch", controller.patchUser);
 router.delete("/delete", controller.deleteUser);

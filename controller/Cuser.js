@@ -490,3 +490,88 @@ exports.postLogout = (req, res) => {
 //     res.status(500).send("Cuser.js postIntake : server error");
 //   }
 // }
+
+exports.getMonthlyIntake = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect("/");
+    }
+
+    const { id: sessionId } = req.session.user;
+    const { month } = req.query; // 쿼리 파라미터에서 month 가져오기
+
+    // 쿼리 파라미터가 없을 경우 현재 월로 설정
+    const now = new Date();
+    const [year, selectedMonth] = month
+      ? month.split("-")
+      : [now.getFullYear(), now.getMonth() + 1];
+
+    const startOfMonth = new Date(year, selectedMonth - 1, 1); // 선택된 달의 첫날
+    const endOfMonth = new Date(year, selectedMonth, 0); // 선택된 달의 마지막 날
+
+    // 월별 섭취 데이터 조회
+    const monthIntakeData = await models.Intake.findAll({
+      attributes: [
+        [Sequelize.fn("DATE", Sequelize.col("createdAt")), "intakeDate"],
+        [Sequelize.fn("SUM", Sequelize.col("carbo")), "cumCarbo"],
+        [Sequelize.fn("SUM", Sequelize.col("protein")), "cumProtein"],
+        [Sequelize.fn("SUM", Sequelize.col("fat")), "cumFat"],
+      ],
+      where: {
+        id: sessionId,
+        createdAt: {
+          [Op.gte]: startOfMonth,
+          [Op.lte]: endOfMonth,
+        },
+      },
+      group: [Sequelize.fn("DATE", Sequelize.col("createdAt"))],
+      order: [[Sequelize.fn("DATE", Sequelize.col("createdAt")), "ASC"]],
+    });
+
+    // 결과 반환
+    res.json(monthIntakeData.map((data) => data.dataValues));
+  } catch (err) {
+    console.log("Cuser.js getMonthlyIntake : server error", err);
+    res.status(500).send("Cuser.js getMonthlyIntake : server error");
+  }
+};
+
+// 데이터가 있는 달 가져오기
+exports.getValidMonths = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect("/");
+    }
+
+    const { id: sessionId } = req.session.user;
+
+    const validMonths = await models.Intake.findAll({
+      attributes: [
+        [Sequelize.fn("YEAR", Sequelize.col("createdAt")), "year"],
+        [Sequelize.fn("MONTH", Sequelize.col("createdAt")), "month"],
+      ],
+      where: {
+        id: sessionId,
+      },
+      group: [
+        Sequelize.fn("YEAR", Sequelize.col("createdAt")),
+        Sequelize.fn("MONTH", Sequelize.col("createdAt")),
+      ],
+      order: [
+        [Sequelize.fn("YEAR", Sequelize.col("createdAt")), "DESC"],
+        [Sequelize.fn("MONTH", Sequelize.col("createdAt")), "DESC"],
+      ],
+    });
+
+    const months = validMonths.map((entry) => ({
+      year: entry.dataValues.year,
+      month: entry.dataValues.month,
+    }));
+
+    res.json(months);
+  } catch (err) {
+    console.log("Cuser.js getValidMonths : server error", err);
+    res.status(500).send("Cuser.js getValidMonths : server error");
+  }
+};
+
