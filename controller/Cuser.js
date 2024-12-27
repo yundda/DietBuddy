@@ -49,7 +49,11 @@ exports.getUserUpdate = async (req, res) => {
 // 비밀번호 수정 GET '/user/pwUpdate
 exports.getPwUpdate = async (req, res) => {
   try {
-    res.render("pwUpdate");
+    if (!req.session.user) {
+      res.render("pwUpdate");
+    } else {
+      res.redirect("/mypage");
+    }
   } catch (err) {
     console.log("Cuser.js getPwUpdate : server error", err);
     res.status(500).send("Cuser.js getPwUpdate : server error");
