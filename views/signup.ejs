@@ -17,6 +17,8 @@
             <!-- 이름 입력 -->
             <label for="name">이름</label>
             <input type="text" id="name" placeholder="ABC" required />
+            <p style="color: red">※이름은 15자 이하로 입력해주세요.</p>
+            <br />
 
             <!-- 이메일 입력 -->
             <label for="email">이메일</label>
@@ -25,6 +27,11 @@
             <!-- 비밀번호 입력 -->
             <label for="password">비밀번호</label>
             <input type="password" id="password" placeholder="●●●●●●" required />
+            <p style="color: red">
+              ※비밀번호는 영어 대소문자와 숫자를 섞어서 8자리 이상 20자리 이하로
+              설정해주세요.
+            </p>
+            <br />
 
             <label for="password">비밀번호 확인</label>
             <input type="password" id="confirm-password" placeholder="●●●●●●" required />
@@ -50,6 +57,8 @@
               placeholder="답변을 입력하세요"
               required
             />
+            <p style="color: red">※답변은 255자 이내로 해주세요.</p>
+            <br />
 
             <!-- 회원가입 버튼 -->
             <button type="button" onclick="user_signup()">회원가입</button>
