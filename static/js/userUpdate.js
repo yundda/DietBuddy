@@ -48,8 +48,13 @@ function user_update() {
     },
   })
     .then(() => {
-      alert("수정이 완료되었습니다.");
-      document.location.href = `/user/date/${date}`;
+      if (res.data.isSuccess) {
+        alert("수정이 완료되었습니다.");
+        document.location.href = `/mypage`;
+      } else {
+        document.location.href = "/404";
+        return false;
+      }
     })
     .catch((err) => {
       console.log(err);

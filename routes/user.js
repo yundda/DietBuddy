@@ -9,8 +9,10 @@ router.get("/settingGoal", controller.getSetGoal);
 router.get("/patch", controller.getUserUpdate);
 router.get("/intake/monthly", controller.getMonthlyIntake);
 router.get("/validMonths", controller.getValidMonths);
+router.get("/pwUpdate", controller.getPwUpdate);
 
 router.patch("/patch", controller.patchUser);
+router.patch("/patchPw", controller.patchPw);
 router.delete("/delete", controller.deleteUser);
 
 router.post("/settingGoal", controller.postSetGoal);

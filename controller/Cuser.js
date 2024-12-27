@@ -46,42 +46,51 @@ exports.getUserUpdate = async (req, res) => {
     res.status(500).send("Cuser.js getUserUpdate : server error");
   }
 };
+// 비밀번호 수정 GET '/user/pwUpdate
+exports.getPwUpdate = async (req, res) => {
+  try {
+    res.render("pwUpdate");
+  } catch (err) {
+    console.log("Cuser.js getPwUpdate : server error", err);
+    res.status(500).send("Cuser.js getPwUpdate : server error");
+  }
+};
 
 // 회원 정보 수정 PATCH '/user/patch'
 exports.patchUser = async (req, res) => {
   try {
-    if (req.session.user) {
-      const { id: sessionId } = req.session.user;
-      console.log(req.body);
-      if (req.body.pw) {
-        const { salt, hash } = hashSaltPw(req.body.pw);
-        const patchResult = await models.User.update(
-          {
-            name: req.body.name,
-            pw: hash,
-            salt: salt,
+    const { id: sessionId } = req.session.user;
+    console.log(req.body);
+    if (req.body.pw) {
+      const { salt, hash } = hashSaltPw(req.body.pw);
+      const patchResult = await models.User.update(
+        {
+          name: req.body.name,
+          pw: hash,
+          salt: salt,
+        },
+        {
+          where: {
+            id: sessionId,
           },
-          {
-            where: {
-              id: sessionId,
-            },
-          }
-        );
-      } else {
-        const patchResult = await models.User.update(
-          {
-            name: req.body.name,
-          },
-          {
-            where: {
-              id: sessionId,
-            },
-          }
-        );
-      }
-      res.end();
+        }
+      );
     } else {
-      res.redirect("/");
+      const patchResult = await models.User.update(
+        {
+          name: req.body.name,
+        },
+        {
+          where: {
+            id: sessionId,
+          },
+        }
+      );
+    }
+    if (patchResult[0] > 0) {
+      res.send({ isSuccess: true });
+    } else {
+      res.send({ isSuccess: false });
     }
   } catch (err) {
     console.log("Cuser.js patchUser : server error", err);
@@ -89,47 +98,32 @@ exports.patchUser = async (req, res) => {
   }
 };
 
-// 비밀번호 재설정 PATCH '/user/patch'
-// exports.patchPw = async (req, res) => {
-//   try {
-//     if (req.session.user) {
-//       const { id: sessionId } = req.session.user;
-//       console.log(req.body);
-//       if (req.body) {
-//         const { salt, hash } = hashSaltPw(req.body.pw);
-//         const patchResult = await models.User.update(
-//           {
-//             name: req.body.name,
-//             pw: hash,
-//             salt: salt,
-//           },
-//           {
-//             where: {
-//               id: sessionId,
-//             },
-//           }
-//         );
-//       } else {
-//         const patchResult = await models.User.update(
-//           {
-//             name: req.body.name,
-//           },
-//           {
-//             where: {
-//               id: sessionId,
-//             },
-//           }
-//         );
-//       }
-//       res.end();
-//     } else {
-//       res.redirect("/");
-//     }
-//   } catch (err) {
-//     console.log("Cuser.js patchUser : server error", err);
-//     res.status(500).send("Cuser.js patchUser : server error");
-//   }
-// };
+// 비밀번호 재설정 PATCH '/user/patchPw'
+exports.patchPw = async (req, res) => {
+  try {
+    const { id: sessionId } = req.session.user;
+    const { salt, hash } = hashSaltPw(req.body.pw);
+    const patchPwResult = await models.User.update(
+      {
+        pw: hash,
+        salt: salt,
+      },
+      {
+        where: {
+          id: sessionId,
+        },
+      }
+    );
+    if (patchPwResult[0] > 0) {
+      res.send({ isSuccess: true });
+    } else {
+      res.send({ isSuccess: false });
+    }
+  } catch (err) {
+    console.log("Cuser.js patchPw : server error", err);
+    res.status(500).send("Cuser.js patchPw : server error");
+  }
+};
 
 // 회원 탈퇴 DELETE '/user'
 exports.deleteUser = async (req, res) => {
