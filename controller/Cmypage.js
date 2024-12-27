@@ -15,8 +15,6 @@ exports.getMypage = async (req, res) => {
       startOfDate.setHours(0, 0, 0, 0);
       const endOfDate = new Date(date);
       endOfDate.setHours(23, 59, 59, 999);
-      // const startOfDate = new Date(`${date}T00:00:00+09:00`).toISOString(); // KST 기준 0시
-      // const endOfDate = new Date(`${date}T23:59:59+09:00`).toISOString(); // KST 기준 23:59:59
 
       const goal_id = await models.UserGoal.findOne({
         where: { id: sessionId },
@@ -51,7 +49,6 @@ exports.getMypage = async (req, res) => {
             },
           },
         });
-        console.log("intakeData >>>", intakeData);
         if (intakeData) {
           // 2. 하루 누적 탄단지 섭취량 ( / 왼쪽 값)
           /*
@@ -72,7 +69,7 @@ exports.getMypage = async (req, res) => {
           // 3. 섭취 칼로리
           const todayCal = todayCarbo * 4 + todayProtein * 4 + todayFat * 9;
           // 4. 아침, 점심, 저녁 별 섭취 정보(오른쪽 페이지) ; 배열로 전달
-          const todayBreakfast = await models.Intake.findAll({
+          const breakfast = await models.Intake.findAll({
             where: {
               id: sessionId,
               mealtime: "breakfast",
@@ -81,9 +78,10 @@ exports.getMypage = async (req, res) => {
                 [Op.lte]: endOfDate,
               },
             },
-            order: [["createdAt"]],
+            attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+            order: [["createdAt"], ["updatedAt"]],
           });
-          const todayLunch = await models.Intake.findAll({
+          const lunch = await models.Intake.findAll({
             where: {
               id: sessionId,
               mealtime: "lunch",
@@ -92,9 +90,10 @@ exports.getMypage = async (req, res) => {
                 [Op.lte]: endOfDate,
               },
             },
-            order: [["createdAt"]],
+            attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+            order: [["createdAt"], ["updatedAt"]],
           });
-          const todayDinner = await models.Intake.findAll({
+          const dinner = await models.Intake.findAll({
             where: {
               id: sessionId,
               mealtime: "dinner",
@@ -103,9 +102,10 @@ exports.getMypage = async (req, res) => {
                 [Op.lte]: endOfDate,
               },
             },
-            order: [["createdAt"]],
+            attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+            order: [["createdAt"], ["updatedAt"]],
           });
-          const todayBtwmeal = await models.Intake.findAll({
+          const btwmeal = await models.Intake.findAll({
             where: {
               id: sessionId,
               mealtime: "btwmeal",
@@ -114,20 +114,32 @@ exports.getMypage = async (req, res) => {
                 [Op.lte]: endOfDate,
               },
             },
-            order: [["createdAt"]],
+            attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+            order: [["createdAt"], ["updatedAt"]],
           });
-          console.log(
-            "todatIntake >>>",
-            todayCarbo,
-            todayProtein,
-            todayFat,
-            todayCal,
-            todayBreakfast,
-            todayLunch,
-            todayDinner,
-            todayBtwmeal
-          );
-          // userTodayIntakes 중 todayBreakfast,todayLunch,todayDinner,todayBtwmeal,monthCumIntake, intakeMonth 는 배열로 전달
+          console.log("todayIntake >>>", todayCarbo, todayProtein, todayFat, todayCal);
+          const todayBreakfast = [];
+          for (let i of breakfast) {
+            todayBreakfast.push(i.dataValues);
+          }
+          const todayLunch = [];
+          for (let i of lunch) {
+            todayLunch.push(i.dataValues);
+          }
+          const todayDinner = [];
+          for (let i of dinner) {
+            todayDinner.push(i.dataValues);
+          }
+          const todayBtwmeal = [];
+          for (let i of btwmeal) {
+            todayBtwmeal.push(i.dataValues);
+          }
+
+          console.log("todayBreakfast >>>", todayBreakfast);
+          console.log("todayLunch >>>", todayLunch);
+          console.log("todayDinner >>>", todayDinner);
+          console.log("todayBtwmeal >>>", todayBtwmeal);
+          // userTodayIntakes 중 todayBreakfast,todayLunch,todayDinner,todayBtwmeal 배열로 전달
           res.render("user", {
             isSettingGoal: true,
             isIntakeData: true,
@@ -150,7 +162,9 @@ exports.getMypage = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: false,
             username: sessionName,
-            goalDate: goalDate,
+            userGoal,
+            goalDate,
+            userTodayIntakes: {},
           });
         }
       } else {
@@ -158,6 +172,9 @@ exports.getMypage = async (req, res) => {
           isSettingGoal: false,
           isIntakeData: false,
           username: sessionName,
+          userGoal: {},
+          goalDate: {},
+          userTodayIntakes: {},
         });
       }
     } else {
