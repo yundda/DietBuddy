@@ -14,6 +14,9 @@ exports.getLogin = (req, res) => {
   res.render("login");
 };
 exports.getService = (req, res) => {
+  res.render("cServicebefore");
+};
+exports.getUserService = (req, res) => {
   res.render("customerService");
 };
 //비밀번호 찾기 페이지
