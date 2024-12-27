@@ -108,7 +108,7 @@ exports.postFindpw = async (req, res) => {
 
     if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
       console.log("회원 존재");
-      res.send({ isFind: true, msg: "비밀번호 변경 페이지로 이동" });
+      res.send({ isFind: true });
     } else {
       console.log("회원 없음.");
       res.send({ isFind: false, msg: "해당 정보와 일치하는 회원이 존재하지 않습니다." });

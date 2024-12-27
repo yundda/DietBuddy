@@ -30,11 +30,7 @@ function user_new_pw() {
     },
   }).then((res) => {
     if (res.data.isFind) {
-      //아직 미완성
-      //새 비밀번호를 입력하는 모달 창을 띄우거나
-      //페이지로 이동한다
-      alert(res.data.msg);
-      return false;
+      document.location.href = "/user/pwUpdate";
     } else {
       alert(res.data.msg);
       return false;
