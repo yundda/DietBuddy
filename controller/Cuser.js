@@ -246,6 +246,7 @@ exports.postIntake = async (req, res) => {
   // ⭐️ createdAt에 선택 날짜 담아서 보내주기!
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
+    const { id: sessionId } = req.session.user;
     const { mealtime, carbo, protein, fat } = req.body;
     const cal = calc_cal(carbo, protein, fat);
     const timestamp = createdAt ? new Date(createdAt) : new Date();
