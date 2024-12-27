@@ -294,6 +294,7 @@ exports.postLogout = (req, res) => {
 //   }
 // }
 
+// GET /intake/monthly
 exports.getMonthlyIntake = async (req, res) => {
   try {
     if (!req.session.user) {
@@ -340,6 +341,7 @@ exports.getMonthlyIntake = async (req, res) => {
 };
 
 // 데이터가 있는 달 가져오기
+// GET /validMonths
 exports.getValidMonths = async (req, res) => {
   try {
     if (!req.session.user) {
