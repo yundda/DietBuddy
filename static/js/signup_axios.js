@@ -4,16 +4,21 @@ function user_signup() {
   //유효성 체크
   //이름, 이메일, 비밀번호, 보안문자를 전부 입력했는지 확인한다.
 
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const pw = document.getElementById("password").value;
-  const confirmPw = document.getElementById("confirm-password").value;
-  const pwQuestion = document.getElementById("security-question").value;
-  const findPw = document.getElementById("security-answer").value;
+  const name = document.getElementById("name").value.trim();
+  //데이터베이스에서 string(255)로 제한해두고 있어서 이름이 너무 길면 들어가지 않는다.
+  const email = document.getElementById("email").value.trim();
+  const pw = document.getElementById("password").value.trim();
+  const confirmPw = document.getElementById("confirm-password").value.trim();
+  const pwQuestion = document.getElementById("security-question").value.trim();
+  const findPw = document.getElementById("security-answer").value.trim();
   const regPw = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
   if (name === "") {
     alert("이름을 입력해 주세요.");
+    return false;
+  }
+  if (name.length > 15) {
+    alert("이름은 15자 이하로 설정해 주세요.");
     return false;
   }
   if (email === "") {
@@ -40,6 +45,10 @@ function user_signup() {
   }
   if (findPw === "") {
     alert("보안문자를 입력해 주세요.");
+    return false;
+  }
+  if (findPw.length > 255) {
+    alert("질문은은 255자 이하로 답변해주세요.");
     return false;
   }
   axios({
