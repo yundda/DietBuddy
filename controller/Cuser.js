@@ -104,7 +104,7 @@ exports.patchUser = async (req, res) => {
 // 비밀번호 재설정 PATCH '/user/patchPw'
 exports.patchPw = async (req, res) => {
   try {
-    const { id: sessionId } = req.session.user;
+    const { id: sessionId } = req.session.chgPw;
     const { salt, hash } = hashSaltPw(req.body.pw);
     const patchPwResult = await models.User.update(
       {
