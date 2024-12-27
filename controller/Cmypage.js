@@ -189,3 +189,86 @@ exports.getMypage = async (req, res) => {
     res.status(500).send("Cuser.js getUser : server error");
   }
 };
+
+exports.getTodayIntake = async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.redirect("/");
+    }
+    const { id: sessionId, name: sessionName } = req.session.user;
+    const date = req.params.date || new Date().toISOString().split("T")[0]; // 기본값: 오늘 날짜
+    const startOfDate = new Date(date);
+    startOfDate.setHours(0, 0, 0, 0);
+    const endOfDate = new Date(date);
+    endOfDate.setHours(23, 59, 59, 999);
+    const intakeData = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        createdAt: {
+          [Op.gte]: startOfDate, // 0시 이후
+          [Op.lte]: endOfDate, // 23시 59분 이전
+        },
+      },
+    });
+    if (!intakeData) {
+      return res.redirect("/");
+    }
+    const breakfast = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "breakfast",
+        createdAt: {
+          [Op.gte]: startOfDate,
+          [Op.lte]: endOfDate,
+        },
+      },
+      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+      order: [["createdAt"], ["updatedAt"]],
+    });
+    const lunch = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "lunch",
+        createdAt: {
+          [Op.gte]: startOfDate,
+          [Op.lte]: endOfDate,
+        },
+      },
+      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+      order: [["createdAt"], ["updatedAt"]],
+    });
+    const dinner = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "dinner",
+        createdAt: {
+          [Op.gte]: startOfDate,
+          [Op.lte]: endOfDate,
+        },
+      },
+      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+      order: [["createdAt"], ["updatedAt"]],
+    });
+    const btwmeal = await models.Intake.findAll({
+      where: {
+        id: sessionId,
+        mealtime: "btwmeal",
+        createdAt: {
+          [Op.gte]: startOfDate,
+          [Op.lte]: endOfDate,
+        },
+      },
+      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+      order: [["createdAt"], ["updatedAt"]],
+    });
+    res.json([
+      breakfast.map((data) => data.dataValues),
+      lunch.map((data) => data.dataValues),
+      dinner.map((data) => data.dataValues),
+      btwmeal.map((data) => data.dataValues),
+    ]);
+  } catch (err) {
+    console.log("Cuser.js getUser : server error", err);
+    res.status(500).send("Cuser.js getUser : server error");
+  }
+};
