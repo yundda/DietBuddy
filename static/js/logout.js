@@ -7,7 +7,6 @@ function user_logout() {
       url: "user/logout",
     }).then((res) => {
       if (res.data.isOut) {
-        alert("로그아웃이 완료되었습니다.");
         document.location.href = "/";
       }
     });
