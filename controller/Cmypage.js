@@ -141,6 +141,7 @@ exports.getMypage = async (req, res) => {
           console.log("todayBtwmeal >>>", todayBtwmeal);
           // userTodayIntakes 중 todayBreakfast,todayLunch,todayDinner,todayBtwmeal 배열로 전달
           res.render("user", {
+            sessionId,
             isSettingGoal: true,
             isIntakeData: true,
             username: sessionName,
@@ -159,6 +160,7 @@ exports.getMypage = async (req, res) => {
           });
         } else {
           res.render("user", {
+            sessionId: sessionId || {},
             isSettingGoal: true,
             isIntakeData: false,
             username: sessionName,
@@ -169,6 +171,7 @@ exports.getMypage = async (req, res) => {
         }
       } else {
         res.render("user", {
+          sessionId: sessionId || {},
           isSettingGoal: false,
           isIntakeData: false,
           username: sessionName,
