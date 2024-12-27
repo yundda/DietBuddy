@@ -13,7 +13,7 @@ function delete_user() {
           alert("탈퇴되었습니다.");
           document.location.href = "/";
         } else {
-          alert("탈퇴 실패.");
+          document.location.href = "/404";
           return false;
         }
       })
