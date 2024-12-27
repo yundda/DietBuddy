@@ -1,58 +1,115 @@
 main {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10% 0 10%;
-  }
-  .findPw-container {
-    display: flex;
-    width: 100%;
-  }
-  
-  /* 폼 스타일 */
-  .findPw-form {
-    flex: 1;
-    display: flex;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10% 0 10%;
+}
+.findPw-container {
+  display: flex;
+  width: 100%;
+}
+
+/* 폼 스타일 */
+.findPw-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+/* 폼 내부 스타일 */
+.findPw-form h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.findPw-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.findPw-form input,
+.findPw-form select {
+  width: 100%;
+  min-width: 400px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.findPw-form button {
+  width: 100%;
+  background-color: #5ca14b;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+  main {
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding: 30px 5%;
+  }
+
+  .findPw-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .findPw-form {
+    width: 100%;
     padding: 20px;
-    background-color: #ffffff;
   }
-  
-  /* 폼 내부 스타일 */
+
   .findPw-form h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 24px;
   }
-  
-  .findPw-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
+
   .findPw-form input,
   .findPw-form select {
-    width: 100%;
-    min-width: 400px;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    font-size: 14px;
+    max-width: 100%; /* 전체 너비로 확장 */
   }
-  
+
   .findPw-form button {
-    width: 100%;
-    background-color: #5ca14b;
-    color: #fff;
-    border: none;
+    font-size: 14px;
     padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
   }
-  
-  
-  
+}
+
+/* 휴대폰 (768px 이하) */
+@media screen and (max-width: 768px) {
+  main {
+    padding: 15px;
+  }
+
+  .findPw-form {
+    padding: 8px;
+    box-shadow: none;
+  }
+
+  .findPw-form h1 {
+    font-size: 15px;
+  }
+
+  .findPw-form input,
+  .findPw-form select {
+    font-size: 10px;
+    padding: 5px;
+  }
+
+  .findPw-form button {
+    font-size: 10px;
+    padding: 8px;
+  }
+}

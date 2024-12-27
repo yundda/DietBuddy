@@ -5,13 +5,14 @@
       <img src="/static/img/logo.png" alt="logo" class="logo-img" />
     </a>
   </div>
-  <nav>
+  <nav class="navbar">
     <a href="#" class="font-navbar" onclick="user_logout()">로그아웃</a>
     <a href="/user/patch" class="font-navbar">회원정보수정</a>
     <a href="#" class="font-navbar" onclick="delete_user()">회원탈퇴</a>
-    <a href="#" class="font-navbar">고객센터</a>
+    <a href="/customerservice" class="font-navbar">고객센터</a>
   </nav>
-
+  <button class="hamburger" aria-label="Toggle navigation">☰</button>
   <script src="/static/js/logout.js"></script>
   <script src="/static/js/userDelete.js"></script>
+  <script src="/static/js/navbar.js"></script>
 </header>

@@ -13,6 +13,9 @@ exports.getSignup = (req, res) => {
 exports.getLogin = (req, res) => {
   res.render("login");
 };
+exports.getService = (req, res) => {
+  res.render("customerService");
+};
 //비밀번호 찾기 페이지
 //페이지 이름은 임시로 정한 것.
 //나중에 비밀번호 페이지 만들어지면 바꾼다.

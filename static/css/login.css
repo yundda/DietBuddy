@@ -76,3 +76,48 @@ main {
   font-weight: normal;
   font-style: normal;
 }
+
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .login-content {
+    max-width: 90%;
+    margin: 20px 0;
+  }
+
+  .input-group input {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 24px;
+  }
+
+  .input-group label {
+    font-size: 14px;
+  }
+
+  .input-group input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .input-group .forgot-password {
+    font-size: 12px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .signup-text {
+    font-size: 12px;
+  }
+}

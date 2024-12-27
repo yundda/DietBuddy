@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('partials/title', { title: '고객센터' })%>
+    <link rel="stylesheet" href="../static/css/base.css" />
+    <link rel="stylesheet" href="../static/css/customerservice.css" />
+  </head>
+  <body>
+    <%-include('partials/userHeader')%>
+    <h1>DIET BUDDY 고객센터</h1>
+    <div>
+      <a href="mailto:dietbuddy@sesac.com?subject=문의사항" class="email-button"
+        >✉️이메일 보내기
+      </a>
+    </div>
+    <div class="team-container">
+      <div class="team-member">
+        <img src="../static/img/111.jpg" />
+        <h3>윤다선</h3>
+        <p>010-XXXX-XXXX</p>
+      </div>
+      <div class="team-member">
+        <img src="../static/img/222.jpg" />
+        <h3>심소영</h3>
+        <p>010-XXXX-XXXX</p>
+      </div>
+      <div class="team-member">
+        <img src="../static/img/333.jpg" />
+        <h3>이혜민</h3>
+        <p>010-XXXX-XXXX</p>
+      </div>
+      <div class="team-member">
+        <img src="../static/img/444.jpg" />
+        <h3>아미나</h3>
+        <p>010-XXXX-XXXX</p>
+      </div>
+    </div>
+    <p>이메일 주소 : dietbuddy@sesac.com</p>
+    <%-include('partials/footer')%>
+  </body>
+</html>
