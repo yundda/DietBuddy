@@ -7,6 +7,7 @@ const {
   calc_carbo,
   calc_protein,
   calc_fat,
+  calc_cal,
   hashSaltPw,
 } = require("../utils/utils");
 
@@ -245,15 +246,16 @@ exports.postIntake = async (req, res) => {
   // ⭐️ createdAt에 선택 날짜 담아서 보내주기!
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
-    const { mealtime, carbo, protein, fat, fiber } = req.body;
+    const { mealtime, carbo, protein, fat } = req.body;
+    const cal = calc_cal(carbo, protein, fat);
     const timestamp = createdAt ? new Date(createdAt) : new Date();
     const intakeResult = await models.Intake.create(
       {
-        mealtime: mealtime,
-        carbo: carbo,
-        protein: protein,
-        fat: fat,
-        fiber: fiber,
+        mealtime,
+        carbo,
+        protein,
+        fat,
+        cal,
         createdAt: timestamp,
         id: sessionId,
       },
@@ -275,7 +277,6 @@ exports.postLogout = (req, res) => {
   try {
     req.session.destroy((err) => {
       if (err) throw err;
-
       res.send({ isOut: true });
     });
   } catch (err) {

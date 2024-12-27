@@ -13,13 +13,17 @@ const Intake = (sequelize, DataTypes) => {
       },
       carbo: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       protein: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       fat: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      cal: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
