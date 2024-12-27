@@ -1,13 +1,13 @@
-const originalName = document.getElementById("name").value;
 function isClick() {
   const pw1 = document.getElementById("password1");
   const pw2 = document.getElementById("password2");
-
+  const caution = document.getElementById("caution");
+  console.log(pw1, pw2, caution);
   if (pw1.value.trim() === "") {
-    pw2.placeholder = "새 비밀번호를 먼저 입력해주세요";
+    caution.innerText = "※새 비밀번호를 먼저 입력해주세요.";
     pw2.disabled = true;
   } else {
-    pw2.placeholder = "비밀번호를 동일하게 입력해주세요";
+    caution.innerText = "";
     pw2.disabled = false;
   }
 }
@@ -36,7 +36,7 @@ function pw_update() {
   })
     .then(() => {
       alert("수정이 완료되었습니다.");
-      document.location.href = `/user/date/${date}`;
+      document.location.href = `/mypage`;
     })
     .catch((err) => {
       console.log(err);

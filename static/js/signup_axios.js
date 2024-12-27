@@ -1,5 +1,16 @@
 console.log("signup axios 정상작동");
-
+function isClick() {
+  const pw = document.getElementById("password");
+  const confirmPw = document.getElementById("confirm-password");
+  const caution = document.getElementById("caution");
+  if (pw.value.trim() === "") {
+    caution.innerText = "※새 비밀번호를 먼저 입력해주세요.";
+    confirmPw.disabled = true;
+  } else {
+    caution.innerText = "";
+    confirmPw.disabled = false;
+  }
+}
 function user_signup() {
   //유효성 체크
   //이름, 이메일, 비밀번호, 보안문자를 전부 입력했는지 확인한다.
