@@ -73,7 +73,7 @@
 }
 .weight-labels span {
   position: relative;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .goal-card:last-child {
@@ -229,7 +229,7 @@
 }
 
 .calorie-container {
-  margin-bottom: 10px; /* 바와 텍스트 간 간격 */
+  margin-bottom: 10px;
 }
 
 .calorie-bar {
@@ -272,4 +272,210 @@
 .spaced-text {
   word-spacing: 6em;
   font-size: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.add-meal-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 모달 전체 컨테이너 (백그라운드) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 콘텐츠 */
+.meal-modal {
+  background-color: #ffffff;
+  border-radius: 15px;
+  width: 450px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 모달 제목 */
+.meal-modal h2 {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* 식사 종류 버튼 그룹 */
+.meal-type-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.meal-type-group button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: white;
+  background-color: #5cb85c;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.meal-type-group button:hover {
+  background-color: #4cae4c;
+  transform: scale(1.05);
+}
+
+.meal-type-group button:focus {
+  outline: none;
+  background-color: #358335;
+  box-shadow: 0 0 0 4px rgba(92, 184, 92, 0.5);
+}
+
+/* 입력 필드 */
+.meal-modal input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.meal-modal input[type="text"]:focus {
+  border-color: #5cb85c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+}
+
+/* 입력 필드 라벨 */
+.meal-modal label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* 버튼 컨테이너 */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-group button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modal-submit {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-submit:hover {
+  background-color: #4cae4c;
+}
+
+.modal-cancel {
+  background-color: #d9534f;
+  color: white;
+}
+
+.modal-cancel:hover {
+  background-color: #c9302c;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.date-scroll {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.date-list {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.date-list button {
+  padding: 10px;
+  margin: 0 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffe0e5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.date-list button.active {
+  background-color: #ec90a1;
+  font-weight: bold;
+}
+
+.date-list button:hover {
+  background-color: #ffb3c1;
+}
+
+.meal-info {
+  margin-top: 20px;
 }

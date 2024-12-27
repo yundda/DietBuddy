@@ -203,6 +203,7 @@ exports.getUser = async (req, res) => {
             isSettingGoal: true,
             isIntakeData: true,
             username: sessionName,
+            sessionId: sessionId,
             userGoal,
             goalDate,
             userTodayIntakes: {
@@ -438,23 +439,24 @@ exports.postIntake = async (req, res) => {
   // ⭐️ createdAt에 선택 날짜 담아서 보내주기!
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
-    const { mealtime, carbo, protein, fat, fiber } = req.body;
-    const timestamp = createdAt ? new Date(createdAt) : new Date();
+    const { id, mealtime, carbo, protein, fat, fiber } = req.body;
+    const timestamp = new Date();
+
     const intakeResult = await models.Intake.create(
       {
+        id,
         mealtime: mealtime,
         carbo: carbo,
         protein: protein,
         fat: fat,
         fiber: fiber,
         createdAt: timestamp,
-        id: sessionId,
-      },
-      {
-        where: {
-          id: sessionId,
-        },
       }
+      // {
+      //   where: {
+      //     id: sessionId,
+      //   },
+      // }
     );
     res.send("유저 섭취량 DB 저장 성공");
   } catch (err) {
@@ -574,4 +576,3 @@ exports.getValidMonths = async (req, res) => {
     res.status(500).send("Cuser.js getValidMonths : server error");
   }
 };
-
