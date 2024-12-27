@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "omyu_pretty";
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -15,13 +15,6 @@ main {
   font-family: "omyu_pretty";
 }
 /* Header 스타일 */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  background-color: #e8f7e2;
-}
 
 header .logo {
   font-size: 28px;
@@ -46,6 +39,66 @@ header nav a:first-child {
   margin-left: 0;
 }
 
+/* 공통 스타일 */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #e8f7e2;
+  position: relative;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+}
+
+/* 햄버거 버튼 스타일 */
+.hamburger {
+  display: none; /* 기본적으로 숨김 */
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* 반응형 설정 */
+@media (max-width: 768px) {
+  .navbar {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: #e8f7e2;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    gap: 15px;
+  }
+
+  .navbar.show {
+    display: flex; /* 햄버거 버튼 클릭 시 표시 */
+  }
+
+  .hamburger {
+    display: block; /* 모바일 화면에서 표시 */
+  }
+}
+
 .logo-img {
   width: 100px;
   height: auto;
@@ -58,7 +111,7 @@ footer {
   padding: 20px 10%;
   background-color: #e8f7e2;
   color: #666;
-  font-family: Tenada, sans-serif;
+  font-family: "Tenada", sans-serif;
   font-size: small;
 }
 
@@ -97,11 +150,86 @@ footer {
   color: #ffffff;
 }
 
-/* 이미지 스타일 */
 .image img {
   width: 100%;
   max-width: 400px;
   height: auto;
+}
+
+.infModal {
+  display: none; /* 기본적으로 숨김 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* 어두운 배경 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.infModal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 600px; /* 모달 최대 너비 */
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* 제목 스타일 */
+.infModal-content h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+/* 본문 텍스트 */
+.infModal-content p {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* 강조 텍스트 */
+.infModal-content strong {
+  color: #683002;
+  font-weight: bold;
+}
+
+/* 닫기 버튼 */
+.infModal-content button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #4a401e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.infModal-content button:hover {
+  background-color: #00b321;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @font-face {
@@ -113,7 +241,7 @@ footer {
 }
 
 .font-navbar {
-  font-family: Tenada, sans-serif;
+  font-family: "Tenada", sans-serif;
   color: #5ca14b;
 }
 
@@ -124,4 +252,3 @@ footer {
   font-weight: normal;
   font-style: normal;
 }
-

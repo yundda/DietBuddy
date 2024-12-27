@@ -90,14 +90,8 @@ utils.calc_fat = (intake, carbo, protein) => {
   return Math.round((intake - (carbo + protein) * 4) / 9);
 };
 
-utils.ratio_carbo = (carbo, intake) => {
-  return Math.round(((carbo * 4) / intake) * 100);
-};
-utils.ratio_protein = (protein, intake) => {
-  return Math.round(((protein * 4) / intake) * 100);
-};
-utils.ratio_fat = (fat, intake) => {
-  return Math.round(((fat * 9) / intake) * 100);
+utils.calc_cal = (carbo, protein, fat) => {
+  return (carbo + protein) * 4 + fat * 9;
 };
 
 //비밀번호 암호화 함수

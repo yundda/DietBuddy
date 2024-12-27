@@ -3,8 +3,9 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10% 0 10%;
+  padding: 0 10%;
 }
+
 .update-content {
   display: flex;
   width: 100%;
@@ -36,7 +37,7 @@ main {
 .update-form input,
 .update-form select {
   width: 100%;
-  min-width: 400px;
+  min-width: 400px; /* 기본 최소 크기 */
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -52,4 +53,73 @@ main {
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 5%;
+  }
+
+  .goalsetting-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .goal-form {
+    width: 100%;
+    padding: 20px;
+    margin-right: 0;
+  }
+
+  .goal-form h1 {
+    font-size: 2.5rem;
+  }
+
+  .goal-form input,
+  .goal-form button {
+    font-size: 1rem;
+  }
+
+  .tea-image {
+    flex: 0 0 auto;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .tea-image img {
+    max-width: 90%;
+  }
+}
+
+/* 휴대폰 (768px 이하) */
+@media screen and (max-width: 768px) {
+  main {
+    padding: 20px;
+  }
+
+  .goal-form {
+    padding: 15px;
+  }
+
+  .goal-form h1 {
+    font-size: 2rem;
+  }
+
+  .goal-form input,
+  .goal-form button {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .submit-btn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .tea-image img {
+    max-width: 100%;
+  }
 }

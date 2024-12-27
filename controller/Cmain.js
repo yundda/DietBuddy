@@ -13,6 +13,9 @@ exports.getSignup = (req, res) => {
 exports.getLogin = (req, res) => {
   res.render("login");
 };
+exports.getService = (req, res) => {
+  res.render("customerService");
+};
 //비밀번호 찾기 페이지
 //페이지 이름은 임시로 정한 것.
 //나중에 비밀번호 페이지 만들어지면 바꾼다.
@@ -69,25 +72,25 @@ exports.postLogin = async (req, res) => {
       },
     });
     //DB에 저장된 해시랑 솔트 값.
-    const { pw: DBhash, salt: DBsalt } = findUser;
+
+    console.log("findUser 시작");
+    console.log(findUser);
 
     if (findUser) {
+      const { pw: DBhash, salt: DBsalt } = findUser;
       if (checkPw(req.body.pw, DBsalt, DBhash)) {
         req.session.user = {
           id: findUser.id,
           name: findUser.name,
           email: findUser.email,
         };
-        // console.log("세션 저장 확인");
-        // console.log(req.session.user);
-        //세션이 잘 저장되었는지 확인.
 
         res.send({ isLogin: true });
-      } else {
-        res.send({ isLogin: false });
+      } else if (!checkPw(req.body.pw, DBsalt, DBhash)) {
+        res.send({ isLogin: false, msg: "비밀번호가 틀렸습니다." });
       }
-    } else {
-      res.send({ isLogin: false });
+    } else if (findUser === null) {
+      res.send({ isLogin: false, msg: "존재하지 않는 이메일입니다." });
     }
   } catch (err) {
     console.log("Cmain.js postLogin : server error", err);
@@ -108,7 +111,7 @@ exports.postFindpw = async (req, res) => {
 
     if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
       console.log("회원 존재");
-      res.send({ isFind: true, msg: "비밀번호 변경 페이지로 이동" });
+      res.send({ isFind: true });
     } else {
       console.log("회원 없음.");
       res.send({ isFind: false, msg: "해당 정보와 일치하는 회원이 존재하지 않습니다." });

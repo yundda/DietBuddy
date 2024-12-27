@@ -76,3 +76,49 @@ main {
   align-items: center;
   background-color: #e8f7e2;
 }
+
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .signup-container {
+    flex-direction: column;
+  }
+
+  .signup-form {
+    width: 100%;
+    padding: 20px 10px;
+  }
+
+  .signup-form input,
+  .signup-form select {
+    min-width: auto;
+  }
+
+  .image {
+    width: 100%;
+    height: 200px;
+    background-color: #e8f7e2;
+  }
+}
+
+@media (max-width: 768px) {
+  .signup-form {
+    padding: 10px;
+  }
+
+  .signup-form input,
+  .signup-form select {
+    width: 100%;
+  }
+
+  .signup-form button {
+    width: 100%;
+  }
+
+  .image {
+    display: none;
+  }
+}
