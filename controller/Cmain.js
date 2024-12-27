@@ -69,25 +69,25 @@ exports.postLogin = async (req, res) => {
       },
     });
     //DB에 저장된 해시랑 솔트 값.
-    const { pw: DBhash, salt: DBsalt } = findUser;
+
+    console.log("findUser 시작");
+    console.log(findUser);
 
     if (findUser) {
+      const { pw: DBhash, salt: DBsalt } = findUser;
       if (checkPw(req.body.pw, DBsalt, DBhash)) {
         req.session.user = {
           id: findUser.id,
           name: findUser.name,
           email: findUser.email,
         };
-        // console.log("세션 저장 확인");
-        // console.log(req.session.user);
-        //세션이 잘 저장되었는지 확인.
 
         res.send({ isLogin: true });
-      } else {
-        res.send({ isLogin: false });
+      } else if (!checkPw(req.body.pw, DBsalt, DBhash)) {
+        res.send({ isLogin: false, msg: "비밀번호가 틀렸습니다." });
       }
-    } else {
-      res.send({ isLogin: false });
+    } else if (findUser === null) {
+      res.send({ isLogin: false, msg: "존재하지 않는 이메일입니다." });
     }
   } catch (err) {
     console.log("Cmain.js postLogin : server error", err);
