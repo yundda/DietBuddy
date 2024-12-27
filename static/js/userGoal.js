@@ -163,7 +163,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const carbohydrate = document.getElementById("carbohydrate").value.trim();
     const protein = document.getElementById("protein").value.trim();
     const fat = document.getElementById("fat").value.trim();
-    const fiber = document.getElementById("fiber").value.trim();
 
     // 유효성 검사
     if (!selectedMealType) {
@@ -198,7 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
         carbo: parseFloat(carbohydrate),
         protein: parseFloat(protein),
         fat: parseFloat(fat),
-        fiber: parseFloat(fiber),
       }),
     })
       .then((response) => {
@@ -262,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 식단 데이터 가져오기
   const fetchMealData = (selectedDate) => {
-    fetch(`/user/intake?date=${selectedDate}`)
+    fetch(`/mypage/?date=${selectedDate}`)
       .then((response) => response.json())
       .then((data) => {
         renderMealInfo(data);
