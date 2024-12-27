@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
         monthSelect.appendChild(option);
       });
 
-      // 첫 번째 유효한 달 데이터 렌더링
       if (validMonths.length > 0) {
         const initialMonth = `${validMonths[0].year}-${String(
           validMonths[0].month
