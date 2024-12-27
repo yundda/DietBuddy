@@ -31,7 +31,7 @@ header .logo span {
 header nav a {
   margin-left: 20px;
   text-decoration: none;
-  color: #333;
+  color: #5ca14b;
   font-size: 16px;
 }
 
@@ -39,7 +39,6 @@ header nav a:first-child {
   margin-left: 0;
 }
 
-/* 공통 스타일 */
 header {
   display: flex;
   justify-content: space-between;
@@ -62,20 +61,18 @@ header {
 
 .navbar a {
   text-decoration: none;
-  color: #333;
+  color: #5ca14b;
   font-size: 16px;
 }
 
-/* 햄버거 버튼 스타일 */
 .hamburger {
-  display: none; /* 기본적으로 숨김 */
+  display: none;
   font-size: 24px;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-/* 반응형 설정 */
 @media (max-width: 768px) {
   .navbar {
     display: none; /* 기본적으로 숨김 */
@@ -105,12 +102,12 @@ header {
   max-height: 100px;
 }
 
-/* Footer 스타일 */
 footer {
+  margin-top: auto;
   text-align: center;
   padding: 20px 10%;
   background-color: #e8f7e2;
-  color: #666;
+  color: #5ca14b;
   font-family: "Tenada", sans-serif;
   font-size: small;
 }
@@ -121,11 +118,10 @@ footer {
 
 .footer-links a {
   text-decoration: none;
-  color: #666;
+  color: #5ca14b;
   margin: 0 10px;
 }
 
-/* 버튼 스타일 */
 .btn {
   padding: 10px 20px;
   border: 2px solid #5ca14b;
@@ -157,30 +153,30 @@ footer {
 }
 
 .infModal {
-  display: none; /* 기본적으로 숨김 */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* 어두운 배경 */
+  background-color: rgba(0, 0, 0, 0.7);
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
 .infModal-content {
-  background: #fff;
+  background-color: rgb(255, 255, 255);
   padding: 30px;
   border-radius: 15px;
   width: 80%;
-  max-width: 600px; /* 모달 최대 너비 */
+  max-width: 600px;
   text-align: left;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
+  color: #fff;
 }
 
-/* 제목 스타일 */
 .infModal-content h2 {
   font-size: 1.8em;
   margin-bottom: 15px;
@@ -188,7 +184,6 @@ footer {
   text-align: center;
 }
 
-/* 본문 텍스트 */
 .infModal-content p {
   font-size: 1em;
   line-height: 1.6;
@@ -196,14 +191,21 @@ footer {
   margin-bottom: 15px;
   text-align: center;
 }
-
-/* 강조 텍스트 */
+.infModal-content li {
+  color: #4a401e;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.infModal-content h3 {
+  color: #4a401e;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
 .infModal-content strong {
-  color: #683002;
+  color: #e79a4e;
   font-weight: bold;
 }
 
-/* 닫기 버튼 */
 .infModal-content button {
   display: block;
   margin: 20px auto 0;

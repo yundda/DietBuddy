@@ -248,24 +248,18 @@ exports.postIntake = async (req, res) => {
   try {
     const { id: sessionId } = req.session.user;
     const { mealtime, carbo, protein, fat } = req.body;
+
     const cal = calc_cal(carbo, protein, fat);
-    const timestamp = createdAt ? new Date(createdAt) : new Date();
-    const intakeResult = await models.Intake.create(
-      {
-        mealtime,
-        carbo,
-        protein,
-        fat,
-        cal,
-        createdAt: timestamp,
-        id: sessionId,
-      },
-      {
-        where: {
-          id: sessionId,
-        },
-      }
-    );
+    const intakeResult = await models.Intake.create({
+      id,
+      mealtime,
+      carbo,
+      protein,
+      fat,
+      fiber,
+      cal,
+      createdAt: timestamp,
+    });
     res.send("유저 섭취량 DB 저장 성공");
   } catch (err) {
     console.log("Cuser.js postIntake : server error", err);
