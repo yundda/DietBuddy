@@ -19,13 +19,18 @@
               id="goal-message"
               data-goal-setting-date="<%= isSettingGoal ? goalDate : '' %>"
               data-is-setting-goal="<%= isSettingGoal %>"
+              data-username="<%= username %>"
             >
               <% if (isSettingGoal) { %> <%= username %> 님의 목표 달성까지 --일 남았어요!
               <% } else { %> <%= username %> 님, 목표를 설정해주세요! <% } %>
             </h1>
             <p id="today-date"></p>
             <div class="goal-details">
-              <div class="goal-card kcal-card">
+              <div
+                class="goal-card kcal-card"
+                data-current-calorie="<%= isSettingGoal && userTodayIntakes.todayCal ? userTodayIntakes.todayCal : 0 %>"
+                data-max-calorie="<%= isSettingGoal && userGoal.recomIntake ? userGoal.recomIntake : 0 %>"
+              >
                 <div class="calorie-container">
                   <div class="calorie-bar">
                     <div class="calorie-progress"></div>
@@ -33,20 +38,26 @@
                   </div>
                   <div class="calorie-labels"></div>
                 </div>
-                <span class="spaced-text">권장섭취량 1500kcal</span>
+                <span class="spaced-text">
+                  권장섭취량 <% if (isSettingGoal && userGoal.recomIntake) { %> <%=
+                  userGoal.recomIntake %>kcal <% } else { %> -- kcal <% } %>
+                </span>
               </div>
-              <div class="goal-card weight-card">
+              <div
+                class="goal-card weight-card"
+                data-current-weight="<%= isSettingGoal && userGoal.weight ? userGoal.weight : 0 %>"
+                data-target-weight="<%= isSettingGoal && userGoal.goalWeight ? userGoal.goalWeight : 0 %>"
+              >
                 <div class="weight-container">
                   <div class="weight-bar">
                     <div class="weight-indicator"></div>
                   </div>
-                  <div class="weight-labels">
-                    <span>60</span>
-                    <span>70</span>
-                    <span>80</span>
-                  </div>
+                  <div class="weight-labels"></div>
                 </div>
-                <span class="spaced-text">Weight 71kg</span>
+                <span class="spaced-text">
+                  몸무게 <% if (isSettingGoal && userGoal.weight) { %> <%= userGoal.weight
+                  %>kg <% } else { %> -- kg <% } %>
+                </span>
               </div>
               <form action="/user/settingGoal" method="GET">
                 <button type="submit" class="btn">목표 설정</button>
@@ -55,41 +66,35 @@
           </div>
 
           <div class="nutrition-section">
+            <% const nutrients = [ { type: 'carbs', name: '탄수화물', value:
+            userTodayIntakes.todayCarbo, target: userGoal.recomCarbo }, { type: 'protein',
+            name: '단백질', value: userTodayIntakes.todayProtein, target:
+            userGoal.recomProtein }, { type: 'fat', name: '지방', value:
+            userTodayIntakes.todayFat, target: userGoal.recomFat } ]; %>
+            <% nutrients.forEach(nutrient => { %>
             <div class="nutrition-card">
               <div class="nutrition-icon">
-                <div class="icon-background background-carbs">
-                  <img src="../static/img/carbs.png" alt="탄수화물 아이콘" />
+                <div class="icon-background background-<%= nutrient.type %>">
+                  <img
+                    src="../static/img/<%= nutrient.type %>.png"
+                    alt="<%= nutrient.name %> 아이콘"
+                  />
                 </div>
               </div>
-              <h2>탄수화물</h2>
-              <p class="nutrition-value">100/100</p>
+              <h2><%= nutrient.name %></h2>
+              <p class="nutrition-value">
+                <%= nutrient.value || 0 %> / <%= nutrient.target || 0 %>
+              </p>
               <span>섭취량</span>
-              <div class="nutrition-status full">충분해요!</div>
-            </div>
-
-            <div class="nutrition-card">
-              <div class="nutrition-icon">
-                <div class="icon-background background-protein">
-                  <img src="../static/img/protein.png" alt="단백질 아이콘" />
-                </div>
+              <div
+                class="nutrition-status <%= nutrient.value / nutrient.target <= 0.33 ? 'none' : nutrient.value / nutrient.target <= 0.67 ? 'half' : 'full' %>"
+              >
+                <% if (nutrient.value / nutrient.target <= 0.33) { %> 부족해요 ㅠㅠ <% }
+                else if (nutrient.value / nutrient.target <= 0.67) { %> 괜찮은 수준이에요
+                <% } else { %> 충분해요! <% } %>
               </div>
-              <h2>단백질</h2>
-              <p class="nutrition-value">20/100</p>
-              <span>섭취량</span>
-              <div class="nutrition-status none">부족해요 ㅠㅠ</div>
             </div>
-
-            <div class="nutrition-card">
-              <div class="nutrition-icon">
-                <div class="icon-background background-fat">
-                  <img src="../static/img/fat.png" alt="지방 아이콘" />
-                </div>
-              </div>
-              <h2>지방</h2>
-              <p class="nutrition-value">50/100</p>
-              <span>섭취량</span>
-              <div class="nutrition-status half">괜찮은 수준이에요</div>
-            </div>
+            <% }); %>
           </div>
 
           <div class="graph-section">
@@ -125,71 +130,7 @@
     </main>
 
     <%-include('partials/footer')%>
-    <script>
-      const currentCalorie = 900; // 현재 섭취량
-      const maxCalorie = 1000; // 권장 섭취량
-      const maxProgress = 120; // 최대 progress(%) 설정
-
-      const steps = 5;
-      const maxDisplayCalorie = Math.round(maxCalorie * (maxProgress / 100));
-      const interval = maxDisplayCalorie / (steps - 1);
-      const calorieLabelsContainer = document.querySelector(".calorie-labels");
-
-      calorieLabelsContainer.innerHTML = "";
-
-      for (let i = 0; i < steps; i++) {
-        const labelValue = Math.round(interval * i);
-        const span = document.createElement("span");
-        span.textContent = labelValue;
-        calorieLabelsContainer.appendChild(span);
-      }
-
-      // 프로그레스 바와 인디케이터
-      const progressBar = document.querySelector(".calorie-progress");
-      const indicator = document.querySelector(".calorie-indicator");
-
-      // 진행률 계산
-      let progressPercentage = (currentCalorie / maxDisplayCalorie) * 100;
-
-      // 진행률이 최대 progress를 넘지 않도록 제한
-      if (progressPercentage > maxProgress) {
-        progressPercentage = maxProgress;
-      }
-
-      // 진행도 및 위치 업데이트
-      progressBar.style.width = `${progressPercentage}%`; // 바 진행률
-      indicator.style.left = `${progressPercentage}%`; // 동그라미 위치
-
-      if (currentCalorie > maxCalorie * (maxProgress / 100)) {
-        indicator.style.background = "red"; // 동그라미 색상 변경
-      }
-
-      const username = "<%= username %>";
-      const goalMessageElement = document.getElementById("goal-message");
-      const isSettingGoal =
-        goalMessageElement.getAttribute("data-is-setting-goal") === "true";
-      const goalSettingDate = goalMessageElement.getAttribute("data-goal-setting-date");
-
-      if (isSettingGoal) {
-        // 목표 날짜가 설정된 경우
-        const today = new Date();
-        const goalDate = new Date(goalSettingDate);
-
-        // D-Day 계산
-        const remainingDays = Math.ceil((goalDate - today) / (1000 * 60 * 60 * 24));
-
-        if (remainingDays > 0) {
-          goalMessageElement.textContent = `${username} 님의 목표 달성까지 ${remainingDays}일 남았어요!`;
-        } else if (remainingDays === 0) {
-          goalMessageElement.textContent = `${username} 님의 목표 달성일이 오늘입니다!`;
-        } else {
-          goalMessageElement.textContent = `${username} 님의 목표 달성일이 지났습니다!`;
-        }
-      } else {
-        // 목표 날짜가 설정되지 않은 경우
-        goalMessageElement.textContent = `${username} 님, 목표를 설정해주세요!`;
-      }
-    </script>
     <script src="../static/js/graph.js"></script>
+    <script src="../static/js/userGoal.js"></script>
   </body>
 </html>

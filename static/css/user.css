@@ -48,6 +48,7 @@
   background: linear-gradient(to right, #a8e0f0, #5cb8e0, #a8e0f0);
   border-radius: 5px;
   overflow: hidden;
+  margin: 10px 0;
 }
 
 /* 몸무게 현재 위치 표시 (빨간색 막대) */
@@ -56,16 +57,23 @@
   height: 100%;
   width: 3px;
   background: red;
-  left: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
 }
 
 /* 몸무게 레이블 (범위 값) */
 .weight-labels {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 5px;
   font-size: 12px;
   color: #5a5a5a;
+  position: relative;
+}
+.weight-labels span {
+  position: relative;
+  z-index: 1; 
 }
 
 .goal-card:last-child {
@@ -259,7 +267,6 @@
   font-size: 10px;
   color: #5a5a5a;
   margin-top: 5px;
-  
 }
 
 .spaced-text {
