@@ -5,6 +5,7 @@ const controller_mypage = require("../controller/Cmypage");
 
 router.get("/", controller.getIndex);
 router.get("/customerservice", controller.getService);
+router.get("/usercustomerservice", controller.getUserService);
 router.get("/signup", controller.getSignup);
 router.get("/login", controller.getLogin);
 router.get("/findPw", controller.getFindpw); //비번찾기 페이지
