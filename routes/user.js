@@ -4,7 +4,6 @@ const controller = require("../controller/Cuser");
 
 // "/user" 경로로 들어왔을 때,
 // router.get("/", controller.getUser);
-router.get("/mypage/:date?", controller.getUser);
 router.get("/settingGoal", controller.getSetGoal);
 // router.get("/dailyIntake", controller.getDailyIntake);
 router.get("/patch", controller.getUserUpdate);
