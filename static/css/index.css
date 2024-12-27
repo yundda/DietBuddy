@@ -1,25 +1,26 @@
 main {
   flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 50px 5%;
   background-color: #ffffff;
+  gap: 20px;
 }
 
 main .content {
   flex: 1;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 main .content h1 {
-  font-size: 56px;
+  font-size: 70px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 main .content h2 {
-  font-size: 32px;
+  font-size: 40px;
   color: #159428;
 }
 main .content h1 span {
@@ -27,7 +28,7 @@ main .content h1 span {
 }
 
 main .content p {
-  font-size: 20px;
+  font-size: 25px;
   margin-bottom: 25px;
   color: rgb(52, 179, 52);
   line-height: 1.6;
@@ -35,13 +36,13 @@ main .content p {
 
 main .content .signin-text {
   color: #999;
-  font-size: 16px;
+  font-size: 25px;
   margin-bottom: 25px;
 }
 
 main .buttons {
   display: flex;
-  gap: 15px;
+  gap: 20px;
 }
 main .image {
   flex: 1;
