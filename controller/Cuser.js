@@ -392,7 +392,7 @@ exports.getDailyIntake = async (req, res) => {
       return res.redirect("/");
     }
     const { id: sessionId } = req.session.user;
-    const { date } = req.query; // 쿼리 파라미터에서 date 가져오기
+    const { date } = req.params; // 쿼리 파라미터에서 date 가져오기
 
     // 쿼리 파라미터가 없을 경우 현재 날짜로 설정
     const now = new Date();
@@ -450,34 +450,23 @@ exports.getDailyIntake = async (req, res) => {
           [Op.lte]: endOfDate,
         },
       },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+      attributes: [
+        "mealtime",
+        "carbo",
+        "protein",
+        "fat",
+        "cal",
+        [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"],
+      ],
       order: [["createdAt"], ["updatedAt"]],
     });
-    const dailyBreakfast = [];
-    for (let i of breakfast) {
-      dailyBreakfast.push(i.dataValues);
-    }
-    const dailyLunch = [];
-    for (let i of lunch) {
-      dailyLunch.push(i.dataValues);
-    }
-    const dailyDinner = [];
-    for (let i of dinner) {
-      dailyDinner.push(i.dataValues);
-    }
-    const dailyBtwmeal = [];
-    for (let i of btwmeal) {
-      dailyBtwmeal.push(i.dataValues);
-    }
 
-    // 결과 반환 json일지 뭘지 몰라서유..
-    // res.json([
-    //   breakfast.map((data) => data.dataValues),
-    //   lunch.map((data) => data.dataValues),
-    //   dinner.map((data) => data.dataValues),
-    //   btwmeal.map((data) => data.dataValues),
-    // ]);
-    res.send(dailyBreakfast, dailyLunch, dailyDinner, dailyBtwmeal);
+    res.json([
+      breakfast.map((data) => data.dataValues),
+      lunch.map((data) => data.dataValues),
+      dinner.map((data) => data.dataValues),
+      btwmeal.map((data) => data.dataValues),
+    ]);
   } catch (err) {
     console.log("Cuser.js getDailyIntake : server error", err);
     res.status(500).send("Cuser.js getDailyIntake : server error");
