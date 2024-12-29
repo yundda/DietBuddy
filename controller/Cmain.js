@@ -114,6 +114,9 @@ exports.postFindpw = async (req, res) => {
 
     if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
       console.log("회원 존재");
+      req.session.chgPw = {
+        id: findingPw.id,
+      };
       res.send({ isFind: true });
     } else {
       console.log("회원 없음.");
