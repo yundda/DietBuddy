@@ -192,8 +192,8 @@ exports.getMypage = async (req, res) => {
 
 exports.getTodayIntake = async (req, res) => {
   try {
-    if (!req.session.user) {
-      return res.redirect("/");
+    if (!intakeData || intakeData.length === 0) {
+      return res.json([[], [], [], []]);
     }
     const { id: sessionId, name: sessionName } = req.session.user;
     const date = req.params.date || new Date().toISOString().split("T")[0]; // 기본값: 오늘 날짜

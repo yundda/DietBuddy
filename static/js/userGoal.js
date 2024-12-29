@@ -220,6 +220,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const dateList = document.getElementById("date-list");
   const mealInfo = document.getElementById("meal-info");
 
+  const bodyElement = document.body;
+  const todayIntakeData = bodyElement.getAttribute("data-today-intake");
+  const todayIntake = JSON.parse(todayIntakeData);
+
+  renderMealInfo({
+    breakfast: todayIntake.todayBreakfast,
+    lunch: todayIntake.todayLunch,
+    dinner: todayIntake.todayDinner,
+    btwmeal: todayIntake.todayBtwmeal,
+  });
+
   // 날짜 버튼 렌더링
   const renderDateButtons = (dates) => {
     const today = new Date().toLocaleDateString("ko-KR", {
@@ -260,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 식단 데이터 가져오기
   const fetchMealData = (selectedDate) => {
-    fetch(`/mypage/?date=${selectedDate}`)
+    fetch(`/getTodayIntake/?date=${selectedDate}`)
       .then((response) => response.json())
       .then((data) => {
         renderMealInfo(data);
@@ -274,20 +285,38 @@ document.addEventListener("DOMContentLoaded", () => {
   // 식단 데이터 렌더링
   const renderMealInfo = (data) => {
     mealInfo.innerHTML = ""; // 초기화
-    if (data.length === 0) {
-      mealInfo.innerHTML = "<p>등록된 식단이 없습니다.</p>";
-      return;
-    }
 
-    data.forEach((meal) => {
-      const mealItem = document.createElement("div");
-      mealItem.className = "meal-item";
-      mealItem.innerHTML = `
-          <p>${meal.mealtime}</p>
-          <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
-        `;
-      mealInfo.appendChild(mealItem);
+    const mealTypes = ["아침", "점심", "저녁", "간식"];
+    const mealData = {
+      breakfast: data[0],
+      lunch: data[1],
+      dinner: data[2],
+      btwmeal: data[3],
+    };
+
+    Object.entries(data).forEach(([key, meals]) => {
+      if (meals && meals.length > 0) {
+        const section = document.createElement("div");
+        section.className = "meal-section";
+        section.innerHTML = `<h3>${mealTypes[key]}</h3>`;
+
+        meals.forEach((meal) => {
+          const mealItem = document.createElement("div");
+          mealItem.className = "meal-item";
+          mealItem.innerHTML = `
+              <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
+              <p>칼로리: ${meal.cal}kcal</p>
+            `;
+          section.appendChild(mealItem);
+        });
+
+        mealInfo.appendChild(section);
+      }
     });
+
+    if (mealInfo.innerHTML === "") {
+      mealInfo.innerHTML = "<p>등록된 식단이 없습니다.</p>";
+    }
   };
 
   // 날짜 버튼 생성
