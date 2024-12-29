@@ -32,7 +32,6 @@ exports.getUserUpdate = async (req, res) => {
       const patchUser = await models.User.findOne({
         where: { id: sessionId },
       });
-      console.log("patchUser >> ", patchUser);
       res.render("userUpdate", {
         name: patchUser.dataValues.name,
         email: patchUser.dataValues.email,
@@ -64,9 +63,10 @@ exports.patchUser = async (req, res) => {
   try {
     const { id: sessionId } = req.session.user;
     console.log(req.body);
+    let patchResult;
     if (req.body.pw) {
       const { salt, hash } = hashSaltPw(req.body.pw);
-      const patchResult = await models.User.update(
+      patchResult = await models.User.update(
         {
           name: req.body.name,
           pw: hash,
@@ -79,7 +79,7 @@ exports.patchUser = async (req, res) => {
         }
       );
     } else {
-      const patchResult = await models.User.update(
+      patchResult = await models.User.update(
         {
           name: req.body.name,
         },
@@ -90,6 +90,7 @@ exports.patchUser = async (req, res) => {
         }
       );
     }
+    console.log("patchResult >", patchResult[0]);
     if (patchResult[0] > 0) {
       res.send({ isSuccess: true });
     } else {
