@@ -47,7 +47,7 @@ function user_update() {
       pw: pw1,
     },
   })
-    .then(() => {
+    .then((res) => {
       if (res.data.isSuccess) {
         alert("수정이 완료되었습니다.");
         document.location.href = `/mypage`;
