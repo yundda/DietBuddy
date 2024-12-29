@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "omyu_pretty";
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+main {
+  font-family: "omyu_pretty";
+}
+/* Header 스타일 */
+
+header .logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: #5ca14b;
+}
+
+header .logo span {
+  font-size: 36px;
+  font-weight: bold;
+  color: #5ca14b;
+}
+
+header nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #5ca14b;
+  font-size: 16px;
+}
+
+header nav a:first-child {
+  margin-left: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #e8f7e2;
+  position: relative;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #5ca14b;
+  font-size: 16px;
+}
+
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background-color: #e8f7e2;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    gap: 15px;
+  }
+
+  .navbar.show {
+    display: flex; /* 햄버거 버튼 클릭 시 표시 */
+  }
+
+  .hamburger {
+    display: block; /* 모바일 화면에서 표시 */
+  }
+}
+
+.logo-img {
+  width: 100px;
+  height: auto;
+  max-height: 100px;
+}
+
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px 10%;
+  background-color: #e8f7e2;
+  color: #5ca14b;
+  font-family: "Tenada", sans-serif;
+  font-size: small;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #5ca14b;
+  margin: 0 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: 2px solid #5ca14b;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn.login {
+  background-color: #ffffff;
+  color: #5ca14b;
+}
+
+.btn.signup {
+  background-color: #5ca14b;
+  color: #ffffff;
+}
+
+.btn:hover {
+  background-color: #5ca14b;
+  color: #ffffff;
+}
+
+.image img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.infModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.infModal-content {
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 600px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  color: #fff;
+}
+
+.infModal-content h2 {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.infModal-content p {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.infModal-content li {
+  color: #4a401e;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.infModal-content h3 {
+  color: #4a401e;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+.infModal-content strong {
+  color: #e79a4e;
+  font-weight: bold;
+}
+
+.infModal-content button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #4a401e;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.infModal-content button:hover {
+  background-color: #00b321;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@font-face {
+  font-family: "Tenada";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-navbar {
+  font-family: "Tenada", sans-serif;
+  color: #5ca14b;
+}
+
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}

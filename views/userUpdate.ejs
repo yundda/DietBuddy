@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('partials/title', { title: '회원 정보 수정' }) %>
+
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/userUpdate.css" />
+  </head>
+  <body>
+    <%-include('partials/userHeader')%>
+    <main>
+      <section class="update-content">
+        <div class="update-form">
+          <h1>회원 정보 수정</h1>
+          <form class="update-form">
+            <!-- 이름 입력 -->
+            <label for="name">이름</label>
+
+            <input type="text" id="name" value="<%= name %>" required />
+
+            <!-- 이메일 입력 -->
+            <label for="email">이메일</label>
+            <input type="email" id="email" value="<%= email %>" required readonly />
+
+            <label for="password1">새 비밀번호</label>
+            <input
+              type="password"
+              id="password1"
+              placeholder="변경을 원하시면 새 비밀번호를 입력해주세요"
+              oninput="isClick()"
+            />
+            <p style="color: red">
+              ※비밀번호는 영어 대소문자와 숫자를 섞어서 8자리 이상 20자리 이하로
+              설정해주세요.
+            </p>
+            <br />
+            <label for="password2">비밀번호 확인</label>
+            <input
+              type="password"
+              id="password2"
+              placeholder="비밀번호를 동일하게 입력해주세요"
+              onfocus="isClick()"
+            />
+            <p id="caution" style="color: red"></p>
+
+            <!-- 이메일 입력
+              <label for="findPwQuestion">회원님의 선택하신 비밀번호 확인 칠문입니다</label>
+              <input type="findPwQuestion" id="findPwQuestion" value="<findPwQuestion>" required readonly />
+            비밀번호 확인
+            <label for="security-answer">비밀번호 확인 답변</label>
+            <input
+              type="text"
+              id="security-answer"
+              value="<findPw>"
+              placeholder="답변을 입력하세요"
+              required
+            /> -->
+
+            <!-- 정보 수정 버튼 -->
+            <button type="button" onclick="user_update()">수정하기</button>
+          </form>
+        </div>
+      </section>
+
+      <section>
+        <div class="image">
+          <img src="/static/img/Tomato.png" alt="User Update" />
+        </div>
+      </section>
+    </main>
+    <%- include('partials/footer') %>
+    <script src="/static/js/userUpdate.js"></script>
+  </body>
+</html>

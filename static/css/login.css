@@ -1,0 +1,123 @@
+/* 로그인 페이지 메인 콘텐츠 */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 10%;
+  font-family: "omyu_pretty";
+}
+
+.login-content {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input-group .forgot-password {
+  display: block;
+  text-align: right;
+  font-size: 14px;
+  color: #999;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.login-btn {
+  width: 100%;
+  background-color: #5ca14b;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.signup-text a {
+  color: #5ca14b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .login-content {
+    max-width: 90%;
+    margin: 20px 0;
+  }
+
+  .input-group input {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 24px;
+  }
+
+  .input-group label {
+    font-size: 14px;
+  }
+
+  .input-group input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .input-group .forgot-password {
+    font-size: 12px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .signup-text {
+    font-size: 12px;
+  }
+}

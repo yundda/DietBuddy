@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <%- include('partials/title', { title: '메인' })%>
+  <!-- css 경로로 -->
+  <link rel="stylesheet" href="../static/css/base.css" />
+  <link rel="stylesheet" href="../static/css/index.css" />
+
+  <body>
+    <%-include('partials/header')%>
+    <main>
+      <section class="content">
+        <h1><span>DietBuddy</span></h1>
+        <h2>건강한 변화를 시작하세요!</h2>
+        <p>
+          목표 체중에 도달할 수 있도록<br />하루 섭취할 탄수화물, 단백질, 지방을 계산해
+          드립니다.
+        </p>
+        <p class="signin-text">오늘부터 기록하고 변화하세요!</p>
+        <div class="buttons">
+          <button class="btn login" id="loginBtn">로그인</button>
+          <button class="btn signup" id="signupBtn">회원가입</button>
+        </div>
+      </section>
+      <div class="image">
+        <img src="../static/img/Broccoli.png" alt="Broccoli" />
+      </div>
+    </main>
+    <%-include('partials/footer')%>
+    <script>
+      document.getElementById("loginBtn").addEventListener("click", () => {
+        window.location.href = "/login";
+      });
+
+      document.getElementById("signupBtn").addEventListener("click", () => {
+        window.location.href = "/signup";
+      });
+    </script>
+  </body>
+</html>
