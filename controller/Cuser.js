@@ -180,7 +180,7 @@ exports.postSetGoal = async (req, res) => {
     const calcedBMR = calc_BMR(gender, weight, height, age);
     const calcedAMR = calc_AMR(calcedBMR, activeLevel);
     const calcedIntake = calc_intake(calcedAMR, weight, goalWeight, period);
-    const calcedCarbo = calc_carbo(gender, weight, dietGoal);
+    const calcedCarbo = calc_carbo(calcedIntake, dietGoal);
     const calcedProtein = calc_protein(gender, activeLevel, dietGoal, weight);
     const calcedFat = calc_fat(calcedIntake, calcedCarbo, calcedProtein);
     // 목표 재설정인지 초기 설정인지
@@ -256,14 +256,10 @@ exports.postIntake = async (req, res) => {
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
     const { id: sessionId } = req.session.user;
-    const { date, mealtime, carbo, protein, fat } = req.body;
+    console.log(sessionId);
+    const { mealtime, carbo, protein, fat } = req.body;
+    const timestamp = new Date();
     const cal = calc_cal(carbo, protein, fat);
-
-    console.log("받은 데이터:", { sessionId, date, mealtime, carbo, protein, fat });
-    const createdAt = new Date(date) || new Date();
-    const updatedAt = new Date();
-
-    console.log("받은 날짜:", createdAt);
     const intakeResult = await models.Intake.create(
       {
         mealtime,
@@ -271,8 +267,7 @@ exports.postIntake = async (req, res) => {
         protein,
         fat,
         cal,
-        createdAt,
-        updatedAt,
+        createdAt: timestamp,
         id: sessionId,
       },
       {
