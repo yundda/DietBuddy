@@ -75,7 +75,7 @@ header {
 
 @media (max-width: 768px) {
   .navbar {
-    display: none; /* 기본적으로 숨김 */
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -88,11 +88,11 @@ header {
   }
 
   .navbar.show {
-    display: flex; /* 햄버거 버튼 클릭 시 표시 */
+    display: flex;
   }
 
   .hamburger {
-    display: block; /* 모바일 화면에서 표시 */
+    display: block;
   }
 }
 
@@ -253,4 +253,36 @@ footer {
     format("woff2");
   font-weight: normal;
   font-style: normal;
+}
+
+@media screen and (max-width: 768px) {
+  #toggle-right-section {
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .left-section {
+    display: block;
+  }
+
+  .right-section {
+    display: none;
+  }
+
+  .left-section.hidden {
+    display: none;
+  }
+
+  .right-section.show {
+    display: block;
+  }
+}
+
+.navbar {
+  display: none;
+}
+
+.navbar.show {
+  display: flex;
 }

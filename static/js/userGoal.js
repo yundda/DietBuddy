@@ -364,3 +364,4 @@ const generateDatesForMonth = () => {
 
   return dates;
 };
+
