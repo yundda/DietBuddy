@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("modal-overlay");
 
   let selectedMealType = null;
-  let selectedDate = new Date().toISOString().slice(0, 10); // 기본값: 오늘 날짜
+  let selectedDate = null;
 
   // 날짜 포맷 변환 함수
   const formatDate = (dateString) => {
@@ -364,4 +364,3 @@ const generateDatesForMonth = () => {
 
   return dates;
 };
-
