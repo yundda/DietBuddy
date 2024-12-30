@@ -55,27 +55,28 @@ header {
 }
 
 .navbar {
-  display: flex;
-  gap: 20px;
+  display: flex; /* 항상 보이도록 기본 설정 */
+  gap: 20px; /* 메뉴 간격 */
 }
 
-.navbar a {
-  text-decoration: none;
-  color: #5ca14b;
-  font-size: 16px;
-}
-
-.hamburger {
-  display: none;
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
+#toggle-right-section {
+  display: none; /* 기본적으로 숨김 */
 }
 
 @media (max-width: 768px) {
+  #toggle-right-section {
+    display: inline-block; /* 모바일 환경에서만 표시 */
+  }
+}
+
+.hamburger {
+  display: none; /* 데스크탑 환경에서는 숨김 */
+}
+
+/* 모바일 환경 */
+@media (max-width: 768px) {
   .navbar {
-    display: none;
+    display: none; /* 기본적으로 숨김 */
     position: absolute;
     top: 100%;
     left: 0;
@@ -88,12 +89,18 @@ header {
   }
 
   .navbar.show {
-    display: flex;
+    display: flex; /* 햄버거 클릭 시 표시 */
   }
 
   .hamburger {
-    display: block;
+    display: block; /* 모바일에서 햄버거 버튼 표시 */
   }
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #5ca14b;
+  font-size: 16px;
 }
 
 .logo-img {
@@ -277,12 +284,4 @@ footer {
   .right-section.show {
     display: block;
   }
-}
-
-.navbar {
-  display: none;
-}
-
-.navbar.show {
-  display: flex;
 }
