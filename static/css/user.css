@@ -451,7 +451,6 @@
   align-items: center;
   overflow-x: auto;
   scroll-behavior: smooth;
-  scrollbar-width: none;
 }
 
 .date-list button {
@@ -515,4 +514,3 @@
     opacity: 1;
     transform: scale(1);
   }
-}
