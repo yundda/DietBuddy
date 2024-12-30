@@ -343,3 +343,4 @@ const generateDatesForMonth = () => {
 
   return dates;
 };
+

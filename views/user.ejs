@@ -9,13 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body
-    data-session-id='<%= sessionId %>'
-    data-today-intake='<%- JSON.stringify({
+    data-session-id="<%= sessionId %>"
+    data-today-intake="<%- JSON.stringify({
       todayBreakfast: userTodayIntakes.todayBreakfast,
       todayLunch: userTodayIntakes.todayLunch,
       todayDinner: userTodayIntakes.todayDinner,
       todayBtwmeal: userTodayIntakes.todayBtwmeal,
-    }) %>'
+    }) %>"
   >
     <%-include('partials/userHeader')%>
     <main class="main-content">
