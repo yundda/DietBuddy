@@ -453,7 +453,6 @@
   align-items: center;
   overflow-x: auto;
   scroll-behavior: smooth;
-  scrollbar-width: none;
 }
 
 .date-list button {
@@ -478,4 +477,9 @@
 
 .meal-info {
   margin-top: 20px;
+}
+
+form#meal-form .carbDetail {
+  color: #999999; 
+  font-size: 0.85rem; 
 }

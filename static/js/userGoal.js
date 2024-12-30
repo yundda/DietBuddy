@@ -121,152 +121,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-//식단 추가
-document.addEventListener("DOMContentLoaded", () => {
-  const mealTypeButtons = document.querySelectorAll(".meal-type-group button");
-  const mealForm = document.getElementById("meal-form");
-  const overlay = document.getElementById("modal-overlay");
-  let selectedMealType = null;
-
-  // 식사 타입 버튼 클릭 이벤트
-  mealTypeButtons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-      // 모든 버튼에서 selected 클래스 제거
-      mealTypeButtons.forEach((btn) => btn.classList.remove("selected"));
-
-      // 클릭한 버튼에만 selected 클래스 추가
-      button.classList.add("selected");
-
-      // 선택된 식사 타입 설정
-      const mealTypeMap = ["breakfast", "lunch", "dinner", "btwmeal"];
-      selectedMealType = mealTypeMap[index]; // 인덱스로 mealtime 매핑
-      console.log(`선택된 식사 타입: ${selectedMealType}`);
-    });
-  });
-
-  // 폼 제출 처리
-  mealForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // 입력된 데이터 가져오기
-    const carbohydrate = document.getElementById("carbohydrate").value.trim();
-    const protein = document.getElementById("protein").value.trim();
-    const fat = document.getElementById("fat").value.trim();
-
-    // 유효성 검사
-    if (!selectedMealType) {
-      alert("식사 종류를 선택해주세요.");
-      return;
-    }
-    if (!carbohydrate || !protein || !fat) {
-      alert("모든 필드를 입력해주세요.");
-      return;
-    }
-
-    if (
-      isNaN(parseFloat(carbohydrate)) ||
-      isNaN(parseFloat(protein)) ||
-      isNaN(parseFloat(fat))
-    ) {
-      alert("모든 입력값을 숫자로 입력해주세요.");
-      return;
-    }
-
-    const sessionId = document.body.dataset.sessionId;
-
-    // 서버에 데이터 전송
-    fetch("/user/dailyIntake", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: sessionId,
-        mealtime: selectedMealType,
-        carbo: parseFloat(carbohydrate),
-        protein: parseFloat(protein),
-        fat: parseFloat(fat),
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("식사 정보가 추가되었습니다.");
-          overlay.style.display = "none";
-          window.location.reload();
-        } else {
-          throw new Error("데이터 전송 실패");
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("오류가 발생했습니다.");
-      });
-  });
-});
-
-// 식단 데이터 렌더링
-const renderMealInfo = (data) => {
-  const mealInfo = document.getElementById("meal-info");
-  mealInfo.innerHTML = ""; // 초기화
-
-  const mealTypes = {
-    breakfast: { name: "아침", icon: "meal.png" },
-    lunch: { name: "점심", icon: "meal.png" },
-    dinner: { name: "저녁", icon: "meal.png" },
-    btwmeal: { name: "간식", icon: "snack.png" },
-  };
-
-  Object.entries(data).forEach(([key, meals]) => {
-    if (meals && meals.length > 0) {
-      const section = document.createElement("div");
-      section.className = "meal-section";
-
-      const mealType = mealTypes[key] || {
-        name: "알 수 없는 식사 유형",
-        icon: "default.png",
-      };
-
-      // 섹션 제목과 아이콘 추가
-      section.innerHTML = `
-        <h3>
-          <img src="../static/img/${mealType.icon}" alt="${mealType.name} 아이콘" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
-          ${mealType.name}
-        </h3>
-      `;
-
-      meals.forEach((meal) => {
-        const mealItem = document.createElement("div");
-        mealItem.className = "meal-item";
-        mealItem.innerHTML = `
-          <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
-          <p>칼로리: ${meal.cal}kcal</p>
-        `;
-        section.appendChild(mealItem);
-      });
-
-      mealInfo.appendChild(section);
-    }
-  });
-
-  if (mealInfo.innerHTML === "") {
-    mealInfo.innerHTML = "<p>등록된 식단이 없습니다.</p>";
-  }
-};
-
+// 식단 추가
 document.addEventListener("DOMContentLoaded", () => {
   const dateList = document.getElementById("date-list");
   const mealInfo = document.getElementById("meal-info");
+  const mealTypeButtons = document.querySelectorAll(".meal-type-group button");
+  const mealForm = document.getElementById("meal-form");
+  const overlay = document.getElementById("modal-overlay");
 
-  const bodyElement = document.body;
-  const todayIntakeData = bodyElement.getAttribute("data-today-intake");
-  const todayIntake = JSON.parse(todayIntakeData);
+  let selectedMealType = null;
+  let selectedDate = new Date().toISOString().slice(0, 10); // 기본값: 오늘 날짜
 
-  renderMealInfo({
-    breakfast: todayIntake.todayBreakfast,
-    lunch: todayIntake.todayLunch,
-    dinner: todayIntake.todayDinner,
-    btwmeal: todayIntake.todayBtwmeal,
-  });
+  // 날짜 포맷 변환 함수
+  const formatDate = (dateString) => {
+    const parts = dateString
+      .replace(/\./g, "")
+      .split(" ")
+      .map((part) => part.trim());
+    if (parts.length === 3) {
+      const [year, month, day] = parts;
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    }
+    return null;
+  };
 
   // 날짜 버튼 렌더링
   const renderDateButtons = (dates) => {
@@ -274,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-    }); // 한국 기준 날짜 YYYY-MM-DD
+    });
 
     dates.forEach((date) => {
       const dateButton = document.createElement("button");
@@ -291,14 +168,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // 오늘 날짜 버튼 활성화
       if (formattedDate === today) {
         dateButton.classList.add("active");
-        fetchMealData(formattedDate);
+        selectedDate = formatDate(formattedDate); // 기본 선택 날짜 설정
+        fetchMealData(formattedDate); // 오늘 날짜 데이터 가져오기
       }
 
       dateButton.addEventListener("click", () => {
         Array.from(dateList.children).forEach((btn) => btn.classList.remove("active"));
-
         dateButton.classList.add("active");
 
+        selectedDate = formatDate(dateButton.dataset.date); // 선택된 날짜 설정
+        console.log(`선택된 날짜 (변환됨): ${selectedDate}`);
         fetchMealData(formattedDate);
       });
 
@@ -327,6 +206,118 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
+  // 식단 데이터 렌더링
+  const renderMealInfo = (data) => {
+    mealInfo.innerHTML = ""; // 초기화
+
+    const mealTypes = {
+      breakfast: { name: "아침", icon: "meal.png" },
+      lunch: { name: "점심", icon: "meal.png" },
+      dinner: { name: "저녁", icon: "meal.png" },
+      btwmeal: { name: "간식", icon: "snack.png" },
+    };
+
+    Object.entries(data).forEach(([key, meals]) => {
+      if (meals && meals.length > 0) {
+        const section = document.createElement("div");
+        section.className = "meal-section";
+
+        const mealType = mealTypes[key] || {
+          name: "알 수 없는 식사 유형",
+          icon: "default.png",
+        };
+
+        // 섹션 제목과 아이콘 추가
+        section.innerHTML = `
+            <h3>
+              <img src="../static/img/${mealType.icon}" alt="${mealType.name} 아이콘" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
+              ${mealType.name}
+            </h3>
+          `;
+
+        meals.forEach((meal) => {
+          const mealItem = document.createElement("div");
+          mealItem.className = "meal-item";
+          mealItem.innerHTML = `
+              <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
+              <p>칼로리: ${meal.cal}kcal</p>
+            `;
+          section.appendChild(mealItem);
+        });
+
+        mealInfo.appendChild(section);
+      }
+    });
+
+    if (mealInfo.innerHTML === "") {
+      mealInfo.innerHTML = "<p>등록된 식단이 없습니다.</p>";
+    }
+  };
+
+  // 식사 타입 버튼 클릭 이벤트
+  mealTypeButtons.forEach((button, index) => {
+    button.addEventListener("click", () => {
+      mealTypeButtons.forEach((btn) => btn.classList.remove("selected"));
+      button.classList.add("selected");
+
+      const mealTypeMap = ["breakfast", "lunch", "dinner", "btwmeal"];
+      selectedMealType = mealTypeMap[index];
+      console.log(`선택된 식사 타입: ${selectedMealType}`);
+    });
+  });
+
+  // 폼 제출 처리
+  mealForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    console.log("전송 전 selectedDate:", selectedDate);
+
+    if (!selectedMealType) {
+      alert("식사 종류를 선택해주세요.");
+      return;
+    }
+    if (!selectedDate) {
+      alert("날짜를 선택해주세요.");
+      return;
+    }
+
+    const carbohydrate = document.getElementById("carbohydrate").value.trim();
+    const protein = document.getElementById("protein").value.trim();
+    const fat = document.getElementById("fat").value.trim();
+
+    if (!carbohydrate || !protein || !fat) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    fetch(`/user/dailyIntake`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        date: selectedDate,
+        mealtime: selectedMealType,
+        carbo: parseFloat(carbohydrate),
+        protein: parseFloat(protein),
+        fat: parseFloat(fat),
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("식사 정보가 추가되었습니다.");
+          overlay.style.display = "none";
+          window.location.reload();
+        } else {
+          throw new Error("데이터 전송 실패");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("오류가 발생했습니다.");
+      });
+  });
+
   // 날짜 버튼 생성
   const dates = generateDatesForMonth();
   renderDateButtons(dates);
@@ -335,8 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
 // 날짜 생성 함수 (한 달 단위)
 const generateDatesForMonth = () => {
   const today = new Date();
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1); // 해당 월의 첫 번째 날
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // 해당 월의 마지막 날
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
   const dates = [];
   for (
