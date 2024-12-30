@@ -198,10 +198,10 @@ exports.getTodayIntake = async (req, res) => {
           [Op.lte]: endOfToday,
         },
       },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+      attributes: ["intake_id","mealtime", "carbo", "protein", "fat", "cal"],
     });
 
-   // console.log("DB에서 가져온 데이터:", meals);
+    // console.log("DB에서 가져온 데이터:", meals);
 
     if (!meals || meals.length === 0) {
       return res.json({
@@ -232,5 +232,23 @@ exports.getTodayIntake = async (req, res) => {
   } catch (err) {
     console.error("Error in getTodayIntake:", err.message);
     res.status(500).send("Cuser.js getTodayIntake : server error");
+  }
+};
+
+exports.deleteIntake = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await models.Intake.destroy({
+      where: { intake_id: id },
+    });
+
+    if (result) {
+      res.status(200).send("삭제 성공");
+    } else {
+      res.status(404).send("데이터를 찾을 수 없습니다.");
+    }
+  } catch (error) {
+    console.error("Error in deleteIntake:", err.message);
+    res.status(500).send("Cmaypage.js deleteIntake : server error");
   }
 };

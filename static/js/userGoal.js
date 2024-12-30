@@ -241,7 +241,31 @@ document.addEventListener("DOMContentLoaded", () => {
           mealItem.innerHTML = `
               <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
               <p>칼로리: ${meal.cal}kcal</p>
+              <button class="delete-btn" data-id="delete"> <img src="../static/img/delete.png" alt="delete 아이콘"></button>
             `;
+
+          const deleteButton = mealItem.querySelector(".delete-btn");
+          deleteButton.addEventListener("click", () => {
+            if (confirm("정말 삭제하시겠습니까?")) {
+              // 서버로 삭제 요청
+              fetch(`/dailyIntake/${meal.intake_id}`, {
+                method: "DELETE",
+              })
+                .then((response) => {
+                  if (response.ok) {
+                    alert("삭제되었습니다.");
+                    mealItem.remove(); // UI에서 삭제
+                  } else {
+                    throw new Error("삭제 실패");
+                  }
+                })
+                .catch((error) => {
+                  console.error(error);
+                  alert("삭제 중 오류가 발생했습니다.");
+                });
+            }
+          });
+
           section.appendChild(mealItem);
         });
 
