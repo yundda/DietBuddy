@@ -92,86 +92,143 @@ exports.getMypage = async (req, res) => {
   }
 };
 
+// exports.getTodayIntake = async (req, res) => {
+//   try {
+//     if (!intakeData || intakeData.length === 0) {
+//       return res.json([[], [], [], []]);
+//     }
+//     const { id: sessionId } = req.session.user;
+//     const today = new Date().toISOString().split("T")[0]; // 기본값: 오늘 날짜
+//     const startOfToday = new Date(today);
+//     startOfToday.setHours(0, 0, 0, 0);
+//     const endOfToday = new Date(today);
+//     endOfToday.setHours(23, 59, 59, 999);
+//     const intakeData = await models.Intake.findAll({
+//       where: {
+//         id: sessionId,
+//         createdAt: {
+//           [Op.gte]: startOfToday, // 0시 이후
+//           [Op.lte]: endOfToday, // 23시 59분 이전
+//         },
+//       },
+//     });
+//     if (!intakeData) {
+//       res.json({ isIntakeData: false });
+//     }
+//     const breakfast = await models.Intake.findAll({
+//       where: {
+//         id: sessionId,
+//         mealtime: "breakfast",
+//         createdAt: {
+//           [Op.gte]: startOfToday,
+//           [Op.lte]: endOfToday,
+//         },
+//       },
+//       attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+//       order: [["createdAt"], ["updatedAt"]],
+//     });
+//     const lunch = await models.Intake.findAll({
+//       where: {
+//         id: sessionId,
+//         mealtime: "lunch",
+//         createdAt: {
+//           [Op.gte]: startOfToday,
+//           [Op.lte]: endOfToday,
+//         },
+//       },
+//       attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+//       order: [["createdAt"], ["updatedAt"]],
+//     });
+//     const dinner = await models.Intake.findAll({
+//       where: {
+//         id: sessionId,
+//         mealtime: "dinner",
+//         createdAt: {
+//           [Op.gte]: startOfToday,
+//           [Op.lte]: endOfToday,
+//         },
+//       },
+//       attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+//       order: [["createdAt"], ["updatedAt"]],
+//     });
+//     const btwmeal = await models.Intake.findAll({
+//       where: {
+//         id: sessionId,
+//         mealtime: "btwmeal",
+//         createdAt: {
+//           [Op.gte]: startOfToday,
+//           [Op.lte]: endOfToday,
+//         },
+//       },
+//       attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
+//       order: [["createdAt"], ["updatedAt"]],
+//     });
+//     console.log(breakfast.map((data) => data.dataValues));
+//     res.json([
+//       breakfast.map((data) => data.dataValues),
+//       lunch.map((data) => data.dataValues),
+//       dinner.map((data) => data.dataValues),
+//       btwmeal.map((data) => data.dataValues),
+//     ]);
+//   } catch (err) {
+//     console.error("Error in getTodayIntake:", error.message);
+//     res.status(500).send("Cuser.js getTodayIntake : server error");
+//   }
+// };
 exports.getTodayIntake = async (req, res) => {
   try {
-    if (!intakeData || intakeData.length === 0) {
-      return res.json([[], [], [], []]);
-    }
     const { id: sessionId } = req.session.user;
     const today = new Date().toISOString().split("T")[0]; // 기본값: 오늘 날짜
     const startOfToday = new Date(today);
     startOfToday.setHours(0, 0, 0, 0);
     const endOfToday = new Date(today);
     endOfToday.setHours(23, 59, 59, 999);
-    const intakeData = await models.Intake.findAll({
+
+    // console.log("세션 ID:", sessionId);
+    // console.log("오늘 시작:", startOfToday);
+    // console.log("오늘 끝:", endOfToday);
+
+    const meals = await models.Intake.findAll({
       where: {
         id: sessionId,
         createdAt: {
-          [Op.gte]: startOfToday, // 0시 이후
-          [Op.lte]: endOfToday, // 23시 59분 이전
+          [Op.gte]: startOfToday,
+          [Op.lte]: endOfToday,
         },
       },
+      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
     });
-    if (!intakeData) {
-      res.json({ isIntakeData: false });
+
+   // console.log("DB에서 가져온 데이터:", meals);
+
+    if (!meals || meals.length === 0) {
+      return res.json({
+        breakfast: [],
+        lunch: [],
+        dinner: [],
+        btwmeal: [],
+      });
     }
-    const breakfast = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "breakfast",
-        createdAt: {
-          [Op.gte]: startOfToday,
-          [Op.lte]: endOfToday,
-        },
+
+    const groupedMeals = meals.reduce(
+      (acc, meal) => {
+        if (!acc[meal.mealtime]) {
+          acc[meal.mealtime] = [];
+        }
+        acc[meal.mealtime].push(meal.dataValues);
+        return acc;
       },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
+      { breakfast: [], lunch: [], dinner: [], btwmeal: [] }
+    );
+
+    res.json({
+      breakfast: groupedMeals.breakfast,
+      lunch: groupedMeals.lunch,
+      dinner: groupedMeals.dinner,
+      btwmeal: groupedMeals.btwmeal,
     });
-    const lunch = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "lunch",
-        createdAt: {
-          [Op.gte]: startOfToday,
-          [Op.lte]: endOfToday,
-        },
-      },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-    const dinner = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "dinner",
-        createdAt: {
-          [Op.gte]: startOfToday,
-          [Op.lte]: endOfToday,
-        },
-      },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-    const btwmeal = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "btwmeal",
-        createdAt: {
-          [Op.gte]: startOfToday,
-          [Op.lte]: endOfToday,
-        },
-      },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-    console.log(breakfast.map((data) => data.dataValues));
-    res.json([
-      breakfast.map((data) => data.dataValues),
-      lunch.map((data) => data.dataValues),
-      dinner.map((data) => data.dataValues),
-      btwmeal.map((data) => data.dataValues),
-    ]);
   } catch (err) {
-    console.log("Cuser.js getTodayIntake : server error", err);
+    console.error("Error in getTodayIntake:", err.message);
     res.status(500).send("Cuser.js getTodayIntake : server error");
   }
 };
