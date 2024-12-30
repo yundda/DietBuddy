@@ -256,10 +256,12 @@ exports.postIntake = async (req, res) => {
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
     const { id: sessionId } = req.session.user;
-    console.log(sessionId);
-    const { mealtime, carbo, protein, fat } = req.body;
-    const timestamp = new Date();
+    const { date, mealtime, carbo, protein, fat } = req.body;
+    const selectedDate = new Date(date);
     const cal = calc_cal(carbo, protein, fat);
+    
+    selectedDate.setHours(0, 0, 0, 0);
+
     const intakeResult = await models.Intake.create(
       {
         mealtime,
@@ -267,7 +269,7 @@ exports.postIntake = async (req, res) => {
         protein,
         fat,
         cal,
-        createdAt: timestamp,
+        createdAt: selectedDate,
         id: sessionId,
       },
       {
