@@ -210,31 +210,37 @@ const renderMealInfo = (data) => {
   mealInfo.innerHTML = ""; // 초기화
 
   const mealTypes = {
-    breakfast: "아침",
-    lunch: "점심",
-    dinner: "저녁",
-    btwmeal: "간식",
-  };
-  const mealData = {
-    breakfast: data[0],
-    lunch: data[1],
-    dinner: data[2],
-    btwmeal: data[3],
+    breakfast: { name: "아침", icon: "meal.png" },
+    lunch: { name: "점심", icon: "meal.png" },
+    dinner: { name: "저녁", icon: "meal.png" },
+    btwmeal: { name: "간식", icon: "snack.png" },
   };
 
   Object.entries(data).forEach(([key, meals]) => {
     if (meals && meals.length > 0) {
       const section = document.createElement("div");
       section.className = "meal-section";
-      section.innerHTML = `<h3>${mealTypes[key] || "알 수 없는 식사 유형"}</h3>`;
+
+      const mealType = mealTypes[key] || {
+        name: "알 수 없는 식사 유형",
+        icon: "default.png",
+      };
+
+      // 섹션 제목과 아이콘 추가
+      section.innerHTML = `
+        <h3>
+          <img src="../static/img/${mealType.icon}" alt="${mealType.name} 아이콘" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;">
+          ${mealType.name}
+        </h3>
+      `;
 
       meals.forEach((meal) => {
         const mealItem = document.createElement("div");
         mealItem.className = "meal-item";
         mealItem.innerHTML = `
-              <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
-              <p>칼로리: ${meal.cal}kcal</p>
-            `;
+          <p>탄수화물: ${meal.carbo}g 단백질: ${meal.protein}g 지방: ${meal.fat}g</p>
+          <p>칼로리: ${meal.cal}kcal</p>
+        `;
         section.appendChild(mealItem);
       });
 
