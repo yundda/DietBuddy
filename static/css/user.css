@@ -418,7 +418,6 @@
 .modal-submit:hover {
   background-color: #4cae4c;
 }
-
 .modal-cancel {
   background-color: #d9534f;
   color: white;
@@ -428,7 +427,6 @@
   background-color: #c9302c;
 }
 
-/* 애니메이션 */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -479,7 +477,40 @@
   margin-top: 20px;
 }
 
-form#meal-form .carbDetail {
-  color: #999999; 
-  font-size: 0.85rem; 
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .left-section {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .right-section {
+    width: 100%;
+  }
+
+  .right-section.show {
+    display: block;
+  }
+
+  .left-section.hidden {
+    display: none;
+  }
+  .btn {
+    font-size: 15px;
+  }
 }
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
