@@ -92,6 +92,16 @@ exports.patchUser = async (req, res) => {
     }
     console.log("patchResult >", patchResult[0]);
     if (patchResult[0] > 0) {
+      const afterPatch = await models.User.findOne({
+        where: {
+          id: req.session.user.id,
+        },
+      });
+      req.session.user = {
+        id: afterPatch.id,
+        name: afterPatch.name,
+        email: afterPatch.email,
+      };
       res.send({ isSuccess: true });
     } else {
       res.send({ isSuccess: false });
