@@ -95,11 +95,11 @@
               </p>
               <span>섭취량</span>
               <div
-                class="nutrition-status <%= nutrient.value / nutrient.target <= 0.33 ? 'none' : nutrient.value / nutrient.target <= 0.67 ? 'half' : 'full' %>"
+                class="nutrition-status <%= nutrient.value / nutrient.target <= 0.7 ? 'none' : nutrient.value / nutrient.target <= 1 ? 'half' : 'full' %>"
               >
-                <% if (nutrient.value / nutrient.target <= 0.33) { %> 부족해요 ㅠㅠ <% }
-                else if (nutrient.value / nutrient.target <= 0.67) { %> 괜찮은 수준이에요
-                <% } else { %> 충분해요! <% } %>
+                <% if (nutrient.value / nutrient.target <= 0.7) { %> 부족해요 ㅠㅠ <% }
+                else if (nutrient.value / nutrient.target <= 1) { %> 적당해요! <% } else {
+                %> 이제 그만~ <% } %>
               </div>
             </div>
             <% }); %>
