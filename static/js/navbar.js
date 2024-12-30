@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navbar = document.querySelector(".navbar");
   const hamburger = document.querySelector(".hamburger");
 
+  // 오늘의 식단 버튼 가시성 설정
   const handleToggleRightSectionVisibility = () => {
     if (toggleRightSection) {
       if (window.innerWidth > 768) {
@@ -19,25 +20,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  handleToggleRightSectionVisibility();
-  window.addEventListener("resize", handleToggleRightSectionVisibility);
+  // 햄버거 메뉴 상태 초기화
+  const initializeNavbar = () => {
+    if (window.innerWidth > 768) {
+      navbar.style.display = "flex"; // 데스크탑 환경
+      navbar.classList.remove("show"); // 모바일 상태 초기화
+    } else {
+      navbar.style.display = "none"; // 모바일 환경
+    }
+  };
 
+  // 초기 실행 및 화면 크기 변경 이벤트 리스너 등록
+  handleToggleRightSectionVisibility();
+  initializeNavbar();
+
+  window.addEventListener("resize", () => {
+    handleToggleRightSectionVisibility();
+    initializeNavbar();
+  });
+
+  // 햄버거 버튼 클릭 이벤트
   if (hamburger && navbar) {
     hamburger.addEventListener("click", () => {
       navbar.classList.toggle("show");
-    });
-
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 768) {
-        navbar.style.display = "flex";
-      } else {
-        navbar.style.display = "none";
-      }
+      navbar.style.display = navbar.classList.contains("show") ? "flex" : "none";
     });
   } else {
-    console.error("메뉴를 찾을 수 없습니다", { navbar, hamburger });
+    console.error("햄버거 메뉴를 찾을 수 없습니다", { navbar, hamburger });
   }
 
+  // "/mypage"에서 오늘의 식단 버튼 동작
   if (currentPath === "/mypage" && toggleRightSection && leftSection && rightSection) {
     toggleRightSection.addEventListener("click", (e) => {
       e.preventDefault();
@@ -52,12 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
           : "왼쪽 섹션 표시, 오른쪽 섹션 숨김"
       );
 
+      // 모바일 환경에서 메뉴 닫기
       if (window.innerWidth <= 768 && navbar.classList.contains("show")) {
         navbar.classList.remove("show");
+        navbar.style.display = "none";
       }
     });
   } else if (currentPath === "/mypage") {
-    console.error("마이페이지를 찾을 수 없습니다", {
+    console.error("마이페이지 관련 요소를 찾을 수 없습니다", {
       toggleRightSection,
       leftSection,
       rightSection,
