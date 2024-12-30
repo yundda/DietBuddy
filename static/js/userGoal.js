@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 식단 데이터 가져오기
   const fetchMealData = (selectedDate) => {
-    fetch(`/todayIntake`)
+    fetch(`/todayIntake?date=${selectedDate}`)
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {

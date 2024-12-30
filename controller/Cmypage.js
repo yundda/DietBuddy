@@ -175,13 +175,15 @@ exports.getMypage = async (req, res) => {
 //     res.status(500).send("Cuser.js getTodayIntake : server error");
 //   }
 // };
+
 exports.getTodayIntake = async (req, res) => {
   try {
     const { id: sessionId } = req.session.user;
-    const today = new Date().toISOString().split("T")[0]; // 기본값: 오늘 날짜
-    const startOfToday = new Date(today);
+    const { date } = req.query;
+    const selectedDate = date ? new Date(date) : new Date().toISOString().split("T")[0];
+    const startOfToday = new Date(selectedDate);
     startOfToday.setHours(0, 0, 0, 0);
-    const endOfToday = new Date(today);
+    const endOfToday = new Date(selectedDate);
     endOfToday.setHours(23, 59, 59, 999);
 
     // console.log("세션 ID:", sessionId);
