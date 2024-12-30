@@ -71,18 +71,32 @@ utils.calc_protein = (gender, activelevel, dietgoal, weight) => {
   }
   return Math.round(calc_protein);
 };
-utils.calc_carbo = (intake, dietgoal) => {
+utils.calc_carbo = (gender, weight, dietgoal) => {
   let calc_carbo;
-  switch (dietgoal) {
-    case "Gain":
-      calc_carbo = intake * 0.135;
-      break;
-    case "Loss":
-      calc_carbo = intake * 0.125;
-      break;
-    case "Gain":
-      calc_carbo = intake * 0.135;
-      break;
+  if (gender === "male") {
+    switch (dietgoal) {
+      case "Gain":
+        calc_carbo = weight * 5.5;
+        break;
+      case "Loss":
+        calc_carbo = weight * 4;
+        break;
+      case "Stay":
+        calc_carbo = weight * 4.5;
+        break;
+    }
+  } else if (gender === "female") {
+    switch (dietgoal) {
+      case "Gain":
+        calc_carbo = weight * 5;
+        break;
+      case "Loss":
+        calc_carbo = weight * 3;
+        break;
+      case "Stay":
+        calc_carbo = weight * 4;
+        break;
+    }
   }
   return Math.round(calc_carbo);
 };

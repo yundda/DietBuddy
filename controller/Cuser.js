@@ -180,7 +180,7 @@ exports.postSetGoal = async (req, res) => {
     const calcedBMR = calc_BMR(gender, weight, height, age);
     const calcedAMR = calc_AMR(calcedBMR, activeLevel);
     const calcedIntake = calc_intake(calcedAMR, weight, goalWeight, period);
-    const calcedCarbo = calc_carbo(calcedIntake, dietGoal);
+    const calcedCarbo = calc_carbo(gender, weight, dietGoal);
     const calcedProtein = calc_protein(gender, activeLevel, dietGoal, weight);
     const calcedFat = calc_fat(calcedIntake, calcedCarbo, calcedProtein);
     // 목표 재설정인지 초기 설정인지
