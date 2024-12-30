@@ -99,7 +99,8 @@ main {
 
   .image {
     width: 100%;
-    height: 200px;
+    /* height: 200px; */
+    height: 100%;
     background-color: #e8f7e2;
   }
 }
