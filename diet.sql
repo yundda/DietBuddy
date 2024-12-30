@@ -1,4 +1,3 @@
--- Active: 1733117003929@@127.0.0.1@3306@dietbuddy
 
 SHOW DATABASES;
 -- 데이터베이스 확인할 때
