@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // 햄버거 메뉴 상태 초기화
   const initializeNavbar = () => {
     if (window.innerWidth > 768) {
-      navbar.style.display = "flex"; // 데스크탑 환경
-      navbar.classList.remove("show"); // 모바일 상태 초기화
+      navbar.style.display = "flex";
+      navbar.classList.remove("show");
     } else {
-      navbar.style.display = "none"; // 모바일 환경
+      navbar.style.display = "none";
     }
   };
 
@@ -58,18 +58,10 @@ document.addEventListener("DOMContentLoaded", function () {
   ) {
     toggleRightSection.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("오늘의 식단 버튼 클릭됨");
 
       const isRightSectionVisible = rightSection.classList.toggle("show");
       leftSection.classList.toggle("hidden", isRightSectionVisible);
 
-      console.log(
-        isRightSectionVisible
-          ? "오른쪽 섹션 표시, 왼쪽 섹션 숨김"
-          : "왼쪽 섹션 표시, 오른쪽 섹션 숨김"
-      );
-
-      // 모바일 환경에서 메뉴 닫기
       if (window.innerWidth <= 768 && navbar.classList.contains("show")) {
         navbar.classList.remove("show");
         navbar.style.display = "none";

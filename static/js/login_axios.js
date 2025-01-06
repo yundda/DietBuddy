@@ -2,7 +2,6 @@ function user_login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const errorMsg = document.getElementById("errorMsg");
-  // const date = new Date().toISOString().split("T")[0];
 
   if (email === "") {
     alert("아이디(이메일)를 입력해주세요.");
@@ -22,16 +21,13 @@ function user_login() {
     },
   })
     .then((response) => {
-      console.log("뭐냐ㅐ!!", response.data.isLogin);
-
       if (response.data.isLogin) {
-        console.log("로그인 성공!");
-        window.location.href = "/mypage/main";
+
+        window.location.href = "/mypage";
+
       } else {
         errorMsg.style.display = "block";
-        // errorMsg.textContent = "로그인에 실패했습니다.";
         errorMsg.textContent = response.data.msg;
-        console.log("로그인 실패!");
       }
     })
     .catch((error) => {

@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <%- include('partials/title', { title: '비밀번호 찾기' }) %>
-    <!-- css 경로로 -->
     <link rel="stylesheet" href="../static/css/base.css" />
     <link rel="stylesheet" href="../static/css/findPw.css" />
   </head>
@@ -13,11 +12,9 @@
         <div class="findPw-form">
           <h1>비밀번호 찾기</h1>
           <form>
-            <!-- 이메일 입력 -->
             <label for="email">이메일</label>
             <input type="email" id="email" placeholder="abc@gmail.com" required />
 
-            <!-- 비밀번호 확인 문제 -->
             <label for="security-question">비밀번호 확인 문제</label>
             <select id="security-question" required>
               <option value="" disabled selected>문제를 선택해주세요</option>
@@ -30,7 +27,6 @@
               <option value="dream_trip">추억하고 싶은 날씨가 있다면?</option>
             </select>
 
-            <!-- 비밀번호 확인 답변 -->
             <label for="security-answer">비밀번호 확인 답변</label>
             <input
               type="text"
@@ -39,7 +35,6 @@
               required
             />
 
-            <!-- 이메일, 답변이 서버와 맞는지 확인 버튼 -->
             <button type="button" onclick="user_new_pw()">비밀번호 찾기</button>
           </form>
         </div>

@@ -79,17 +79,17 @@ body h1 {
   }
 
   .team-container {
-    gap: 20px; /* 팀원 간격 축소 */
+    gap: 20px;
   }
 
   .team-member {
-    width: 160px; /* 카드 크기 축소 */
+    width: 160px;
     padding: 10px;
   }
 
   .team-member img {
     width: 120px;
-    height: 120px; /* 이미지 크기 축소 */
+    height: 120px;
   }
 
   .team-member h3 {
@@ -113,19 +113,19 @@ body h1 {
   }
 
   .team-container {
-    flex-direction: column; /* 세로 정렬 */
+    flex-direction: column;
     gap: 15px;
   }
 
   .team-member {
     width: 100%;
-    max-width: 300px; /* 카드 최대 너비 */
-    margin: 0 auto; /* 가운데 정렬 */
+    max-width: 300px;
+    margin: 0 auto;
   }
 
   .team-member img {
     width: 100px;
-    height: 100px; /* 이미지 크기 더 축소 */
+    height: 100px;
   }
 
   .team-member h3 {

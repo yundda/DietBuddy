@@ -35,7 +35,7 @@ main {
 .updatePw-form input,
 .updatePw-form select {
   width: 100%;
-  min-width: 400px; /* 기본 최소 크기 */
+  min-width: 400px;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
