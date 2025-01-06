@@ -105,17 +105,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const addMealBtn = document.getElementById("add-meal-btn");
   const modalOverlay = document.getElementById("modal-overlay");
   const cancelBtn = document.getElementById("cancel-btn");
+  const mealFormInputs = document.querySelectorAll("#meal-form input[type='text']");
+  const mealTypeButtons = document.querySelectorAll(".meal-type-group button");
 
   addMealBtn.addEventListener("click", () => {
+    mealFormInputs.forEach((input) => {
+      input.value = "";
+    });
     modalOverlay.style.display = "flex";
   });
 
   cancelBtn.addEventListener("click", () => {
+    mealFormInputs.forEach((input) => {
+      input.value = "";
+    });
+    mealTypeButtons.forEach((button) => {
+      button.classList.remove("selected"); 
+    });
+    selectedMealType = null; 
     modalOverlay.style.display = "none";
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      mealFormInputs.forEach((input) => {
+        input.value = "";
+      });
       modalOverlay.style.display = "none";
     }
   });
@@ -283,7 +298,6 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       mealTypeButtons.forEach((btn) => btn.classList.remove("selected"));
       button.classList.add("selected");
-
       const mealTypeMap = ["breakfast", "lunch", "dinner", "btwmeal"];
       selectedMealType = mealTypeMap[index];
       console.log(`선택된 식사 타입: ${selectedMealType}`);
