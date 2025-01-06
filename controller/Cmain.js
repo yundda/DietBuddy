@@ -1,4 +1,3 @@
-// const models = require("../models/User");
 const models = require("../models/index");
 
 const { hashSaltPw, checkPw } = require("../utils/utils");
@@ -19,9 +18,6 @@ exports.getService = (req, res) => {
 exports.getUserService = (req, res) => {
   res.render("customerService");
 };
-//비밀번호 찾기 페이지
-//페이지 이름은 임시로 정한 것.
-//나중에 비밀번호 페이지 만들어지면 바꾼다.
 exports.getFindpw = (req, res) => {
   res.render("findPw");
 };
@@ -29,7 +25,6 @@ exports.getFindpw = (req, res) => {
 //회원가입 controller
 exports.postSignup = (req, res) => {
   try {
-    //아이디(이메일) 중복체크
     const sameCheck = models.User.findOne({
       where: {
         email: req.body.email,
@@ -37,10 +32,8 @@ exports.postSignup = (req, res) => {
     });
 
     if (sameCheck) {
-      //중복되는 이메일이 없을 경우
       const hashResult = hashSaltPw(req.body.pw);
 
-      //회원 정보 추가
       models.User.create({
         email: req.body.email,
         pw: hashResult.hash,
@@ -56,8 +49,6 @@ exports.postSignup = (req, res) => {
         }
       });
     } else {
-      //중복되는 이메일이 있을 경우우
-      console.log("중복 이메일 존재");
       res.send({ msg: "이 이메일로 가입한 회원이 이미 있습니다." });
     }
   } catch (err) {
@@ -74,10 +65,6 @@ exports.postLogin = async (req, res) => {
         email: req.body.email,
       },
     });
-    //DB에 저장된 해시랑 솔트 값.
-
-    console.log("findUser 시작");
-    console.log(findUser);
 
     if (findUser) {
       const { pw: DBhash, salt: DBsalt } = findUser;
@@ -113,13 +100,11 @@ exports.postFindpw = async (req, res) => {
     const { pwQuestion, findPw } = findingPw;
 
     if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
-      console.log("회원 존재");
       req.session.chgPw = {
         id: findingPw.id,
       };
       res.send({ isFind: true });
     } else {
-      console.log("회원 없음.");
       res.send({ isFind: false, msg: "해당 정보와 일치하는 회원이 존재하지 않습니다." });
     }
   } catch (err) {

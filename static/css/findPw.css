@@ -78,7 +78,7 @@ main {
   .findPw-form input,
   .findPw-form select {
     font-size: 14px;
-    max-width: 100%; /* 전체 너비로 확장 */
+    max-width: 100%;
   }
 
   .findPw-form button {

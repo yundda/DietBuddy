@@ -90,7 +90,6 @@ exports.patchUser = async (req, res) => {
         }
       );
     }
-    console.log("patchResult >", patchResult[0]);
     if (patchResult[0] > 0) {
       const afterPatch = await models.User.findOne({
         where: {
@@ -167,9 +166,6 @@ exports.deleteUser = async (req, res) => {
 // POST '/user/settingGoal
 // 유효성 검증 후 목표 DB 저장
 exports.postSetGoal = async (req, res) => {
-  // gender value -> "male", "female"
-  // activeLevel value -> 1.2 / 1.375 / 1.55 / 1.725
-  // dietGoal value -> "Gain" / "Lose" / "Stay"
   try {
     console.log(req.body);
     const { id: sessionId } = req.session.user;
@@ -248,7 +244,6 @@ exports.postSetGoal = async (req, res) => {
 // POST '/user/dailyIntake'
 // 섭취량 DB 저장 (create)
 exports.postIntake = async (req, res) => {
-  // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
     const { id: sessionId } = req.session.user;
     const { date, mealtime, carbo, protein, fat } = req.body;
@@ -301,16 +296,15 @@ exports.getMonthlyIntake = async (req, res) => {
     }
 
     const { id: sessionId } = req.session.user;
-    const { month } = req.query; // 쿼리 파라미터에서 month 가져오기
+    const { month } = req.query;
 
-    // 쿼리 파라미터가 없을 경우 현재 월로 설정
     const now = new Date();
     const [year, selectedMonth] = month
       ? month.split("-")
       : [now.getFullYear(), now.getMonth() + 1];
 
-    const startOfMonth = new Date(year, selectedMonth - 1, 1); // 선택된 달의 첫날
-    const endOfMonth = new Date(year, selectedMonth, 0); // 선택된 달의 마지막 날
+    const startOfMonth = new Date(year, selectedMonth - 1, 1);
+    const endOfMonth = new Date(year, selectedMonth, 0);
 
     // 월별 섭취 데이터 조회
     const monthIntakeData = await models.Intake.findAll({

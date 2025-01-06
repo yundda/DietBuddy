@@ -3,16 +3,11 @@ const models = require("../models");
 
 exports.getMypage = async (req, res) => {
   try {
-    // 세션 있으면 goal 있냐 없냐에 따라서 isSettingGoal true/false 전달 각각 mypage after/before,
-    // my page after : 세팅한 goal 정보 가져와서 보여주기
-    // my page before : 빈 값으로 보여주기
     if (!req.session.user) {
       res.redirect("/");
     }
-    console.log(req.session.user);
-    console.log(req.params);
     const { id: sessionId, name: sessionName } = req.session.user;
-    const today = new Date().toISOString().split("T")[0]; // 기본값: 오늘 날짜
+    const today = new Date().toISOString().split("T")[0];
     const startOfToday = new Date(today);
     startOfToday.setHours(0, 0, 0, 0);
     const endOfToday = new Date(today);
@@ -21,7 +16,6 @@ exports.getMypage = async (req, res) => {
     const goal_id = await models.UserGoal.findOne({
       where: { id: sessionId },
     });
-    console.log(today, goal_id);
     if (goal_id) {
       // 1. 유저 목표 설정 정보
       const userGoal = await models.UserGoal.findOne({
@@ -35,10 +29,9 @@ exports.getMypage = async (req, res) => {
           "recomCarbo",
           "recomProtein",
           "recomFat",
-          [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"], // createdAt에서 날짜 부분만 추출 ex)'2024-12-01'
+          [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"],
         ],
       });
-      console.log("goalSettingDate>>", userGoal.dataValues.goalSettingDate);
       const goalDate = new Date(userGoal.dataValues.goalSettingDate);
       goalDate.setDate(goalDate.getDate() + userGoal.dataValues.period);
 
@@ -46,8 +39,8 @@ exports.getMypage = async (req, res) => {
         where: {
           id: sessionId,
           createdAt: {
-            [Op.gte]: startOfToday, // 0시 이후
-            [Op.lte]: endOfToday, // 23시 59분 이전
+            [Op.gte]: startOfToday,
+            [Op.lte]: endOfToday,
           },
         },
       });
@@ -102,10 +95,6 @@ exports.getTodayIntake = async (req, res) => {
     const endOfToday = new Date(selectedDate);
     endOfToday.setHours(23, 59, 59, 999);
 
-    // console.log("세션 ID:", sessionId);
-    // console.log("오늘 시작:", startOfToday);
-    // console.log("오늘 끝:", endOfToday);
-
     const meals = await models.Intake.findAll({
       where: {
         id: sessionId,
@@ -117,7 +106,6 @@ exports.getTodayIntake = async (req, res) => {
       attributes: ["intake_id", "mealtime", "carbo", "protein", "fat", "cal"],
     });
 
-    console.log("DB에서 가져온 데이터:", meals);
 
     if (!meals || meals.length === 0) {
       return res.json({

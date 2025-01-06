@@ -1,4 +1,3 @@
-console.log("signup axios 정상작동");
 function isClick() {
   const pw = document.getElementById("password");
   const confirmPw = document.getElementById("confirm-password");
@@ -12,11 +11,7 @@ function isClick() {
   }
 }
 function user_signup() {
-  //유효성 체크
-  //이름, 이메일, 비밀번호, 보안문자를 전부 입력했는지 확인한다.
-
   const name = document.getElementById("name").value.trim();
-  //데이터베이스에서 string(255)로 제한해두고 있어서 이름이 너무 길면 들어가지 않는다.
   const email = document.getElementById("email").value.trim();
   const pw = document.getElementById("password").value.trim();
   const confirmPw = document.getElementById("confirm-password").value.trim();
@@ -74,7 +69,6 @@ function user_signup() {
     },
   })
     .then((result) => {
-      //이 안에는 create 결과로 전송된 데이터가 담긴다.
       if (result.data.isCreate) {
         alert("회원가입이 완료되었습니다.");
         document.location.href = "/login";
