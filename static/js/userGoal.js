@@ -254,7 +254,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((response) => {
                   if (response.ok) {
                     alert("삭제되었습니다.");
-                    mealItem.remove(); // UI에서 삭제
+                    mealItem.remove();
+                    if (section.querySelectorAll(".meal-item").length === 0) {
+                      section.remove();
+                    }
                   } else {
                     throw new Error("삭제 실패");
                   }
