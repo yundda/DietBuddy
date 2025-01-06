@@ -97,15 +97,22 @@ exports.postFindpw = async (req, res) => {
       },
     });
 
-    const { pwQuestion, findPw } = findingPw;
-
-    if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
-      req.session.chgPw = {
-        id: findingPw.id,
-      };
-      res.send({ isFind: true });
-    } else {
+    if (!findingPw) {
       res.send({ isFind: false, msg: "해당 정보와 일치하는 회원이 존재하지 않습니다." });
+    } else {
+      const { pwQuestion, findPw } = findingPw;
+
+      if (findPw === req.body.findPw && pwQuestion === req.body.pwQuestion) {
+        req.session.chgPw = {
+          id: findingPw.id,
+        };
+        res.send({ isFind: true });
+      } else {
+        res.send({
+          isFind: false,
+          msg: "해당 정보와 일치하는 회원이 존재하지 않습니다.",
+        });
+      }
     }
   } catch (err) {
     console.log("Cmain.js postFindpw : server error", err);
