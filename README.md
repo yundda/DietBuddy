@@ -22,15 +22,11 @@ $ npm run dev
 
 ---
 
-<br/>
-<br/>
-
 # 1. Project Overview (프로젝트 개요)
 - 프로젝트 이름: DietBuddy
 - 프로젝트 설명: 건강한 삶을 꿈꾸는 모든 사람들을 위해 설계된 맞춤형 식단 관리 플랫폼
 
-<br/>
-<br/>
+---
 
 # 2. Team Members (팀원 및 팀 소개)
 | 윤다선(리더) | 이혜민 | 심소영 | 아미나 |
@@ -42,7 +38,7 @@ $ npm run dev
 <br/>
 <br/>
 
-# 3. Key Features (주요 기능)
+# 3. Key Features (주요 기능 )
 
 ### **반응형 웹 지원**
 - **모바일 버전**: 화면 크기에 따라 레이아웃이 변경되며, **헤더에 햄버거 메뉴(삼단바)**가 표시됩니다.
@@ -52,10 +48,20 @@ $ npm run dev
 - **모바일 버전**: 삼단바 메뉴를 통해 식단 추가 페이지로 이동할 수 있습니다.
 - **PC 버전**: 좌측에 **고정 메뉴**가 표시되어 클릭 시 페이지 전환이 가능합니다.
 
-- **회원가입 기능**
-- **입력 항목**:  
-  이름, 이메일(아이디), 비밀번호, 비밀번호 확인, 비밀번호 확인 질문, 비밀번호 확인 답변을 입력합니다.
+---
 
+### **1. 메인 홈페이지 / 고객센터**
+
+| **메인 홈페이지** | **모바일 메인 홈페이지** |**고객센터 홈페이지** |
+|:-----------------:|:---------------------:|:---------------------:|
+| ![메인 홈페이지](https://github.com/user-attachments/assets/eb03cceb-8232-4a7e-a0c4-03b4de9b0aab) | ![모바일 메인 페이지](https://github.com/user-attachments/assets/06353f92-d81e-4749-bdfb-e0bee383be38) | ![고객센터 페이지](https://github.com/user-attachments/assets/8a18301a-f9c0-49bd-ba9a-f76cc158a5f1) |
+
+---
+
+### **2. 회원가입 기능**  
+
+**화면 설명 및 기능**
+- **입력 항목**: 이름, 이메일(아이디), 비밀번호, 비밀번호 확인, 비밀번호 확인 질문, 비밀번호 확인 답변을 입력합니다.
 - **유효성 검사**:
   - **이름**:  
     - 최대 15자 이내  
@@ -72,22 +78,31 @@ $ npm run dev
   - **비밀번호 확인 답변**:  
     - 최대 255자 이내 작성 가능합니다.
 
-  - **비밀번호 확인 질문과 답변의 역할**:  
-    - 비밀번호 찾기 시 입력된 질문과 답변을 통해 본인 확인 절차를 진행합니다.
+| **회원가입 페이지** |
+|:-----------------:|
+| ![회원가입 페이지](https://github.com/user-attachments/assets/ea25e33a-5018-44e4-b0f1-d176f750a667) |
 
 ---
 
-- **로그인**
+### **3. 로그인 기능**
+
+**기능 설명**
 - **유효성 검사 및 오류 처리**:
   - **이메일 또는 비밀번호 미기재 시**:  
     - 경고창을 표시하여 사용자에게 입력을 요청합니다.  
   - **이메일 또는 비밀번호 오류 시**:  
     - 로그인 버튼 하단에 **빨간색 경고 메시지**를 표시합니다.  
     - 예시: `"이메일 또는 비밀번호가 올바르지 않습니다."`
-    
+
+| **로그인 페이지** |
+|:-----------------:|
+| ![로그인 페이지](https://github.com/user-attachments/assets/9a1e192a-51e9-4f3d-a102-8cc0480f6cb3) |
+
 ---
 
-- **비밀번호 찾기 기능**
+### **4. 비밀번호 찾기 기능**
+
+**기능 설명**
 - **입력 항목**  
   - 이메일  
   - 비밀번호 확인 질문  
@@ -98,9 +113,16 @@ $ npm run dev
   2. **모두 일치할 경우**, 비밀번호 재설정 페이지로 이동합니다.  
   3. 사용자가 새 비밀번호를 입력하여 **데이터베이스에 비밀번호가 업데이트**됩니다.
 
+
+| **비밀번호 찾기 페이지** |
+|:-----------------:|
+| ![비밀번호 찾기 페이지](https://github.com/user-attachments/assets/7f93c167-eff6-42d2-a3e0-f60ce78bdfa5) |
+
 ---
 
-- **목표 설정**
+### **5. 목표 설정 기능**
+
+**기능 설명**  
 - **입력 항목**
   - 키(cm)
   - 현재 체중(kg)
@@ -129,17 +151,22 @@ $ npm run dev
    - 목표 설정이 완료되면 해당 유저에 대한 **맞춤형 하루 섭취량(탄수화물, 단백질, 지방)**을 계산하여 데이터베이스에 저장합니다.
    - 계산된 결과를 기반으로 **맞춤형 식단 플랜**을 제공합니다.
 
+| **목표 설정 페이지** | **목표 얼럿 (일일 섭취량이 -300kcal 미만)** | **목표 얼럿 (일일 섭취량이 0~300kcal 미만)** |
+|:-------------------:|:-------------------:|:-------------------:|
+| ![목표 설정 페이지](https://github.com/user-attachments/assets/a1b206c6-52a3-4528-8020-05a82a02604c) | ![목표 설정 페이지(기초대사량 대비 일일 섭취량이 -300kcal 미만)](https://github.com/user-attachments/assets/b56989f1-3ffa-485a-b987-38a4ab293acb) | ![목표 설정 페이지(기초대사량 대비 0~300kcal 미만)](https://github.com/user-attachments/assets/577f496a-45ee-4245-af0f-7a35802c77cc) |
+
 ---
 
-- **목표 설정 전, 후 **
+### **6. 맞춤형 식단 플랜 및 섭취 기록**
+
+**기능 설명**  
+**목표 설정 전, 후 **
 
 **1. 목표 설정 전 페이지**
-### **기능 설명**
+**기능 설명**
 - 사용자 입력 폼이 제공되며, 항목별로 데이터를 입력받습니다.
 - **입력되지 않은 항목**은 기본값으로 `--`이 표시됩니다.
 - 모든 항목을 입력 후 **"목표 설정" 버튼**을 클릭하여 다음 단계로 이동합니다.
-
----
 
 **2. 목표 설정 후 페이지**
 
@@ -167,9 +194,16 @@ $ npm run dev
 - 페이지 로드 시 사용자의 기록을 바탕으로 **해당 월의 리스트**만 상단에 표시됩니다.
 - **ApexCharts** 라이브러리를 사용하여 그래프를 시각화합니다.
 
+
+| **목표 설정 후 페이지** | **식단 기록 모달** |
+|:-------------------:|:-------------------:|
+| ![목표 설정 후 페이지](https://github.com/user-attachments/assets/ee20b4bf-2ba2-4aa1-8a29-969fcdeb9a2f) | ![식단 기록 모달](https://github.com/user-attachments/assets/19897800-a295-4509-a98a-3dd962c9393d) |
+| **모바일 목표 기록** | **모바일 식단 기록** |
+| ![모바일 목표 기록](https://github.com/user-attachments/assets/a083eee7-6889-45a9-894a-ec30ed4521e8) | ![모바일 식단 기록](https://github.com/user-attachments/assets/9431c7f2-6e47-4017-8752-55fd479d9733) |
+
 ---
 
-- **회원정보 수정**
+### **7. 회원 정보 수정**
 
 **1. 기능 설명**
 - 사용자는 **이름**, **새 비밀번호**, **새 비밀번호 확인**을 입력하여 회원 정보를 수정할 수 있습니다.
@@ -196,13 +230,21 @@ $ npm run dev
 
 ---
 
+| **회원 정보 수정 페이지** | **회원 정보 수정 모바일 페이지** |
+|:-------------------------:|:-------------------------:|
+| ![회원 정보 수정 페이지](https://github.com/user-attachments/assets/d48c6869-b79a-4f48-b921-02ff4fb7f423) | ![회원 정보 수정 모바일 페이지](https://github.com/user-attachments/assets/6f6d0a80-0552-4092-b8c1-9dbdc30447e9) |
+
+---
+
+
 # 4. Tasks & Responsibilities (작업 및 역할 분담)
-|  |  |  |
-|-----------------|-----------------|-----------------|
-| 윤다선    |  <img src="https://github.com/user-attachments/assets/9042ccb3-5ac2-4c94-8cc6-d540ab3ff42a" alt="윤다선" width="100"> | <ul><li>프로젝트 계획 및 관리</li><li>데이터베이스 구축</li><li>회원정보 수정 기능</li><li>비밀번호 재설정 기능</li><li>목표설정 기능</li><li>일일 섭취 정보 저장</li><li>권장 섭취량 계산</li><li>섭취 정보 삭제</li></ul> |
-| 이혜민   |  <img src="https://github.com/user-attachments/assets/86ec2098-8e5b-40d7-9fbc-bcf6a36cd5f4" alt="이혜민" width="100">| <ul><li>로그인 기능</li><li>회원가입 기능</li><li>로그아웃 기능</li><li>회원탈퇴 기능</li></ul> |
-| 심소영   |  <img src="https://github.com/user-attachments/assets/e4bcf65e-bdc6-4a12-b9ea-d8b70af6404a" alt="심소영" width="100">    | <ul><li>기본 홈페이지</li><li>메인 user 페이지</li><li>로그인 페이지</li><li>비밀번호 찾기 페이지</li><li>식단 추가 모달</li><li>메인 user 그래프</li></ul> |
-| 아미나   |  <img src="https://github.com/user-attachments/assets/c634ab0c-57c0-40c1-8ba6-8eb54afef5cd" alt="아미나" width="100">    | <ul><li>반응형 페이지 개발</li><li>비밀번호 재설정 페이지</li><li>목표설정 페이지</li><li>회원가입 페이지</li><li>회원 정보 수정 페이지</li></ul> |
+
+| **이름** | **사진** | **담당 역할** |
+|:------------:|:-------:|:----------:|
+| **윤다선** | <img src="https://github.com/user-attachments/assets/9042ccb3-5ac2-4c94-8cc6-d540ab3ff42a" alt="윤다선" width="100"> | 프로젝트 계획 및 관리, DB 구축, 회원정보 수정, 비밀번호 재설정, 목표 설정, 일일 섭취 정보 저장, 권장 섭취량 계산, 섭취 정보 삭제 |
+| **이혜민** | <img src="https://github.com/user-attachments/assets/86ec2098-8e5b-40d7-9fbc-bcf6a36cd5f4" alt="이혜민" width="100"> | 로그인, 회원가입, 로그아웃, 회원탈퇴 기능 |
+| **심소영** | <img src="https://github.com/user-attachments/assets/e4bcf65e-bdc6-4a12-b9ea-d8b70af6404a" alt="심소영" width="100"> | 기본 홈페이지, 메인 페이지, 로그인, 비밀번호 찾기, 식단 추가 모달, 메인 그래프 |
+| **아미나** | <img src="https://github.com/user-attachments/assets/c634ab0c-57c0-40c1-8ba6-8eb54afef5cd" alt="아미나" width="100"> | 반응형 개발, 비밀번호 재설정, 목표 설정, 회원가입, 회원정보 수정 페이지 |
 
 <br/>
 <br/>
@@ -216,14 +258,11 @@ $ npm run dev
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)  
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)  
 
----
-
 ## 5.2 Frontend (프론트엔드) 
 ![EJS](https://img.shields.io/badge/EJS-68A063?style=for-the-badge&logo=express&logoColor=white)  
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)  
 ![ApexCharts](https://img.shields.io/badge/ApexCharts-5C5CFF?style=for-the-badge&logo=apexcharts&logoColor=white)  
-
----
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
 ## 5.3 Backend (백엔드) 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)  
@@ -233,8 +272,7 @@ $ npm run dev
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)  
 ![Dotenv](https://img.shields.io/badge/Dotenv-E4DCCF?style=for-the-badge&logo=dotenv&logoColor=black)  
 ![Cross-Env](https://img.shields.io/badge/Cross%20Env-555555?style=for-the-badge&logo=nodedotjs&logoColor=white)  
-
----
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
 ## 5.4 Cooperation (협업 도구) 
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)  
@@ -246,7 +284,6 @@ $ npm run dev
 ![Canva](https://img.shields.io/badge/Canva-00C4CC?style=for-the-badge&logo=canva&logoColor=white)  
 
 
-<br/>
 
 # 6. Project Structure (프로젝트 구조)
 ## 6.1 Project Structure
@@ -346,8 +383,6 @@ DietBuddy/
 ```bash
 git commit -m "[Fix] 로그인 화면 버그 수정"
 git commit -m "[Feature] 회원가입 API 추가"
-<br/>
-<br/>
 ```
 
 <br/>
@@ -368,7 +403,8 @@ const snake_case;
 ```
 
 ### **4. API Documentation (API 문서)**  
-- [API 문서 보러 가기](https://github.com/user-attachments/assets/19485e48-4e09-4ce9-a9a5-a259cd9e5dbe)  
+ <img src="https://github.com/user-attachments/assets/19485e48-4e09-4ce9-a9a5-a259cd9e5dbe" alt="API" width="100%"> 
+
 
 
 
