@@ -23,15 +23,15 @@ exports.getFindpw = (req, res) => {
 };
 
 //회원가입 controller
-exports.postSignup = (req, res) => {
+exports.postSignup = async (req, res) => {
   try {
-    const sameCheck = models.User.findOne({
+    const sameCheck = await models.User.findOne({
       where: {
         email: req.body.email,
       },
     });
 
-    if (sameCheck) {
+    if (!sameCheck) {
       const hashResult = hashSaltPw(req.body.pw);
 
       models.User.create({
