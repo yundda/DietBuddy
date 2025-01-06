@@ -6,7 +6,7 @@ const controller = require("../controller/Cuser");
 // router.get("/", controller.getUser);
 
 router.get("/settingGoal", controller.getSetGoal);
-router.get("/intake/daily:date?", controller.getDailyIntake);
+// router.get("/intake/daily:date?", controller.getDailyIntake);
 router.get("/patch", controller.getUserUpdate);
 router.get("/intake/monthly", controller.getMonthlyIntake);
 router.get("/validMonths", controller.getValidMonths);

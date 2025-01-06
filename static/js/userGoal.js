@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 식단 데이터 가져오기
   const fetchMealData = (selectedDate) => {
-    fetch(`/todayIntake?date=${selectedDate}`)
+    fetch(`/mypage/todayIntake?date=${selectedDate}`)
       .then((response) => {
         if (!response.ok) {
           return response.text().then((text) => {
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
           deleteButton.addEventListener("click", () => {
             if (confirm("정말 삭제하시겠습니까?")) {
               // 서버로 삭제 요청
-              fetch(`/dailyIntake/${meal.intake_id}`, {
+              fetch(`/mypage/dailyIntake/${meal.intake_id}`, {
                 method: "DELETE",
               })
                 .then((response) => {

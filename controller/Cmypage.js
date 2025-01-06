@@ -198,10 +198,10 @@ exports.getTodayIntake = async (req, res) => {
           [Op.lte]: endOfToday,
         },
       },
-      attributes: ["intake_id","mealtime", "carbo", "protein", "fat", "cal"],
+      attributes: ["intake_id", "mealtime", "carbo", "protein", "fat", "cal"],
     });
 
-    // console.log("DB에서 가져온 데이터:", meals);
+    console.log("DB에서 가져온 데이터:", meals);
 
     if (!meals || meals.length === 0) {
       return res.json({
