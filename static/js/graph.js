@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     };
 
-    chartContainer.innerHTML = ""; // 기존 차트 초기화
+    chartContainer.innerHTML = "";
     const chart = new ApexCharts(chartContainer, options);
     chart.render();
   };
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetch("/user/validMonths")
     .then((response) => response.json())
     .then((validMonths) => {
-      monthSelect.innerHTML = ""; // 기존 옵션 제거
+      monthSelect.innerHTML = "";
 
       // 유효한 달 추가
       validMonths.forEach(({ year, month }) => {

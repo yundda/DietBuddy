@@ -15,21 +15,21 @@ function showModal(message, onConfirm, severe = false) {
 
   if (severe) {
     // 사용자가 목표 설정을 위해 입력한 값을 변경하기 위한 버튼 동작
-    confirmBtn.style.display = "inline-block"; // 확인 버튼 재활용
+    confirmBtn.style.display = "inline-block";
     confirmBtn.textContent = "수정하기";
     confirmBtn.onclick = () => {
-      modal.classList.add("hidden"); // 데이터 전송하지 않고 모달 닫기- 사용자가 입력한 값은 그대로 남는다
+      modal.classList.add("hidden");
     };
   } else {
     // 기본 "확인", "취소" 버튼 동작 설정
     confirmBtn.textContent = "확인";
     confirmBtn.onclick = () => {
       modal.classList.add("hidden");
-      onConfirm(); // 확인 버튼 눌렀을 때 실행
+      onConfirm();
     };
 
     cancelBtn.onclick = () => {
-      modal.classList.add("hidden"); // 취소 버튼 눌렀을 때 숨김
+      modal.classList.add("hidden");
     };
   }
 }
@@ -80,8 +80,8 @@ function handleSubmit(event) {
       "😥 감량 목표가 너무 과합니다\n" +
         "✔️활동량을 늘리거나, 목표 체중을 수정해보세요\n" +
         "✔️기간을 늘려 더 안전하게 진행할 수 있습니다😊",
-      null, // onConfirm 없으므로 다음 단계 진행 없음
-      true // severe=true: 버튼 하나만 표시
+      null,
+      true
     );
   } else if (calcedIntake < calcedBMR) {
     // 조금 과한 경우 경고문을 올리고 사용자가 진행할지 최소할지 선택가능기능
@@ -91,10 +91,9 @@ function handleSubmit(event) {
         "✖️ 수정을 원하시면 최소 버튼을 눌러주세요😊\n" +
         "< 활동량/목표 기간을 늘리거나 목표 체중을 수정하시면 안전하게 진행할 수 있습니다 >",
       () => {
-        console.log("사용자가 위험성을 확인하고 진행을 선택했습니다.");
-        user_goal(); // 목표 설정 진행
+        user_goal();
       },
-      false // severe=false: 기본 버튼 표시
+      false
     );
   } else {
     user_goal();
@@ -122,8 +121,6 @@ function user_goal() {
       document.querySelector(".diet-goals .selected")?.getAttribute("value") || null,
   };
 
-  console.log("저장된 데이터:", data);
-
   axios
     .post("/user/settingGoal", data)
     .then((result) => {
@@ -146,7 +143,6 @@ const setupSingleSelect = (selector) => {
     button.addEventListener("click", () => {
       buttons.forEach((btn) => btn.classList.remove("selected"));
       button.classList.add("selected");
-      console.log(`${selector} 목록에서 선택된 요소는: ${button.textContent}`);
     });
   });
 };

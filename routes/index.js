@@ -8,7 +8,7 @@ router.get("/customerservice", controller.getService);
 router.get("/usercustomerservice", controller.getUserService);
 router.get("/signup", controller.getSignup);
 router.get("/login", controller.getLogin);
-router.get("/findPw", controller.getFindpw); //비번찾기 페이지
+router.get("/findPw", controller.getFindpw);
 router.get("/mypage/:date?", controller_mypage.getMypage);
 router.get("/todayIntake/:date?", controller_mypage.getTodayIntake);
 router.delete("/dailyIntake/:id?", controller_mypage.deleteIntake);

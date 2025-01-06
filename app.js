@@ -36,7 +36,6 @@ app.get("*", (req, res) => {
 });
 
 db.sequelize.sync({ force: false }).then(() => {
-  console.log("db 연결 성공");
   app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
   });

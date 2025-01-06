@@ -17,7 +17,6 @@ function user_update() {
   const pw2 = document.getElementById("password2").value.trim();
   const date = new Date().toISOString().split("T")[0];
 
-  // const findPw = document.getElementById("security-answer").value;
   const regPw = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
   if (name == originalName && pw1 === "" && pw2 === "") {

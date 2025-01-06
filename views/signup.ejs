@@ -14,17 +14,14 @@
         <div class="signup-form">
           <h1>회원가입</h1>
           <form>
-            <!-- 이름 입력 -->
             <label for="name">이름</label>
             <input type="text" id="name" placeholder="ABC" required />
             <p style="color: red">※이름은 15자 이하로 입력해주세요.</p>
             <br />
 
-            <!-- 이메일 입력 -->
             <label for="email">이메일</label>
             <input type="email" id="email" placeholder="abc@gmail.com" required />
 
-            <!-- 비밀번호 입력 -->
             <label for="password">비밀번호</label>
             <input
               type="password"
@@ -50,7 +47,6 @@
             <p id="caution" style="color: red"></p>
             <br />
 
-            <!-- 비밀번호 확인 문제 -->
             <label for="security-question">비밀번호 확인 문제</label>
             <select id="security-question" required>
               <option value="" disabled selected>문제를 선택해주세요</option>
@@ -63,7 +59,6 @@
               <option value="dream_trip">추억하고 싶은 날씨가 있다면?</option>
             </select>
 
-            <!-- 비밀번호 확인 답변 -->
             <label for="security-answer">비밀번호 확인 답변</label>
             <input
               type="text"
@@ -74,10 +69,8 @@
             <p style="color: red">※답변은 255자 이내로 해주세요.</p>
             <br />
 
-            <!-- 회원가입 버튼 -->
             <button type="button" onclick="user_signup()">회원가입</button>
 
-            <!-- 로그인 링크 -->
             <p class="signin-text">회원이신가요? <a href="/login">로그인</a></p>
           </form>
         </div>
