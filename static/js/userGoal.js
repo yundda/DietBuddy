@@ -20,6 +20,7 @@ if (isSettingGoals) {
     goalMessageElement.textContent = `${username} 님의 목표 달성일이 지났습니다!`;
   }
 } else {
+  // 목표 날짜가 설정되지 않은 경우
   goalMessageElement.textContent = `${username} 님, 목표를 설정해주세요!`;
 }
 
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // data-* 속성 값 가져오기
   const currentCalorie = parseInt(kcalCard.dataset.currentCalorie, 10) || 0;
   const maxCalorie = parseInt(kcalCard.dataset.maxCalorie, 10) || 0;
-  const steps = 5;
+  const steps = 5; // 라벨 구간 수
 
   // 라벨 초기화
   calorieLabelsContainer.innerHTML = "";
@@ -56,9 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const limitedProgress = Math.min(progressPercentage, 100);
 
   // Progress Bar 및 Indicator 업데이트
-  progressBar.style.width = `${limitedProgress}%`;
-  indicator.style.left = `${limitedProgress}%`;
+  progressBar.style.width = `${limitedProgress}%`; // Progress Bar 길이
+  indicator.style.left = `${limitedProgress}%`; // Indicator 위치
 
+  // 섭취량 초과 시 Indicator 색상 변경
   if (currentCalorie > maxCalorie) {
     indicator.style.background = "green";
   } else {
@@ -75,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentWeight = parseFloat(weightCard.dataset.currentWeight) || 0;
 
   // ±5kg 범위 설정
-  const minWeight = currentWeight - 5;
-  const maxWeight = currentWeight + 5;
+  const minWeight = currentWeight - 5; // 현재 몸무게 - 5kg
+  const maxWeight = currentWeight + 5; // 현재 몸무게 + 5kg
 
   // 그래프 초기화
   weightLabelsContainer.innerHTML = "";
 
   // 라벨 추가: 65kg, 70kg, 75kg
-  const labels = [minWeight, currentWeight, maxWeight];
+  const labels = [minWeight, currentWeight, maxWeight]; // 라벨 값 배열
   labels.forEach((weight) => {
     const span = document.createElement("span");
     span.textContent = `${weight}kg`;
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 현재 몸무게 인디케이터
   weightIndicator.style.left = `${Math.min(Math.max(currentPercentage, 0), 100)}%`;
-  weightIndicator.style.background = "red";
+  weightIndicator.style.background = "red"; // 현재 몸무게 색상
 });
 
 // 모달 열기, 닫기
@@ -166,15 +168,15 @@ document.addEventListener("DOMContentLoaded", () => {
       // 오늘 날짜 버튼 활성화
       if (formattedDate === today) {
         dateButton.classList.add("active");
-        selectedDate = formatDate(formattedDate);
-        fetchMealData(formattedDate);
+        selectedDate = formatDate(formattedDate); // 기본 선택 날짜 설정
+        fetchMealData(formattedDate); // 오늘 날짜 데이터 가져오기
       }
 
       dateButton.addEventListener("click", () => {
         Array.from(dateList.children).forEach((btn) => btn.classList.remove("active"));
         dateButton.classList.add("active");
 
-        selectedDate = formatDate(dateButton.dataset.date);
+        selectedDate = formatDate(dateButton.dataset.date); // 선택된 날짜 설정
         console.log(`선택된 날짜 (변환됨): ${selectedDate}`);
         fetchMealData(formattedDate);
       });
@@ -252,10 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then((response) => {
                   if (response.ok) {
                     alert("삭제되었습니다.");
-                    mealItem.remove();
-                    if (section.querySelectorAll(".meal-item").length === 0) {
-                      section.remove();
-                    }
+                    mealItem.remove(); // UI에서 삭제
                   } else {
                     throw new Error("삭제 실패");
                   }
@@ -287,12 +286,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const mealTypeMap = ["breakfast", "lunch", "dinner", "btwmeal"];
       selectedMealType = mealTypeMap[index];
+      console.log(`선택된 식사 타입: ${selectedMealType}`);
     });
   });
 
   // 폼 제출 처리
   mealForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    console.log("전송 전 selectedDate:", selectedDate);
 
     if (!selectedMealType) {
       alert("식사 종류를 선택해주세요.");
