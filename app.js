@@ -27,8 +27,10 @@ app.use(
 // 라우터 불러오기
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
+const mypageRouter = require("./routes/mypage");
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/mypage", mypageRouter);
 
 // 404 페이지
 app.get("*", (req, res) => {
