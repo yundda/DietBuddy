@@ -36,7 +36,7 @@ function pw_update() {
   })
     .then(() => {
       alert("수정이 완료되었습니다.");
-      document.location.href = `/mypage/main`;
+      document.location.href = `/login`;
     })
     .catch((err) => {
       console.log(err);
