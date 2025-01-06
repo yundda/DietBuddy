@@ -32,7 +32,6 @@ exports.getUserUpdate = async (req, res) => {
       const patchUser = await models.User.findOne({
         where: { id: sessionId },
       });
-      console.log("patchUser >> ", patchUser);
       res.render("userUpdate", {
         name: patchUser.dataValues.name,
         email: patchUser.dataValues.email,
@@ -51,7 +50,7 @@ exports.getPwUpdate = async (req, res) => {
     if (!req.session.user) {
       res.render("pwUpdate");
     } else {
-      res.redirect("/mypage");
+      res.redirect("/mypage/main");
     }
   } catch (err) {
     console.log("Cuser.js getPwUpdate : server error", err);
@@ -64,9 +63,10 @@ exports.patchUser = async (req, res) => {
   try {
     const { id: sessionId } = req.session.user;
     console.log(req.body);
+    let patchResult;
     if (req.body.pw) {
       const { salt, hash } = hashSaltPw(req.body.pw);
-      const patchResult = await models.User.update(
+      patchResult = await models.User.update(
         {
           name: req.body.name,
           pw: hash,
@@ -79,7 +79,7 @@ exports.patchUser = async (req, res) => {
         }
       );
     } else {
-      const patchResult = await models.User.update(
+      patchResult = await models.User.update(
         {
           name: req.body.name,
         },
@@ -90,7 +90,18 @@ exports.patchUser = async (req, res) => {
         }
       );
     }
+    console.log("patchResult >", patchResult[0]);
     if (patchResult[0] > 0) {
+      const afterPatch = await models.User.findOne({
+        where: {
+          id: req.session.user.id,
+        },
+      });
+      req.session.user = {
+        id: afterPatch.id,
+        name: afterPatch.name,
+        email: afterPatch.email,
+      };
       res.send({ isSuccess: true });
     } else {
       res.send({ isSuccess: false });
@@ -152,8 +163,6 @@ exports.deleteUser = async (req, res) => {
     res.status(500).send("Cuser.js deleteUser : server error");
   }
 };
-
-/* req.session.user = {id : ~, email : ~, name : ~} */
 
 // POST '/user/settingGoal
 // 유효성 검증 후 목표 DB 저장
@@ -230,7 +239,6 @@ exports.postSetGoal = async (req, res) => {
       );
     }
     res.send("목표 설정 완료");
-    // res.redirect("/user");
   } catch (err) {
     console.log("Cuser.js postSetGoal : server error", err);
     res.status(500).send("Cuser.js postSetGoal : server error");
@@ -240,15 +248,15 @@ exports.postSetGoal = async (req, res) => {
 // POST '/user/dailyIntake'
 // 섭취량 DB 저장 (create)
 exports.postIntake = async (req, res) => {
-  // req.body or form 데이터
-  // ⭐️ createdAt에 선택 날짜 담아서 보내주기!
   // mealtime value -> "breakfast", "lunch", "dinner", "btwmeal"
   try {
     const { id: sessionId } = req.session.user;
-    console.log(sessionId);
-    const { mealtime, carbo, protein, fat } = req.body;
-    const timestamp = new Date();
+    const { date, mealtime, carbo, protein, fat } = req.body;
+    const selectedDate = new Date(date);
     const cal = calc_cal(carbo, protein, fat);
+
+    selectedDate.setHours(0, 0, 0, 0);
+
     const intakeResult = await models.Intake.create(
       {
         mealtime,
@@ -256,7 +264,7 @@ exports.postIntake = async (req, res) => {
         protein,
         fat,
         cal,
-        createdAt: timestamp,
+        createdAt: selectedDate,
         id: sessionId,
       },
       {
@@ -284,20 +292,6 @@ exports.postLogout = (req, res) => {
     res.status(500).send("Cmain.js postLogout : server error");
   }
 };
-
-// 섭취량 수정
-// 섭취량 삭제
-
-// // POST '/user/dailyIntake'
-// // 섭취량 DB 저장 (create)
-// exports.postIntake =  async (req,res)=>{
-//   try{
-//     const Result = await models
-//   } catch (err) {
-//     console.log("Cuser.js postIntake : server error", err);
-//     res.status(500).send("Cuser.js postIntake : server error");
-//   }
-// }
 
 // GET /intake/monthly
 exports.getMonthlyIntake = async (req, res) => {
@@ -382,93 +376,5 @@ exports.getValidMonths = async (req, res) => {
   } catch (err) {
     console.log("Cuser.js getValidMonths : server error", err);
     res.status(500).send("Cuser.js getValidMonths : server error");
-  }
-};
-
-// 오른쪽 세션 GET /intake/daily
-exports.getDailyIntake = async (req, res) => {
-  try {
-    if (!req.session.user) {
-      return res.redirect("/");
-    }
-    const { id: sessionId } = req.session.user;
-    const { date } = req.params; // 쿼리 파라미터에서 date 가져오기
-
-    // 쿼리 파라미터가 없을 경우 현재 날짜로 설정
-    const now = new Date();
-    const [year, selectedMonth, selecetedDay] = date
-      ? date.split("-")
-      : [now.getFullYear(), now.getMonth() + 1, now.getDay];
-
-    const startOfDate = new Date(year, selectedMonth - 1, selecetedDay);
-    startOfDate.setHours(0, 0, 0, 0);
-    const endOfDate = new Date(year, selectedMonth - 1, selecetedDay);
-    endOfDate.setHours(23, 59, 59, 999);
-
-    const breakfast = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "breakfast",
-        createdAt: {
-          [Op.gte]: startOfDate,
-          [Op.lte]: endOfDate,
-        },
-      },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-    const lunch = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "lunch",
-        createdAt: {
-          [Op.gte]: startOfDate,
-          [Op.lte]: endOfDate,
-        },
-      },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-    const dinner = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "dinner",
-        createdAt: {
-          [Op.gte]: startOfDate,
-          [Op.lte]: endOfDate,
-        },
-      },
-      attributes: ["mealtime", "carbo", "protein", "fat", "cal"],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-    const btwmeal = await models.Intake.findAll({
-      where: {
-        id: sessionId,
-        mealtime: "btwmeal",
-        createdAt: {
-          [Op.gte]: startOfDate,
-          [Op.lte]: endOfDate,
-        },
-      },
-      attributes: [
-        "mealtime",
-        "carbo",
-        "protein",
-        "fat",
-        "cal",
-        [Sequelize.fn("DATE", Sequelize.col("createdAt")), "goalSettingDate"],
-      ],
-      order: [["createdAt"], ["updatedAt"]],
-    });
-
-    res.json([
-      breakfast.map((data) => data.dataValues),
-      lunch.map((data) => data.dataValues),
-      dinner.map((data) => data.dataValues),
-      btwmeal.map((data) => data.dataValues),
-    ]);
-  } catch (err) {
-    console.log("Cuser.js getDailyIntake : server error", err);
-    res.status(500).send("Cuser.js getDailyIntake : server error");
   }
 };
