@@ -25,6 +25,15 @@ $ npm run dev
 # 1. Project Overview (프로젝트 개요)
 - 프로젝트 이름: DietBuddy
 - 프로젝트 설명: 건강한 삶을 꿈꾸는 모든 사람들을 위해 설계된 맞춤형 식단 관리 플랫폼
+- 프로젝트 기간: **2024년 12월 13일 ~ 2024년 12월 30일** 
+
+### **피그마 설계 및 UI 기획**
+
+#### **1. 피그마 웹 디자인**
+![피그마 웹 디자인](https://github.com/user-attachments/assets/4d16feab-1eb4-4877-be4f-31e9a1f746c8)
+
+#### **2. 피그마 모바일 디자인**
+![피그마 모바일 디자인](https://github.com/user-attachments/assets/804d17c3-0ddd-4714-b32e-fd60ac332ab6)
 
 ---
 
