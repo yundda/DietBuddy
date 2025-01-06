@@ -28,6 +28,10 @@ function user_update() {
     alert("이름을 입력해주세요.");
     return false;
   }
+  if (name.length > 15) {
+    alert("이름은 15자 이하로 설정해 주세요.");
+    return false;
+  }
   if (pw1 !== "" && !regPw.test(pw1)) {
     alert("비밀번호는 영어 대소문자와 숫자를 포함한 8~20자리 글자여야 합니다.");
     return false;
