@@ -54,7 +54,7 @@ function user_signup() {
     return false;
   }
   if (findPw.length > 255) {
-    alert("질문은은 255자 이하로 답변해주세요.");
+    alert("질문은 255자 이하로 답변해주세요.");
     return false;
   }
   axios({

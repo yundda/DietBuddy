@@ -13,7 +13,7 @@ exports.getLogin = (req, res) => {
   res.render("login");
 };
 exports.getService = (req, res) => {
-  res.render("cServicebefore");
+  res.render("customerService_before_login");
 };
 exports.getUserService = (req, res) => {
   res.render("customerService");

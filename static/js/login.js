@@ -22,9 +22,7 @@ function user_login() {
   })
     .then((response) => {
       if (response.data.isLogin) {
-
-        window.location.href = "/mypage";
-
+        window.location.href = "/mypage/main";
       } else {
         errorMsg.style.display = "block";
         errorMsg.textContent = response.data.msg;
@@ -32,7 +30,7 @@ function user_login() {
     })
     .catch((error) => {
       errorMsg.style.display = "block";
-      errorMsg.textContent = "로그인에 실패했습니다.";
+      errorMsg.textContent = "이메일 또는 비밀번호가 올바르지 않습니다.";
       console.log("로그인 에러", error);
     });
 }
