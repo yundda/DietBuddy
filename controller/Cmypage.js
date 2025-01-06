@@ -106,6 +106,7 @@ exports.getTodayIntake = async (req, res) => {
       attributes: ["intake_id", "mealtime", "carbo", "protein", "fat", "cal"],
     });
 
+
     if (!meals || meals.length === 0) {
       return res.json({
         breakfast: [],

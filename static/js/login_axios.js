@@ -22,7 +22,9 @@ function user_login() {
   })
     .then((response) => {
       if (response.data.isLogin) {
+
         window.location.href = "/mypage";
+
       } else {
         errorMsg.style.display = "block";
         errorMsg.textContent = response.data.msg;

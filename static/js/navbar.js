@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (toggleRightSection) {
       if (window.innerWidth > 768) {
         toggleRightSection.style.display = "none";
-      } else if (currentPath === "/mypage") {
+      } else if (currentPath === "/mypage/main") {
         toggleRightSection.style.display = "inline-block";
       } else {
         toggleRightSection.style.display = "none";
@@ -49,8 +49,13 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("햄버거 메뉴를 찾을 수 없습니다", { navbar, hamburger });
   }
 
-  // "/mypage"에서 오늘의 식단 버튼 동작
-  if (currentPath === "/mypage" && toggleRightSection && leftSection && rightSection) {
+  // "/mypage/main"에서 오늘의 식단 버튼 동작
+  if (
+    currentPath === "/mypage/main" &&
+    toggleRightSection &&
+    leftSection &&
+    rightSection
+  ) {
     toggleRightSection.addEventListener("click", (e) => {
       e.preventDefault();
 
@@ -62,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         navbar.style.display = "none";
       }
     });
-  } else if (currentPath === "/mypage") {
+  } else if (currentPath === "/mypage/main") {
     console.error("마이페이지 관련 요소를 찾을 수 없습니다", {
       toggleRightSection,
       leftSection,

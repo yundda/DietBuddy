@@ -21,7 +21,7 @@ function user_update() {
 
   if (name == originalName && pw1 === "" && pw2 === "") {
     alert("수정 사항이 없습니다.");
-    document.location.href = `/mypage`;
+    document.location.href = `/mypage/main`;
     return;
   }
   if (name === "") {
@@ -49,7 +49,7 @@ function user_update() {
     .then((res) => {
       if (res.data.isSuccess) {
         alert("수정이 완료되었습니다.");
-        document.location.href = `/mypage`;
+        document.location.href = `/mypage/main`;
       } else {
         document.location.href = "/404";
         return false;
